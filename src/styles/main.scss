@@ -25,3 +25,15 @@ table .form-control[disabled], fieldset[disabled] .form-control {
     background: #E1E1E1;
     padding: 20px;
 }
+#dailyDefault{
+    width:70%;
+    float:right;
+    margin-left:4px;
+}
+@media (min-width: 768px){
+    .form-inline .form-group {
+        display: inline-block;
+        margin-bottom: 15px;
+        vertical-align: middle;
+    }
+}

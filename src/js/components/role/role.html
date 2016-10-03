@@ -1,0 +1,44 @@
+<h2>תפקידים</h2>
+<div class="col-xs-12">
+    <form class="form-inline" name="roleForm" ng-submit="$ctrl.addRole(roleForm.$valid)" novalidate>
+        <div class="form-group">
+            <label class="sr-only" for="name">שם:</label>
+            <input type="text" placeholder="שם" class="form-control" name="name" id="name" ng-model="$ctrl.role.name" required />
+        </div>
+        <!--<div class="form-group">
+            <label class="sr-only" for="value">Value:</label>
+            <input type="text" placeholder="value" class="form-control" name="value" id="value" ng-model="$ctrl.role.value" required />
+        </div>-->
+        <button type="submit" class="btn btn-primary" data-style="zoom-out" ladda="$ctrl.addingRole">הוספה</button>
+    </form>
+</div>
+<div class="col-xs-12">
+    <table class="table table-striped table-inverse">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>שם</th>
+                <!--<th>Value</th>-->
+                <th>מזהה</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="role in $ctrl.roles">
+                <th scope="row" ng-bind="$index+1"></th>
+                <td ><input type="text" 
+                            ng-disabled="!$ctrl.editDisabled[role._id]"
+                            ng-model="role.name"></td>
+                <!--<td ><input type="text" 
+                            ng-disabled="!$ctrl.editDisabled[role._id]"
+                            ng-model="role.value"></td>-->
+                <td ng-bind="role._id"></td>
+                <td ng-click="$ctrl.editDisabled[role._id] = !$ctrl.editDisabled[role._id]"><i class="glyphicon glyphicon-pencil"></i></td>
+                <td ng-click="$ctrl.updateRole(role)"><i class="glyphicon glyphicon-floppy-disk"></td>
+                <td ng-click="$ctrl.deleteRole(role._id)"><i class="glyphicon glyphicon-trash"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

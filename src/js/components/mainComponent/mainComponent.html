@@ -1,0 +1,46 @@
+<div id="wrapper" ng-class="{toggled:toggle.state}">
+    <!-- Sidebar -->
+    <div ng-show="true">
+        <div id="sidebar-wrapper">
+            <!--<ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="#">
+                          Start Bootstrap
+                      </a>
+                </li>
+                <li>
+                    <a href="#" aria-label="Login" ng-click="$ctrl.go(login)" ng-if="!$ctrl.auth.isAuthenticated">Dashboard</a>
+                </li>
+                <li>
+                    <a href="#">Shortcuts</a>
+                </li>
+                <li>
+                    <a href="#">Overview</a>
+                </li>
+                <li>
+                    <a href="#">Events</a>
+                </li>
+                <li>
+                    <a href="#">About</a>
+                </li>
+                <li>
+                    <a href="#">Services</a>
+                </li>
+                <li>
+                    <a href="#">Contact</a>
+                </li>
+            </ul>-->
+            <toolbar></toolbar>
+        </div>
+        <div class="btn btn-default" id="menu-toggle" ng-click="toggle.state = !toggle.state">
+            <span class="glyphicon glyphicon-menu-hamburger"></span>
+        </div>
+    </div>
+
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+            <div class="ui-view">
+            </div>
+        </div>
+    </div>
+</div>

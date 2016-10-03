@@ -1,0 +1,92 @@
+<h2>משתמשים</h2>
+<div class="col-xs-12">
+    <form class="col-xs-6 form-inline" name="userForm" ng-submit="$ctrl.addUser(userForm.$valid)" novalidate>
+        <!--<div class="form-group">
+            <label class="sr-only" or="id">id:</label>
+            <input type="text" class="form-control" placeholder="Id" name="id" id="id" ng-model="$ctrl.user.id" required />
+        </div>-->
+        <div class="form-group">
+            <label class="sr-only" for="name">Name:</label>
+            <input type="text" placeholder="שם" class="form-control" name="name" id="name" ng-model="$ctrl.user.name" required />
+        </div>
+        <div class="form-group">
+            <label class="sr-only" for="email">Email:</label>
+            <input type="text" placeholder="דואר אלקטרוני" class="form-control" name="email" id="email" ng-model="$ctrl.user.email" required
+            />
+        </div>
+        <div class="form-group">
+            <label class="sr-only" for="password">password:</label>
+            <input type="text" placeholder="סיסמה" class="form-control" name="password" id="password" ng-model="$ctrl.user.password"
+                required />
+        </div>
+        <div class="form-group">
+            <label class="sr-only" for="role">role:</label>
+            <select class="form-control" name="role" id="role" ng-init="$ctrl.selectedrole = $ctrl.roles[0]" ng-model="$ctrl.user.role"
+                ng-options="role as role.name for role in $ctrl.roles"></select>
+        </div>
+        <button type="submit" class="btn btn-primary">הוספה</button>
+    </form>
+</div>
+<div class="col-xs-12">
+    <table class="table table-striped table-inverse">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>שם</th>
+                <th>מייל</th>
+                <th>תפקיד</th>
+                <!--<th>סיסמה</th>-->
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="user in $ctrl.users">
+                <th scope="row" ng-bind="$index+1"></th>
+                <td><input type="text" ng-disabled="!$ctrl.editDisabled[user._id]" ng-model="user.name"></td>
+                <td><input type="text" ng-disabled="!$ctrl.editDisabled[user._id]" ng-model="user.email"></td>
+                <td>
+                    <select class="form-control" name="role" id="role" ng-disabled="!$ctrl.editDisabled[user._id]" ng-model="user.role._id" ng-options="role._id as role.name for role in $ctrl.roles"></select>
+                </td>
+                <!--<td><input type="text" ng-disabled="!$ctrl.editDisabled[user._id]" ng-model="user.password"></td>-->
+                <td ng-click="$ctrl.getUserSites(user._id); $ctrl.selectedUser = user"><i class="glyphicon glyphicon-info-sign"></td>
+                <td ng-click="$ctrl.editDisabled[user._id] = !$ctrl.editDisabled[user._id]"><i class="glyphicon glyphicon-pencil"></i></td>
+                <td ng-click="$ctrl.updateUser(user)"><i class="glyphicon glyphicon-floppy-disk"></td>
+                <!--<td ng-click="$ctrl.authenticate(user)"><i class="glyphicon glyphicon-floppy-disk"></td>-->
+                <td ng-click="$ctrl.deleteUser(user._id)"><i class="glyphicon glyphicon-trash"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div ng-show="$ctrl.selectedUser">
+    <div class="col-md-12">
+        <h3><span>אתרים של </span><span ng-bind="$ctrl.selectedUser.name"></span></h3>
+        <table class="table table-striped table-inverse">
+            <thead>
+                <tr>
+                    <th>שם</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="site in $ctrl.userSites" >
+                    <td ng-bind="site.name">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-xs-12">
+        <form class="col-xs-6 form-inline" name="passwordForm" ng-submit="$ctrl.changePassword(passwordForm.$valid)" novalidate>        
+            <div class="form-group">
+                <label class="sr-only" for="newPassword">Email:</label>
+                <input type="text" placeholder="סיסמה חדשה" class="form-control" name="newPassword" id="newPassword" ng-model="$ctrl.passwords.newPassword" required
+                />
+            </div>
+            <button type="submit" class="btn btn-primary">עדכון</button>
+        </form>
+    </div>
+</div>

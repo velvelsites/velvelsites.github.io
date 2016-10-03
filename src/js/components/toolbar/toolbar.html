@@ -1,0 +1,104 @@
+<ul class="sidebar-nav">
+    <li class="sidebar-brand">
+        <div>
+            ש.א.ג
+        </div>
+    </li>
+    <div class="sidebar-profile" ng-show="$ctrl.currentUser">
+        <div class="profile-userpic">
+            <img src="http://www.palauoek.com/wp-content/uploads/2014/07/profile-default-male.png" class="img-responsive"
+                alt="">
+        </div>
+        <div class="profile-usertitle">
+            <div class="profile-usertitle-name" ng-bind="$ctrl.currentUser.name">
+            </div>
+            <div class="profile-usertitle-job" ng-bind="$ctrl.currentUser.role.name">
+            </div>
+            <!--<div class="profile-usertitle-job" ng-bind="$ctrl.currentUser.email">
+            </div>-->
+        </div>
+        <div class="profile-userbuttons">
+            <button type="button" class="btn btn-success btn-sm" ng-click="$ctrl.go('profile')">בית</button>
+            <button type="button" class="btn btn-danger btn-sm" ng-click="$ctrl.logout()">יציאה</button>
+        </div>
+    </div>
+    <!--<div class="profile-usermenu">
+					<ul class="nav">
+						<li class="active">
+							<a href="#">
+							<i class="glyphicon glyphicon-home"></i>
+							Overview </a>
+						</li>
+					</ul>
+    	</div>-->
+    <!--<div ng-show="$ctrl.currentUser">
+        <span ng-bind="$ctrl.currentUser.name"></span>
+        <span ng-bind="$ctrl.currentUser.email"></span>
+        <div aria-label="Logout" ng-click="$ctrl.logout()">Logout</div>
+    </div>-->
+    <li>
+        <div aria-label="Login" ng-click="$ctrl.login()" ng-show="!$ctrl.currentUser">כניסה</div>
+    </li>
+    <!--<div ng-show="$ctrl.currentUser">
+
+        <li>
+            <div ng-click="$ctrl.go('resource')">משאבים</div>
+        </li>
+    </div>-->
+    <div ng-show="$ctrl.currentUser.role._id == '57d2805f13d468481b1fe130' ||
+                  $ctrl.currentUser.role._id == '57d27d4313d468481b1fe12e'">
+        <li>
+            <div ng-click="$ctrl.go('site')">אתרים</div>
+        </li>
+    </div>
+    <div ng-show="$ctrl.currentUser.role._id == '57d27d4313d468481b1fe12e'">
+        
+        <li>
+            <div ng-click="$ctrl.go('user')">משתמשים</div>
+        </li>
+        <li>
+            <div ng-click="$ctrl.go('role')">תפקידים</div>
+        </li>
+        <li>
+            <div ng-click="$ctrl.go('type')">משאבים</div>
+        </li>
+    </div>
+    <!--<li>
+        <div ng-click="$ctrl.go('dailyResources')">Daily Resources</div>
+    </li>-->
+</ul>
+<!--<md-toolbar>
+    <div class="md-toolbar-tools">
+        <h2>
+    <span>
+        Velvel
+    </span>
+</h2>
+        <span flex>
+    
+</span>
+        <md-button aria-label="Login" ng-click="$ctrl.login()" ng-if="!$ctrl.auth.isAuthenticated">
+            Login
+        </md-button>
+
+        <md-button
+        aria-label="Profile"
+        ui-sref="profile"
+        ng-if="$ctrl.auth.isAuthenticated">        
+        Profile
+        </md-button>
+
+        <md-button 
+        aria-label="Logout" 
+        ng-click="$ctrl.logout()"
+        ng-if="$ctrl.auth.isAuthenticated">
+            Logout
+        </md-button>
+        <md-button 
+        aria-label="Resource" 
+        ng-click="$ctrl.go('resource')"
+        ng-if="$ctrl.auth.isAuthenticated">
+            Resource
+        </md-button>
+    </div>
+</md-toolbar>-->

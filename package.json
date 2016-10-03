@@ -5,10 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --inline ./src/js/index.js",
-    // "start": "http-server",
-    "prod": "webpack ./src/js/index.js bundle.js",
-    "postinstall": "webpack ./src/js/index.js bundle.js",
-    "preinstall": "npm install webpack ",
+    "prod": "webpack --output-filename bundle.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

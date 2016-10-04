@@ -33,6 +33,13 @@ class ResourceService {
 		}
 		return this.$http.post(url + '/api/addDailyDefault',resource);
 	}
+	addDailyResource(resource) {
+		let promise = this.validateClientObject(resource);
+		if (promise) {
+			return promise;
+		}
+		return this.$http.post(url + '/api/addDailyResource',resource);
+	}
     getDailyDefaults(date, site){
 		return this.$http.get(url + '/api/getDailyDefaults',{
 			params:{
@@ -44,10 +51,11 @@ class ResourceService {
 	deleteDailyDefault(resourceId){
 		return this.$http.delete(url + '/api/deleteDailyDefault/' + resourceId);
 	}
-	getAllDailyResources(date){
+	getAllDailyResources(object){
 		return this.$http.get(url + '/api/getAllDailyResources',{
 			params:{
-				date:date
+				date:object.date,
+				sites: object.sites
 			}
 		});
 	}

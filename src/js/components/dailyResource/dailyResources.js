@@ -82,21 +82,20 @@ class DailyResourceCtrl {
         console.log('clear resource');
     }
     initSites() {
-        // this.sites = response.data;
         this.dailyResource.site = this.sites[0];
         this.dailyResource.site;
-        this.getAllDailyResources(this.resourcesDate);
+        this.getAllDailyResources();
     }
-    getSites() {
-        this.SiteService.getSites().then((response) => {
-            console.log('Site-component');
-            this.sites = response.data;
-            this.dailyResource.site = this.sites[0];
-            this.getAllDailyResources(this.resourcesDate);
-        }, (error) => {
-            console.log('Error retriving Sites');
-        });
-    }
+    // getSites() {
+    //     this.SiteService.getSites().then((response) => {
+    //         console.log('Site-component');
+    //         this.sites = response.data;
+    //         this.dailyResource.site = this.sites[0];
+    //         this.getAllDailyResources(this.resourcesDate);
+    //     }, (error) => {
+    //         console.log('Error retriving Sites');
+    //     });
+    // }
     findResourceLike(searchString) {
         let searchObject = {};
         searchObject.date = this.currentDate;
@@ -115,9 +114,13 @@ class DailyResourceCtrl {
             });
     }
     getAllDailyResources() {
-        let resourcesDate = this.dailyResource.date;
-        resourcesDate = this.formatDate(resourcesDate);
-        this.ResourceService.getAllDailyResources(resourcesDate)
+        let object = {};
+        object.date = this.formatDate(this.dailyResource.date);
+        object.sites = [];
+        _.mapValues(this.sites, function(o){
+            object.sites.push(o._id);
+        });
+        this.ResourceService.getAllDailyResources(object)
             .then((response) => {
                 console.log('resource-component');
                 this.resources = response.data;

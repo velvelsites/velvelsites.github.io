@@ -10,6 +10,9 @@
             <input type="password" placeholder="password" class="form-control" name="password" id="password" ng-model="$ctrl.user.password" required
             />
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary ladda-button" ladda="$ctrl.loading" data-style="expand-left">
+            <span class="ladda-label">Submit</span>
+            <span class="ladda-spinner"></span>
+        </button>
     </form>
 </div>

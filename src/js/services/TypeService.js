@@ -1,15 +1,29 @@
 let url = 'https://velvel-server.herokuapp.com';
 // let url = 'http://localhost:3001';
-@Inject('$http','$q')
+@Inject('$http', '$q')
 class TypeService {
 	constructor() {
+		// if (this.types === undefined) {
+		// 	this.getTypes();
+		// 	this.notifyObservers();
+		// }
+		this.observers = [];
+		this.types ={};
 	}
+	notifyObservers() {
+        _.forEach(this.observers, (callback) => {
+            callback();
+        });
+    };
+	registerUserUpdateCallback(callback) {
+        this.observers.push(callback);
+    }
 	addType(type) {
 		let promise = this.validateClientObject(type);
 		if (promise) {
 			return promise;
 		}
-		return this.$http.post(url + '/api/addType',type);
+		return this.$http.post(url + '/api/addType', type);
 
 	}
 	getType(id) {
@@ -17,15 +31,20 @@ class TypeService {
 		if (promise) {
 			return promise;
 		}
-		return this.$http.get(url + '/api/getType', {id:id});
+		return this.$http.get(url + '/api/getType', { id: id });
 	}
 	getTypes() {
-		return this.$http.get(url + '/api/getTypes');
+		let promise = this.$http.get(url + '/api/getTypes');
+		promise.then((res) => {
+			this.types = res.data;
+			this.notifyObservers();
+		});
+		return promise;
 	}
-	updateType(type){
-		return this.$http.put(url + '/api/updateType/' + type._id,type);
+	updateType(type) {
+		return this.$http.put(url + '/api/updateType/' + type._id, type);
 	}
-	deleteType(typeId){
+	deleteType(typeId) {
 		return this.$http.delete(url + '/api/deleteType/' + typeId);
 	}
 	validateClientObject(clientObject) {
@@ -36,12 +55,12 @@ class TypeService {
 		}
 		return null;
 	}
-	findTypeLike(searchObject){
+	findTypeLike(searchObject) {
 		return this.$http.get(url + '/api/findTypeLike', {
-        params: {
-            searchString:searchObject.searchString
-        }
-    });
+			params: {
+				searchString: searchObject.searchString
+			}
+		});
 	}
 }
 angular.module('velvel-app').service('TypeService', TypeService);

@@ -1,17 +1,32 @@
 let url = 'https://velvel-server.herokuapp.com';
 // let url = 'http://localhost:3001';
-@Inject('$http','$q')
+@Inject('$http', '$q')
 class SiteService {
 	constructor() {
+		// if (this.sites === undefined) {
+		// 	this.getSites();
+		// }
+		this.sites = {};
+		this.userSites = {};
+		this.observers = [];
 	}
-    addUserToSite(siteId, userId){
-        return this.$http.post(url + '/api/addUserToSite',{
+	notifyObservers() {
+        _.forEach(this.observers, (callback) => {
+            callback();
+        });
+    };
+	registerUserUpdateCallback(callback) {
+        this.observers.push(callback);
+    }
+    addUserToSite(siteId, userId) {
+        return this.$http.post(url + '/api/addUserToSite', {
             siteId: siteId,
             userId: userId
         });
     }
-	removeUserFromSite(userId, siteId){
-        return this.$http.post(url + '/api/removeUserFromSite',{
+	
+	removeUserFromSite(userId, siteId) {
+        return this.$http.post(url + '/api/removeUserFromSite', {
             siteId: siteId,
             userId: userId
         });
@@ -21,7 +36,7 @@ class SiteService {
 		if (promise) {
 			return promise;
 		}
-		return this.$http.post(url + '/api/addSite',site);
+		return this.$http.post(url + '/api/addSite', site);
 
 	}
 	getSite(id) {
@@ -29,18 +44,30 @@ class SiteService {
 		if (promise) {
 			return promise;
 		}
-		return this.$http.get(url + '/api/getSite', {id:id});
+		return this.$http.get(url + '/api/getSite', { id: id });
 	}
 	getSites() {
-		return this.$http.get(url + '/api/getSites');
+		let promise = this.$http.get(url + '/api/getSites');
+		promise.then(() => {
+			this.notifyObservers();
+		});
+		return promise;
 	}
-	getSiteUsers(siteId){
+	getUserSites(userId) {
+		let promise = this.$http.get(url + '/api/getUserSites/' + userId);
+		promise.then((res) => {
+			this.userSites = res.data;
+			this.notifyObservers();
+		});
+		return promise;
+	}
+	getSiteUsers(siteId) {
 		return this.$http.get(url + '/api/getSiteUsers/' + siteId);
 	}
-	updateSite(site){
-		return this.$http.put(url + '/api/updateSite/' + site._id,site);
+	updateSite(site) {
+		return this.$http.put(url + '/api/updateSite/' + site._id, site);
 	}
-	deleteSite(siteId){
+	deleteSite(siteId) {
 		return this.$http.delete(url + '/api/deleteSite/' + siteId);
 	}
 	validateClientObject(clientObject) {
@@ -51,12 +78,12 @@ class SiteService {
 		}
 		return null;
 	}
-	findSiteLike(searchObject){
+	findSiteLike(searchObject) {
 		return this.$http.get(url + '/api/findSiteLike', {
-        params: {
-            searchString:searchObject.searchString
-        }
-    });
+			params: {
+				searchString: searchObject.searchString
+			}
+		});
 	}
 }
 angular.module('velvel-app').service('SiteService', SiteService);

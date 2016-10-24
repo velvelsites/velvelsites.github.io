@@ -3,36 +3,44 @@ class SiteCtrl {
     constructor() {
         // this.getSites();
         this.getUsers();
-        AuthService.registerUserUpdateCallback(() => {
-            this.currentUser = AuthService.currentUser;
-            if (this.currentUser && this.currentUser._id) {
-                if (this.currentUser.role._id == '57d27d4313d468481b1fe12e') {// if is admin TODO
-                    this.SiteService.getSites().then((res) => {
-                        this.userSites = res.data;
-                    });
-                }
-                else {
-                    this.getUserSites();
-                }
-            }
+        this.SiteService.registerUserUpdateCallback(() => {
+            this.initSites();
         });
-        this.updateUser();
+        this.initSites();
+        // AuthService.registerUserUpdateCallback(() => {
+        //     this.currentUser = AuthService.currentUser;
+        //     if (this.currentUser && this.currentUser._id) {
+        //         if (this.currentUser.role._id == '57d27d4313d468481b1fe12e') {// if is admin TODO
+        //             this.SiteService.getSites().then((res) => {
+        //                 this.userSites = res.data;
+        //             });
+        //         }
+        //         else {
+        //             this.getUserSites();
+        //         }
+        //     }
+        // });
+        // this.updateUser();
     }
-    updateUser() {
-        this.currentUser = this.AuthService.currentUser
-        if (this.currentUser && this.currentUser._id) {
-            if (this.currentUser.role._id == '57d27d4313d468481b1fe12e') {// if is admin TODO
-                this.SiteService.getSites().then((res) => {
-                    this.userSites = res.data;
-                });
-            }
-            else {
-                this.UserService.getUserSites(this.currentUser._id).then((res) => {
-                    this.userSites = res.data;
-                });
-            }
-        }
+    initSites(){
+        this.userSites = this.SiteService.userSites;
+        this.selectedSite = this.userSites[0];
     }
+    // updateUser() {
+    //     this.currentUser = this.AuthService.currentUser
+    //     if (this.currentUser && this.currentUser._id) {
+    //         if (this.currentUser.role._id == '57d27d4313d468481b1fe12e') {// if is admin TODO
+    //             this.SiteService.getSites().then((res) => {
+    //                 this.userSites = res.data;
+    //             });
+    //         }
+    //         else {
+    //             this.UserService.getUserSites(this.currentUser._id).then((res) => {
+    //                 this.userSites = res.data;
+    //             });
+    //         }
+    //     }
+    // }
     addSite(isValid) {
         if (isValid) {
             this.SiteService.addSite(this.site).then((response) => {
@@ -78,6 +86,7 @@ class SiteCtrl {
         this.UserService.getUsers().then((response) => {
             console.log('User-component');
             this.users = response.data;
+            this.selectedUser = this.users[0];
         }, (error) => {
             console.log('Error retriving Users');
         });

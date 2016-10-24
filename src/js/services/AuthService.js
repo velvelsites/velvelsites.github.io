@@ -1,5 +1,5 @@
 import _ from 'lodash';
-@Inject('$q', '$http', 'UserService')
+@Inject('$q', '$http', 'UserService', 'SiteService', 'TypeService', 'ResourceService')
 class AuthService {
     constructor() {
         this.adminRoles = ['57d27d4313d468481b1fe12e'];
@@ -13,7 +13,7 @@ class AuthService {
         this.observers = [];
 
         this.API_ENDPOINT = {
-            url:'https://velvel-server.herokuapp.com/api'//'http://localhost:3001/api'
+            url: 'https://velvel-server.herokuapp.com/api'//'http://localhost:3001/api'
         };
         this.LOCAL_TOKEN_KEY = 'yourTokenKey';
         this.isAuthenticated = false;
@@ -46,7 +46,7 @@ class AuthService {
         return _.includes(this.adminRoles, this.currentUserRole);
     }
     validateEditorRole() {
-        return _.includes(this.editorRoles, this.currentUserRole) || validateReaderRole() ;
+        return _.includes(this.editorRoles, this.currentUserRole) || validateReaderRole();
     }
     validateReaderRole() {
         return _.includes(this.readerRoles, this.currentUserRole);
@@ -62,9 +62,8 @@ class AuthService {
             if (token) {
                 this.useCredentials(token);
                 this.UserService.getUser(userId).then((res) => {
-                this.currentUser = res.data;
-                this.notifyObservers();
-            });
+                    this.loadUser(res.data);
+                });
             }
         }
     }
@@ -102,15 +101,20 @@ class AuthService {
             });
         });
     };
-
+    loadUser(user) {
+        this.currentUser = user;
+        this.currentUserRole = user.role._id;
+        this.SiteService.getUserSites(user._id);
+        this.TypeService.getTypes();
+        // this.ResourceService.initUser(user);
+        this.notifyObservers();
+    }
     login(user) {
         return this.$q((resolve, reject) => {
             this.$http.post(this.API_ENDPOINT.url + '/authenticate', user).then((result) => {
                 if (result.data.success) {
                     this.storeUserCredentials(result.data);
-                    this.currentUser = result.data.user;
-                    this.currentUserRole = result.data.user.role._id;
-                    this.notifyObservers();
+                    this.loadUser(result.data.user);
                     resolve(result.data.msg);
                 } else {
                     alert('No go!');
@@ -124,8 +128,8 @@ class AuthService {
         this.destroyUserCredentials();
         this.notifyObservers();
     };
-    static AuthFactory($q, $http, UserService) {
-        return new AuthService($q, $http, UserService);
+    static AuthFactory($q, $http, UserService, SiteService,TypeService,ResourceService) {
+        return new AuthService($q, $http, UserService, SiteService,TypeService,ResourceService);
     }
 }
 angular.module('velvel-app').factory('AuthService', AuthService.AuthFactory);

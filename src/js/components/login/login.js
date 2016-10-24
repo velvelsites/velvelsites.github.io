@@ -1,10 +1,13 @@
 @Inject('$location', '$state', 'UserService', 'AuthService')
 class LoginCtrl {
     constructor() {
+        this.loading = false;
         this.isAdmin = false;// auth.isadmin...
     }
     login() {
+        this.loading = true;
         this.AuthService.login(this.user).then((response) => {
+            this.loading = false;
             this.$state.go('profile');
         }).catch((err) => {
         });

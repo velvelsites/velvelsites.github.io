@@ -122,6 +122,8 @@
     #page-content-wrapper {
         padding-left: 270px;
         padding-top:66px;
+        float:left;
+        margin-bottom:50px;
     }
 
     #wrapper.toggled #page-content-wrapper {
@@ -161,6 +163,10 @@ nav{
     background: #7c46cf;
 }
 @media (max-width:  488px) {
+    #page-content-wrapper {
+        float:left;
+        margin-bottom:10px;
+    }
     nav{  
         div{
             margin:0px;

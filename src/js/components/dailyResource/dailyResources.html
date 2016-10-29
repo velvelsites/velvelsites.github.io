@@ -16,27 +16,17 @@
                 <div class="form-group filter-panel-searchbox">
                     <input type="text" placeholder="כמות" class="form-control amount-field" ng-model="$ctrl.dailyResource.amount">
                 </div>
-                <!--<div class="form-group has-feedback filter-panel-searchbox col-xs-3-">
-                    <input type="text" class="form-control" 
-                    ng-model="$ctrl.dailyResource.resource" 
-                    ng-model-options="{debounce: 300}" 
-                    typeahead-on-select="$ctrl.setSelectedResource($item)"
-                        uib-typeahead="res.name for res in $ctrl.findResourceLike($viewValue)">
-                    <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
-                </div>-->
-                <div class="col-md-3- form-group">
-                    <div class="input-group">
-                        <input type="text" class="form-control" uib-datepicker-popup="{{$ctrl.format}}" ng-model="$ctrl.dailyResource.date" is-open="$ctrl.popupsOpen.addDate"
-                            ng-change="$ctrl.getAllDailyResources()" datepicker-options="$ctrl.selectedDateOptions" ng-click="$ctrl.openDate('addDate')"
-                            close-text="Close" data-datepicker-popup={{$ctrl.format}} />
-                        <span class="input-group-btn">
-                </span>
-                    </div>
+                <div>
+                    <input type="text" class="form-control" uib-datepicker-popup="{{$ctrl.format}}" ng-model="$ctrl.dailyResource.date" is-open="$ctrl.popupsOpen.addDate"
+                        ng-change="$ctrl.getAllDailyResources()" datepicker-options="$ctrl.selectedDateOptions" ng-click="$ctrl.openDate('addDate')"
+                        close-text="Close" data-datepicker-popup={{$ctrl.format}} />
+                    <span class="input-group-btn">
+                    </span>
                 </div>
                 <button type="submit" class="btn btn-primary">הוספה</button>
             </div>
         </form>
-        <div class="row">
+        <div class="row col-xs-12">
             <button type="submit" class="btn btn-primary" ng-click="$ctrl.addDefault()" ladda="$ctrl.loading" data-style="zoom-out">הוספת בסיס
             </button>
         </div>
@@ -67,12 +57,9 @@
 <div class="col-md-6 col-xs-12">
     <div class="card">
         <h2>הוספת סוג משאב</h2>
-    
         <form class="form-inline" name="typeForm" ng-submit="$ctrl.addType(typeForm.$valid)" novalidate>
-            <div class="form-group">
                 <label class="sr-only" for="name">Name:</label>
                 <input type="text" placeholder="שם" class="form-control" name="name" id="name" ng-model="$ctrl.type.name" required />
-            </div>
             <button type="submit" class="btn btn-primary" data-style="zoom-out" ladda="$ctrl.addingType">הוספה</button>
         </form>
     </div>

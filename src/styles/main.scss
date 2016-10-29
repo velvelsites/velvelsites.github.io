@@ -50,4 +50,114 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(63, 63, 68, 0.1);
     background-color: #FFFFFF;
     margin-bottom: 30px;
+    float: left;
+    width: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#wrapper {
+   background: #F5F5F5;
+        // font-family: OpenSansHebrewBold;
+    color: #59554e;
+}
+.input-group input, input, .form-control {
+    border: 2px solid #59554E;
+    border-radius: 0px;
+    background: transparent;
+}
+.btn {
+    background: #59554E;
+    border-radius: 0px;
+}
+.container {
+    margin-top: -31px;
+}
+.table{
+    margin-top:20px;
+    border: 2px solid #e2e2e2;
+}
+tr{
+    border:none;
+}
+thead{
+    border:none;
+}
+button .glyphicon {
+    color: white;
+}
+.input-group-btn:last-child > .btn, .input-group-btn:last-child > .btn-group {
+    margin-left: 0px;
+    padding: 7px 11px;
+}
+.form-inline .amount-field{
+    width:60px;
+}
+.horizontal-table > div > div, .horizontal-table  input{
+    display: inline-block;
+    width: 60px;
+    text-align: center;
+}
+.horizontal-table {
+    margin-top:20px;
+}
+.horizontal-table .button-holder{
+    color: #fff;
+    background: #59554e;
+    // display: inline-block;
+    // width: 100%;
+    padding: 4px;
+    border: 1px solid white;
+}
+.horizontal-table .button-holder > div{
+     display: inline-block;
+        padding: 0px 3px;
+        
+}
+.horizontal-table .header{
+    border: 1px solid black;
+}
+.horizontal-table .body{
+    border: 1px solid black;    
+}
+.horizontal-table .body  input[disabled] {
+    background:white;
+}
+.horizontal-table .body  input {
+    background: #D6BBDF;
+}
+.inverse {
+  background: #fff;
+  color: #59554e;
+}
+.horizontal-table h3{
+    margin-top: 0px;
+    margin-bottom: 5px;
+    font-size: 18px;
+}
+@media (max-width:  488px) {
+    .btn {
+        width: 100%;
+        margin-top: 15px;
+    }
+    .form-inline .amount-field {
+       width: 100%;
+    }
 }

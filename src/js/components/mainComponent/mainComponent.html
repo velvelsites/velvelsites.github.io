@@ -1,7 +1,9 @@
-
-<a ng-click="toggle.state = !toggle.state" class="navbar-brand"><span class="glyphicon glyphicon-list"></span></a>
-<toolbar></toolbar>
-<div id="page-content-wrapper" ng-class="{toggled:toggle.state}">
+<div id="menu">
+    <a ng-click="toggle.state = !toggle.state" class="navbar-brand"><span class="glyphicon glyphicon-list"></span></a>
+    <toolbar ng-class="{toggled:toggle.state}"></toolbar>
+</div>
+<div id="page-content-wrapper">
     <div class="ui-view">
     </div>
 </div>
+<!--ng-class="{toggled:toggle.state}"-->

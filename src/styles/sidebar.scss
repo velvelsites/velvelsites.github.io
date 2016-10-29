@@ -40,6 +40,7 @@
 #page-content-wrapper {
     padding: 15px;
     width: 100%;
+        background: rgba(203, 203, 210, 0.15);
 }
 
 #wrapper.toggled #page-content-wrapper {
@@ -117,7 +118,8 @@
     }
 
     #page-content-wrapper {
-        padding: 270px;
+        padding-left: 270px;
+        padding-top:66px;
     }
 
     #wrapper.toggled #page-content-wrapper {
@@ -129,16 +131,23 @@ nav{
     background: #7c46cf;
     padding:10px;
 }
-#menu{
-    position: fixed;
-    bottom:0px;
-    width:100%;
-}
+
 .navbar-brand, .navbar-brand:hover{
     color: #ffffff;
     float:right;
 }
-@media (max-width: 767px) {
+.navbar-brand{
+    display:none;
+}
+#menu{
+    position: fixed;
+    width:100%;
+    z-index: 4;
+}
+@media (max-width:  488px) {
+    #menu{
+        bottom:0px;
+    }
     #sidebar-wrapper{
         width:100%;
         height:0px;
@@ -146,9 +155,10 @@ nav{
         bottom:39px;
     }
     .navbar-brand{
-            padding: 7px 14px;
-    line-height: inherit;
-    height: inherit;
+        padding: 7px 14px;
+        line-height: inherit;
+        height: inherit;
+        display: block;
     }
     .toggled #sidebar-wrapper{
         height:40%;

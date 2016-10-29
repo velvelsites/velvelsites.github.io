@@ -1,9 +1,11 @@
 <nav>
-     ש.א.ג
+     <div type="button" ng-click="$ctrl.logout()">יציאה</div>
+     <div ng-bind="$ctrl.currentUser.name"></div>
+    <div ng-bind="$ctrl.currentUser.email"></div>
 </nav>
 <div id="sidebar-wrapper">
     <ul class="sidebar-nav">
-        <div class="sidebar-profile" ng-show="$ctrl.currentUser && !$ctrl.currentUser">
+        <!--<div class="sidebar-profile" ng-show="$ctrl.currentUser && !$ctrl.currentUser">
             <div class="profile-userpic">
                 <img src="http://www.palauoek.com/wp-content/uploads/2014/07/profile-default-male.png" class="img-responsive" alt="">
             </div>
@@ -17,36 +19,42 @@
                 <button type="button" class="btn btn-success btn-sm" ng-click="$ctrl.go('profile')">בית</button>
                 <button type="button" class="btn btn-danger btn-sm" ng-click="$ctrl.logout()">יציאה</button>
             </div>
-        </div>
-        <div class="profile-usermenu">
+        </div>-->
+        <div class="profile-usermenu" ng-show="$ctrl.currentUser">
                 <li>
-                    <a href="#">
-                        <i class="glyphicon glyphicon-home"></i> Overview </a>
+                    <span href="#" ng-click="$ctrl.go('profile')">
+                        <i class="glyphicon glyphicon-home" ></i> בית </span>
                 </li>
         </div>
-        <div ng-show="$ctrl.currentUser">
-            <span ng-bind="$ctrl.currentUser.name"></span>
-            <span ng-bind="$ctrl.currentUser.email"></span>
-        </div>
-        <li>
-            <a href="#" aria-label="Login" ng-click="$ctrl.login()" ng-show="!$ctrl.currentUser">כניסה</a>
+        <li ng-show="!$ctrl.currentUser">
+            <span href="#" aria-label="Login" ng-click="$ctrl.login()">
+                <i class="glyphicon glyphicon-home"></i>
+                כניסה</span>
         </li>
         <div ng-show="$ctrl.currentUser.role._id == '57d2805f13d468481b1fe130' ||
                   $ctrl.currentUser.role._id == '57d27d4313d468481b1fe12e'">
             <li>
-                <a href="#" ng-click="$ctrl.go('site')">אתרים</a>
+                <span href="#" ng-click="$ctrl.go('site')">
+                    <i class="glyphicon glyphicon-home"></i>
+                    אתרים</span>
             </li>
         </div>
         <div ng-show="$ctrl.currentUser.role._id == '57d27d4313d468481b1fe12e'">
 
             <li>
-                <a href="#" ng-click="$ctrl.go('user')">משתמשים</a>
+                <span href="#" ng-click="$ctrl.go('user')">
+                    <i class="glyphicon glyphicon-home"></i>
+                    משתמשים</span>
             </li>
             <li>
-                <a href="#" ng-click="$ctrl.go('role')">תפקידים</a>
+                <span href="#" ng-click="$ctrl.go('role')">
+                    <i class="glyphicon glyphicon-home"></i>
+                    תפקידים</span>
             </li>
             <li>
-                <a href="#" ng-click="$ctrl.go('type')">משאבים</a>
+                <span href="#" ng-click="$ctrl.go('type')">
+                    <i class="glyphicon glyphicon-home"></i>
+                    משאבים</span>
             </li>
         </div>
     </ul>

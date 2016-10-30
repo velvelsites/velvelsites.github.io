@@ -15,13 +15,11 @@
                 <div class="form-group filter-panel-searchbox">
                     <input type="text" placeholder="כמות" class="form-control amount-field" ng-model="$ctrl.dailyResource.amount">
                 </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" uib-datepicker-popup="{{$ctrl.format}}" ng-model="$ctrl.dailyResource.date" is-open="$ctrl.popupsOpen.addDate"
-                        ng-change="$ctrl.getAllDailyResources()" datepicker-options="$ctrl.selectedDateOptions" ng-click="$ctrl.openDate('addDate')"
-                        close-text="Close" data-datepicker-popup={{$ctrl.format}} />
-                    <span class="input-group-btn">
-                    </span>
-                </div>
+                <input type="text" class="form-control" uib-datepicker-popup="{{$ctrl.format}}" ng-model="$ctrl.dailyResource.date" is-open="$ctrl.popupsOpen.addDate"
+                    ng-change="$ctrl.getAllDailyResources()" datepicker-options="$ctrl.selectedDateOptions" ng-click="$ctrl.openDate('addDate')"
+                    close-text="Close" data-datepicker-popup={{$ctrl.format}} />
+                <span class="input-group-btn">
+                </span>
                 <button type="submit" class="btn btn-primary">הוספה</button>
         </form>
             <button type="submit" class="btn btn-primary" ng-click="$ctrl.addDefault()" ladda="$ctrl.loading" data-style="zoom-out">הוספת בסיס

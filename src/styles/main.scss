@@ -181,6 +181,9 @@ button .glyphicon {
 }
 @media (max-width:  488px) {
     .form-group {
+        input{
+            width:100%;
+        }
         width: 49%;
         margin-left: 1%;
         float: left;
@@ -188,6 +191,9 @@ button .glyphicon {
     .form-inline input{
             width: 50%;
             float: right;
+    }
+    .form-inline .form-group input{
+            width: 100%;
     }
     .btn {
         width: 100%;

@@ -20,7 +20,7 @@
 
 #sidebar-wrapper {
     position: fixed;
-    left: 250px;
+    right: 0px;
     z-index: 1000;
     overflow-y: auto;
     margin-left: -250px;
@@ -92,7 +92,14 @@
     font-size: 18px;
     line-height: 60px;
 }
-
+#company-logo{
+    background: #996EDB;
+    margin: 0;
+    padding: 11px 0px;
+    width: 250px;
+    text-align: center;
+    font-size: 27px;
+}
 .sidebar-nav > .sidebar-brand a {
     color: #999999;
 }
@@ -113,6 +120,7 @@
 
     #sidebar-wrapper {
         width: 250px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
     #wrapper.toggled #sidebar-wrapper {
@@ -120,8 +128,8 @@
     }
 
     #page-content-wrapper {
-        padding-left: 270px;
-        padding-top:66px;
+        padding-right: 270px;
+        padding-top:90px;
         float:left;
         margin-bottom:50px;
     }
@@ -144,17 +152,21 @@
     z-index: 4;
 }
 nav{
+    .action-wrapper{
+        direction: ltr;
+        float:left;
+    }
     direction:rtl;
     .btn:hover{
         color: #1DC7EA;
     }
-    div{
-            font-size: 16px;
-    color: #ffffff;
-    padding: 10px 15px;
-    margin: 8px 3px;
-    background: transparent;
-    display: inline-block;
+    .content{
+        font-size: 16px;
+        color: #ffffff;
+        padding: 10px 15px;
+        margin: 8px 3px;
+        background: transparent;
+        display: inline-block;
     }
     action-btn{
     cursor: pointer;
@@ -163,12 +175,15 @@ nav{
     background: #7c46cf;
 }
 @media (max-width:  488px) {
+    #company-logo{
+        display:none;
+    }
     #page-content-wrapper {
         float:left;
         margin-bottom:10px;
     }
-    nav{  
-        div{
+    nav{
+        .content{
             margin:0px;
         }
         padding:0px;

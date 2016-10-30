@@ -23,8 +23,11 @@ class SiteCtrl {
         // this.updateUser();
     }
     initSites(){
-        this.userSites = this.SiteService.userSites;
-        this.selectedSite = this.userSites[0];
+        if(this.SiteService.userSites.length){
+            this.userSites = this.SiteService.userSites;
+            this.selectedSite = this.userSites[0];
+            this.getSiteUsers(this.selectedSite._id);
+        }
     }
     // updateUser() {
     //     this.currentUser = this.AuthService.currentUser

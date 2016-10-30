@@ -3,7 +3,6 @@
     <div class="card">
         <h2>משאבי אתר</h2>
         <form class="form-inline" name="resourceForm" ng-submit="$ctrl.addDailyResource(resourceForm.$valid)" novalidate>
-            <div class="row col-xs-12">
                 <div class="form-group col-xs-3-">
                     <label class="sr-only" for="site">site:</label>
                     <select class="form-control" name="site" id="site" ng-model="$ctrl.dailyResource.site" ng-change="$ctrl.getAllDailyResources()"
@@ -16,7 +15,7 @@
                 <div class="form-group filter-panel-searchbox">
                     <input type="text" placeholder="כמות" class="form-control amount-field" ng-model="$ctrl.dailyResource.amount">
                 </div>
-                <div>
+                <div class="form-group">
                     <input type="text" class="form-control" uib-datepicker-popup="{{$ctrl.format}}" ng-model="$ctrl.dailyResource.date" is-open="$ctrl.popupsOpen.addDate"
                         ng-change="$ctrl.getAllDailyResources()" datepicker-options="$ctrl.selectedDateOptions" ng-click="$ctrl.openDate('addDate')"
                         close-text="Close" data-datepicker-popup={{$ctrl.format}} />
@@ -24,12 +23,9 @@
                     </span>
                 </div>
                 <button type="submit" class="btn btn-primary">הוספה</button>
-            </div>
         </form>
-        <div class="row col-xs-12">
             <button type="submit" class="btn btn-primary" ng-click="$ctrl.addDefault()" ladda="$ctrl.loading" data-style="zoom-out">הוספת בסיס
             </button>
-        </div>
     </div>
 </div>
 
@@ -54,7 +50,7 @@
         </div>
     </div>
 </div>
-<div class="col-md-6 col-xs-12">
+<div class="col-xs-12">
     <div class="card">
         <h2>הוספת סוג משאב</h2>
         <form class="form-inline" name="typeForm" ng-submit="$ctrl.addType(typeForm.$valid)" novalidate>

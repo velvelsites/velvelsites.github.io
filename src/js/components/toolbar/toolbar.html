@@ -1,7 +1,12 @@
 <nav>
-     <div type="button" ng-click="$ctrl.logout()">יציאה</div>
-     <div ng-bind="$ctrl.currentUser.name"></div>
-    <div ng-bind="$ctrl.currentUser.email"></div>
+    <div class="content" id="company-logo">
+        ש.א.ג
+    </div>
+    <div class="action-wrapper">
+        <div class="content" type="button" ng-click="$ctrl.logout()">יציאה</div>
+        <div class="content" ng-bind="$ctrl.currentUser.name"></div>
+        <div class="content" ng-bind="$ctrl.currentUser.email"></div>
+    </div>
 </nav>
 <div id="sidebar-wrapper">
     <ul class="sidebar-nav">
@@ -21,10 +26,10 @@
             </div>
         </div>-->
         <div class="profile-usermenu" ng-show="$ctrl.currentUser">
-                <li>
-                    <span href="#" ng-click="$ctrl.go('profile')">
+            <li>
+                <span href="#" ng-click="$ctrl.go('profile')">
                         <i class="glyphicon glyphicon-home" ></i> בית </span>
-                </li>
+            </li>
         </div>
         <li ng-show="!$ctrl.currentUser">
             <span href="#" aria-label="Login" ng-click="$ctrl.login()">

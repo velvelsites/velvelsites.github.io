@@ -4,9 +4,10 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 // $fa-font-path: '~font-awesome/fonts/';
 // @import '~font-awesome/scss/font-awesome.scss';
 
-// html {
-//   font-size: 16px;
-// }
+html {
+  font-size: 16px;
+  direction:rtl;
+}
 // button[disabled], html input[disabled] {
 //     background: transparent;
 //     border-color: transparent;
@@ -40,6 +41,10 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 //         vertical-align: middle;
 //     }
 // }
+// .card button{
+//     width:49%;
+//     margin-right:1%;
+// }
 .card {
     h2{
         padding-top:0px;
@@ -54,6 +59,16 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
     width: 100%;
 }
 
+.form-control {
+    background-color: #FFFFFF;
+    border: 1px solid #E3E3E3;
+    border-radius: 4px;
+    color: #565656;
+    padding: 8px 12px;
+    height: 40px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
 
 
 
@@ -70,6 +85,9 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 
 
 
+.bottom-gap{
+        margin-bottom: 10px;
+}
 
 
 
@@ -82,16 +100,21 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
     border: 2px solid #59554E;
     border-radius: 0px;
     background: transparent;
+        border: 1px solid #E3E3E3;
+    border-radius: 3px;
 }
 .btn {
-    background: #59554E;
-    border-radius: 0px;
+    background: #D9CFCE;
+    border-radius: 3px;
+    border: 1px solid #C4A6C2;
+    border: 1px solid #E3E3E3;
+    padding:10px;
 }
 .container {
     margin-top: -31px;
 }
 .table{
-    margin-top:20px;
+    // margin-top:20px;
     border: 2px solid #e2e2e2;
 }
 tr{
@@ -114,17 +137,18 @@ button .glyphicon {
     display: inline-block;
     width: 60px;
     text-align: center;
+    margin-left:10px;
 }
-.horizontal-table {
-    margin-top:20px;
-}
+// .horizontal-table {
+//     margin-top:20px;
+// }
 .horizontal-table .button-holder{
     color: #fff;
     background: #59554e;
     // display: inline-block;
     // width: 100%;
     padding: 4px;
-    border: 1px solid white;
+    // border: 1px solid white;
 }
 .horizontal-table .button-holder > div{
      display: inline-block;
@@ -132,7 +156,8 @@ button .glyphicon {
         
 }
 .horizontal-table .header{
-    border: 1px solid black;
+    // border: 1px solid black;
+    margin-top: 10px;
 }
 .horizontal-table .body{
     border: 1px solid black;    
@@ -149,10 +174,18 @@ button .glyphicon {
 }
 .horizontal-table h3{
     margin-top: 0px;
-    margin-bottom: 5px;
+    margin-bottom: 0px;
     font-size: 18px;
 }
 @media (max-width:  488px) {
+    .form-group {
+        width: 49%;
+        margin-left: 1%;
+        float: left;
+    }
+    .form-inline input{
+            width: 50%;
+    }
     .btn {
         width: 100%;
         margin-top: 15px;

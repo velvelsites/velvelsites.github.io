@@ -7,6 +7,7 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 html {
   font-size: 16px;
   direction:rtl;
+    background: rgba(203, 203, 210, 0.15);
 }
 // button[disabled], html input[disabled] {
 //     background: transparent;
@@ -144,7 +145,7 @@ button .glyphicon {
 // }
 .horizontal-table .button-holder{
     color: #fff;
-    background: #59554e;
+    background: #D9CFCE;
     // display: inline-block;
     // width: 100%;
     padding: 4px;
@@ -152,21 +153,22 @@ button .glyphicon {
 }
 .horizontal-table .button-holder > div{
      display: inline-block;
-        padding: 0px 3px;
+        padding: 5px 5px;
         
 }
 .horizontal-table .header{
     // border: 1px solid black;
     margin-top: 10px;
 }
-.horizontal-table .body{
-    border: 1px solid black;    
-}
+// .horizontal-table .body{
+//     border: 1px solid black;    
+// }
 .horizontal-table .body  input[disabled] {
     background:white;
 }
 .horizontal-table .body  input {
     background: #D6BBDF;
+    padding: 5px;
 }
 .inverse {
   background: #fff;
@@ -194,4 +196,50 @@ button .glyphicon {
     .form-inline .amount-field {
        width: 100%;
     }
+}
+#login-form{
+    button {
+        position: absolute;
+        left: -7px;
+        top: 40%;
+        background: #ffffff;
+        color: #999999;
+        padding: 11px 0;
+        width: 50px;
+        height: 50px;
+        margin-top: -25px;
+        border: 5px solid #efefef;
+        border-radius: 50%;
+        transition: all ease-in-out 500ms;
+        .glyphicon, .fa{
+            color: #F0F0F2;
+        }
+    }
+    .form-group {
+        width:initial;
+        float:none;
+        margin-bottom: 0;
+        border-bottom: 2px solid #efefef;
+        padding-right: 20px;
+        position: relative;
+        .form-control {
+            width:initial;
+            float:none;
+            border: 0;
+            box-shadow: 0 0 0;
+            border-radius: 0;
+            background: transparent;
+            color: #555555;
+            padding: 7px 0;
+            font-weight: bold;
+            height: auto;
+        }
+    }
+    background: #ffffff;
+    color: #999999;
+    border-radius: 8px;
+    padding: 10px 20px;
+}
+.col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12 {
+    float: right;
 }

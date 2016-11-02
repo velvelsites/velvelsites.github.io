@@ -129,6 +129,10 @@ class DailyResourceCtrl {
                 console.log('resource-component');
                 this.resources = response.data;
                 this.grouped = _.groupBy(this.resources, 'site._id');
+                _.forEach(this.grouped,(item)=>{
+                    let all = _.sumBy(item, function(o) { return o.amount; });
+                    item.push({resourceType:{name:'סך הכל'},amount:all});
+                });
                 let dummy;
             }, (error) => {
                 console.log('Error retriving resources');

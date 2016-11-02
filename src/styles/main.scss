@@ -140,6 +140,16 @@ button .glyphicon {
     text-align: center;
     margin-left:10px;
 }
+.horizontal-table > div > .sum-row{
+    display: block;
+    width:100%;
+    margin-top: 10px;
+    float:right;
+    span{
+        display: inline-block;
+        float: right;
+    }
+}
 // .horizontal-table {
 //     margin-top:20px;
 // }
@@ -203,6 +213,7 @@ button .glyphicon {
        width: 100%;
     }
 }
+
 #login-form{
     button {
         position: absolute;

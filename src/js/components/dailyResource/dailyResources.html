@@ -33,11 +33,19 @@
     <div class="horizontal-table col-xs-12">
         <div class="card">
             <h3 ng-bind="currentSite[0].site.name"></h3>
-            <div ng-repeat="item in currentSite">
+            <div ng-repeat="item in currentSite.resources">
                 <div ng-bind="item.resourceType.name" class="header"></div>
                 <div class="body">
-                    <div><input type="text" ng-disabled="!$ctrl.editDisabled[item._id]" ng-model="item.amount"></div>
                     <div class="button-holder">
+                        <div ng-click="$ctrl.increaceDailyResource(item)">
+                            <i class="glyphicon glyphicon glyphicon-plus"></i>
+                        </div>
+                        <div ng-click="$ctrl.decreaseDailyResource(item)">
+                            <i class="glyphicon glyphicon-minus"></i>
+                        </div>
+                    </div>
+                    <div><input type="text" ng-disabled="!$ctrl.editDisabled[item._id]" ng-model="item.amount"></div>
+                    <div class="button-holder" ng-show="!item.sum">
                         <div ng-click="$ctrl.editField(item)" ng-class="{'inverse':$ctrl.editDisabled[item._id]}">
                             <i class="glyphicon glyphicon glyphicon-edit"></i>
                         </div>
@@ -46,6 +54,9 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="sum-row">
+                <span>סך הכל:</span><span ng-bind="currentSite.total"></span>
             </div>
         </div>
     </div>

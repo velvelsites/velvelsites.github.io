@@ -11,17 +11,17 @@ class DailyResourceCtrl {
             this.initSites();
         });
         this.TypeService.registerUserUpdateCallback(() => {
-            this.initResources(); 
+            this.initResources();
         });
         this.initSites();
-        this.initResources(); 
+        this.initResources();
         this.initDates();
     }
-    initResources(){
+    initResources() {
         this.resourceTypes = this.TypeService.types;
         this.dailyResource.resourceType = this.resourceTypes[0];
     }
-    initSites(){
+    initSites() {
         this.sites = this.SiteService.userSites;
         this.dailyResource.site = this.sites[0];
         this.getAllDailyResources();
@@ -81,18 +81,37 @@ class DailyResourceCtrl {
             });
         }
     }
+    sumSiteResources(siteId) {
+
+    }
     editField(item) {
         if (this.editDisabled[item._id] === true) {
             this.updateDailyResource(item);
         }
         this.editDisabled[item._id] = !this.editDisabled[item._id];
     }
-    updateDailyResource(resource) {
+     updateDailyResource(resource) {
         this.ResourceService.updateDailyResource(resource)
             .then((res) => {
                 this.editDisabled[resource._id] = false;
             });
-
+    }
+    increaceDailyResource(resource) {
+        resource.amount += 1;
+        this.ResourceService.updateDailyResource(resource)
+            .then((res) => {
+                this.addAllResourceSum();
+                // resource.amount += 1;
+            });
+    }
+    decreaseDailyResource(resource) {
+        this.ResourceService.updateDailyResource(resource)
+        resource.amount -= 1;
+        this.ResourceService.updateDailyResource(resource)
+            .then((res) => {
+                this.addAllResourceSum();
+                // resource.amount -= 1;
+            });
     }
     formatDate(date) {
         return this.moment(date).format('YYYY-MM-DD');
@@ -115,28 +134,38 @@ class DailyResourceCtrl {
             });
     }
     getAllDailyResources() {
-        if(!this.sites || this.sites.length < 1){
+        if (!this.sites || this.sites.length < 1) {
             return;
         }
         let object = {};
         object.date = this.formatDate(this.dailyResource.date);
         object.sites = [];
-        _.mapValues(this.sites, function(o){
+        _.mapValues(this.sites, function (o) {
             object.sites.push(o._id);
         });
         this.ResourceService.getAllDailyResources(object)
             .then((response) => {
                 console.log('resource-component');
                 this.resources = response.data;
-                this.grouped = _.groupBy(this.resources, 'site._id');
-                _.forEach(this.grouped,(item)=>{
-                    let all = _.sumBy(item, function(o) { return o.amount; });
-                    item.push({resourceType:{name:'סך הכל'},amount:all});
-                });
+                this.addAllResourceSum();
                 let dummy;
             }, (error) => {
                 console.log('Error retriving resources');
             });
+    }
+    addAllResourceSum() {
+        this.arrayGroup = _.groupBy(this.resources, 'site._id');
+        this.grouped = [];
+        _.forEach(this.arrayGroup, (key,value)=>{
+            let all = _.sumBy(key, function (o) { return o.amount; });
+            this.grouped.push({resources:key,total:all});
+        })
+        // _.forEach(this.grouped, (item) => {
+        //     let all = _.sumBy(item, function (o) { return o.amount; });
+        //     let sumResources = _.find(item, function (o) { return o.resourceType.id == -1 });
+        //     sumResources = { resourceType: { name: 'סך הכל' }, amount: all,sum:1 };
+        //     item.push(sumResources);    
+        // });
     }
     getDailyResources() {
         if (this.dailyResource.site) {

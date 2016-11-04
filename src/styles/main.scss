@@ -8,6 +8,8 @@ html {
   font-size: 16px;
   direction:rtl;
     background: rgba(203, 203, 210, 0.15);
+    font-weight:500;
+    color:black;
 }
 // button[disabled], html input[disabled] {
 //     background: transparent;
@@ -111,6 +113,15 @@ html {
     border: 1px solid #C4A6C2;
     border: 1px solid #E3E3E3;
     padding:10px;
+        background: #685582;
+    font-weight: 600;
+}
+.horizontal-table .button-holder{
+    color: #fff;
+    background: #D9CFCE;
+    padding: 4px;
+    background: #685582;
+    font-weight: 600;
 }
 .container {
     margin-top: -31px;
@@ -153,17 +164,7 @@ button .glyphicon {
         float: right;
     }
 }
-// .horizontal-table {
-//     margin-top:20px;
-// }
-.horizontal-table .button-holder{
-    color: #fff;
-    background: #D9CFCE;
-    // display: inline-block;
-    // width: 100%;
-    padding: 4px;
-    // border: 1px solid white;
-}
+
 .horizontal-table .button-holder > div{
      display: inline-block;
         padding: 5px 5px;

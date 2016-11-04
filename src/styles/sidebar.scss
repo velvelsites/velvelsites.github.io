@@ -38,7 +38,7 @@
 }
 
 #page-content-wrapper {
-    padding: 15px;
+    padding: 0px;
     width: 100%;
         background: rgba(203, 203, 210, 0.15);
 }
@@ -175,12 +175,23 @@ nav{
     background: #7c46cf;
 }
 @media (max-width:  488px) {
+    .card {
+        margin-bottom: 5px;
+        margin-top: 5px;
+    }
+    .col-xs-12{
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+    .card {
+        padding: 10px;
+    }
     #company-logo{
         display:none;
     }
     #page-content-wrapper {
         float:left;
-        margin-bottom:10px;
+        margin-bottom:50px;
     }
     nav{
         .content{

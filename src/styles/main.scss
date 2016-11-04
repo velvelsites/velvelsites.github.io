@@ -55,7 +55,8 @@ html {
     border-radius: 4px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(63, 63, 68, 0.1);
     background-color: #FFFFFF;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
+    margin-top: 15px;
     float: left;
     width: 100%;
 }
@@ -145,6 +146,8 @@ button .glyphicon {
     width:100%;
     margin-top: 10px;
     float:right;
+    font-size: 16px;
+    font-weight: 600;
     span{
         display: inline-block;
         float: right;

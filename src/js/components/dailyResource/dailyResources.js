@@ -158,14 +158,8 @@ class DailyResourceCtrl {
         this.grouped = [];
         _.forEach(this.arrayGroup, (key,value)=>{
             let all = _.sumBy(key, function (o) { return o.amount; });
-            this.grouped.push({resources:key,total:all});
-        })
-        // _.forEach(this.grouped, (item) => {
-        //     let all = _.sumBy(item, function (o) { return o.amount; });
-        //     let sumResources = _.find(item, function (o) { return o.resourceType.id == -1 });
-        //     sumResources = { resourceType: { name: 'סך הכל' }, amount: all,sum:1 };
-        //     item.push(sumResources);    
-        // });
+            this.grouped.push({resources:key,total:all,siteName:key[0].site.name});
+        });
     }
     getDailyResources() {
         if (this.dailyResource.site) {
@@ -175,8 +169,6 @@ class DailyResourceCtrl {
                 .then((response) => {
                     console.log('resource-component');
                     this.resources = response.data;
-                    // this.grouped = _.groupBy(this.resources,'resourceType.name');
-                    //    let dummy;
                 }, (error) => {
                     console.log('Error retriving resources');
                 });

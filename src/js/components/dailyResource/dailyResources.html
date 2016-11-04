@@ -32,7 +32,7 @@
 <div ng-repeat="currentSite in $ctrl.grouped">
     <div class="horizontal-table col-xs-12">
         <div class="card">
-            <h3 ng-bind="currentSite[0].site.name"></h3>
+            <h3 ng-bind="currentSite.siteName"></h3>
             <div ng-repeat="item in currentSite.resources">
                 <div ng-bind="item.resourceType.name" class="header"></div>
                 <div class="body">

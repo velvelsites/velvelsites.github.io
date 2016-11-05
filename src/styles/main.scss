@@ -105,10 +105,9 @@ select{
     color: #59554e;
 }
 .input-group input, input, .form-control {
-    border: 2px solid #59554E;
     border-radius: 0px;
     background: transparent;
-        border: 1px solid #E3E3E3;
+        border:none;
     border-radius: 3px;
 }
 .btn {
@@ -255,7 +254,7 @@ button .glyphicon {
   color: #59554e;
 }
 .comment-wrapper h3{
-    
+
 }
 .horizontal-table h3{
     margin-top: 0px;
@@ -275,7 +274,7 @@ button .glyphicon {
         float: left;
     }
     .form-inline input{
-            width: 50%;
+            /*width: 50%;*/
             float: right;
     }
     .form-inline .form-group input{
@@ -336,3 +335,10 @@ button .glyphicon {
 .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12 {
     float: right;
 }
+table{
+        background-color: #4f6fad;
+                background-image: linear-gradient(to right, #ee9cb4, #4f6fad);
+        tbody{
+                background-color: #f5f5f5;
+        }
+    }

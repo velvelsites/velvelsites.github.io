@@ -10,6 +10,11 @@ html {
     background: rgba(203, 203, 210, 0.15);
     font-weight:500;
     color:black;
+    direction:rtl;
+}
+input, html input[disabled] {
+    font-weight:600;
+    color:black;
 }
 select{
     border: 2px solid #685582!important;
@@ -104,10 +109,13 @@ select{
         // font-family: OpenSansHebrewBold;
     color: #59554e;
 }
+table .input-group input, table input,table .form-control {
+    border:none;
+}
 .input-group input, input, .form-control {
     border-radius: 0px;
     background: transparent;
-        border:none;
+    border: 1px solid #E3E3E3;
     border-radius: 3px;
 }
 .btn {
@@ -130,6 +138,9 @@ select{
 } 
 .container {
     margin-top: -31px;
+}
+table th{
+ text-align:right;   
 }
 .table{
     // margin-top:20px;
@@ -157,6 +168,7 @@ button .glyphicon {
     text-align: center;
     margin-left:10px;
 }
+
 .comment-wrapper{
     border-top: 1px solid lightgray;
     display: block;

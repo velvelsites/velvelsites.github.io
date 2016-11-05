@@ -21,7 +21,7 @@
     <table class="table table-striped table-inverse">
         <thead>
             <tr>
-                <th>#</th>
+                <!--<th>#</th>-->
                 <th>Name</th>
                 <th>Id</th>
                 <th>Type</th>
@@ -31,7 +31,7 @@
         </thead>
         <tbody>
             <tr ng-repeat="resource in $ctrl.resources">
-                <th scope="row" ng-bind="$index+1"></th>
+                <!--<th scope="row" ng-bind="$index+1"></th>-->
                 <td ><input type="text" 
                             ng-disabled="!$ctrl.editDisabled[resource._id]"
                             ng-model="resource.name"></td>

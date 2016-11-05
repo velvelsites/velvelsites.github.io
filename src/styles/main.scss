@@ -11,6 +11,10 @@ html {
     font-weight:500;
     color:black;
 }
+select{
+    border: 2px solid #685582!important;
+    -webkit-appearance: menulist;
+}
 // button[disabled], html input[disabled] {
 //     background: transparent;
 //     border-color: transparent;

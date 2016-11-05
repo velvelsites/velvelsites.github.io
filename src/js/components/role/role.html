@@ -2,10 +2,7 @@
 <div class="col-xs-12">
     <div class="card">
         <form class="form-inline bottom-gap" name="roleForm" ng-submit="$ctrl.addRole(roleForm.$valid)" novalidate>
-            <div class="form-group">
-                <label class="sr-only" for="name">שם:</label>
-                <input type="text" placeholder="שם" class="form-control" name="name" id="name" ng-model="$ctrl.role.name" required />
-            </div>
+            <input type="text" placeholder="שם" class="form-control" name="name" id="name" ng-model="$ctrl.role.name" required />
             <button type="submit" class="btn btn-primary" data-style="zoom-out" ladda="$ctrl.addingRole">הוספה</button>
         </form>
         <div class="content table-responsive table-full-width">

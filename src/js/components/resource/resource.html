@@ -1,19 +1,10 @@
 <h2>Resources</h2>
 <div class="col-xs-12">
     <form class="form-inline" name="resourceForm" ng-submit="$ctrl.addResource(resourceForm.$valid)" novalidate>
-        <div class="form-group">
-            <label class="sr-only" or="id">id:</label>
             <input type="text" class="form-control" placeholder="Id" name="id" id="id" ng-model="$ctrl.resource.id" required />
-        </div>
-        <div class="form-group">
-            <label class="sr-only" for="name">Name:</label>
             <input type="text" placeholder="Name" class="form-control" name="name" id="name" ng-model="$ctrl.resource.name" required
             />
-        </div>
-         <div class="form-group">
-            <label class="sr-only" for="type">Type:</label>
             <select class="form-control" name="type" id="type" ng-model="$ctrl.resource.type._id" ng-options="type._id as type.name for type in $ctrl.types"></select>
-        </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>

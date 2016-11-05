@@ -194,10 +194,15 @@ button .glyphicon {
 @media (max-width:  488px) {
     .comment-wrapper{
         form{
-            width:100%;
+            width: 100%;
             margin-bottom: 15px;
+            background: #b0b0b0;
+            padding: 10px;
             .divider{
                 display:none;
+            }
+            textarea{
+                background:#ffffff;
             }
         }
         .table-responsive > .table > thead > tr > th,
@@ -249,10 +254,16 @@ button .glyphicon {
   background: #fff;
   color: #59554e;
 }
+.comment-wrapper h3{
+
+}
 .horizontal-table h3{
     margin-top: 0px;
     margin-bottom: 0px;
-    font-size: 18px;
+    padding-bottom: 5px;
+    font-size: 20px;
+    text-align: center;
+    border-bottom: 1px solid #A988B1;
 }
 @media (max-width:  488px) {
     .form-group {

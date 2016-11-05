@@ -58,13 +58,14 @@
                 <span>סך הכל:</span><span ng-bind="currentSite.total"></span>
             </div>
             <div class="comment-wrapper">
+                <h3>הערות</h3>
                 <form class="" name="commentForm" ng-submit="$ctrl.addDailyComment(currentSite.siteId)" novalidate>
                     <input type="hidden"    ng-model="$ctrl.dailyComments[currentSite.siteId].site._id"
                                             value="{{currentSite.siteId}}"
                                             ng-init="$ctrl.dailyComments[currentSite.siteId].site._id=currentSite.siteId"
                     />
                     <div class="form-group filter-panel-searchbox">
-                        <textarea   type="text" placeholder="הערה" class="form-control amount-field"
+                        <textarea   type="text" placeholder="הוספת הערה" class="form-control amount-field"
                                     ng-model="$ctrl.dailyComments[currentSite.siteId].text">
                         </textarea>
                     </div>

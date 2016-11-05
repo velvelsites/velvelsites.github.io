@@ -12,12 +12,14 @@ class ToolbarCtrl {
         this.$state.go('login');
     }
     go(tab) {
+        this.toggle = !this.toggle; 
         this.$state.go(tab, this.$state.params);
     }
 }
 angular.module('velvel-app').component('toolbar', {
     template: require('./toolbar.html'),
     bindings: {
+        toggle: '='
     },
     controller: ToolbarCtrl
 });

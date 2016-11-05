@@ -3,9 +3,6 @@ class ToolbarCtrl {
     constructor() {
         AuthService.registerUserUpdateCallback(() => {
             this.currentUser = AuthService.currentUser;
-            // if (this.currentUser && this.currentUser._id) {
-            //     this.SiteService.getUserSites(this.currentUser._id);
-            // }
         });
     }
     login() {

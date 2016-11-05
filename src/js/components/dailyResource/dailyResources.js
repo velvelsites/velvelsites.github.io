@@ -1,6 +1,6 @@
 import moment from 'moment-timezone';
 let DATE_FORMAT = 'yyyy-MM-dd';
-@Inject('ResourceService', 'SiteService', '$scope', 'TypeService')
+@Inject('ResourceService', 'SiteService', '$scope', 'TypeService','CommentService','AuthService', '$q')
 class DailyResourceCtrl {
     constructor() {
         this.dailyResource = {};
@@ -12,6 +12,9 @@ class DailyResourceCtrl {
         });
         this.TypeService.registerUserUpdateCallback(() => {
             this.initResources();
+        });
+        AuthService.registerUserUpdateCallback(() => {
+            this.currentUser = AuthService.currentUser;
         });
         this.initSites();
         this.initResources();
@@ -76,8 +79,21 @@ class DailyResourceCtrl {
         if (isValid) {
             let dailyResource = Object.assign({}, this.dailyResource);
             dailyResource.date = this.formatDate(dailyResource.date);
+            dailyResource.site = {};            
+            dailyResource.site._id = this.dailyResource.site._id;
             this.ResourceService.addDailyResource(dailyResource).then((response) => {
                 this.getAllDailyResources();
+            });
+        }
+    }
+    addDailyComment(siteId) {
+        if (this.dailyComments[siteId].site._id && this.dailyComments[siteId].text) {
+            let dailyComment = Object.assign({}, this.dailyComments[siteId]);
+            dailyComment.user = {};
+            dailyComment.user._id = this.currentUser._id;
+            dailyComment.date = this.formatDate(dailyComment.date);
+            this.CommentService.addDailyComment(dailyComment).then((res) => {
+                    this.getAllDailyResources();
             });
         }
     }
@@ -133,8 +149,14 @@ class DailyResourceCtrl {
                 this.getAllDailyResources();
             });
     }
+    deleteDailyComment(dailyCommentId) {
+        this.CommentService.deleteDailyComment(dailyCommentId)
+            .then((res) => {
+                this.getAllDailyResources();
+            });
+    }
     getAllDailyResources() {
-        if (!this.sites || this.sites.length < 1) {
+        if (!this.sites || this.sites.length === undefined || this.sites.length < 1) {
             return;
         }
         let object = {};
@@ -143,22 +165,32 @@ class DailyResourceCtrl {
         _.mapValues(this.sites, function (o) {
             object.sites.push(o._id);
         });
-        this.ResourceService.getAllDailyResources(object)
-            .then((response) => {
-                console.log('resource-component');
-                this.resources = response.data;
+        let resourceCall = this.ResourceService.getAllDailyResources(object);
+        let commentCall = this.CommentService.getAllDailyComments(object);
+
+        this.$q.all([resourceCall, commentCall])
+            .then((resArray)=> {
+                this.resources = resArray[0].data;
+                this.comments = resArray[1].data;
                 this.addAllResourceSum();
-                let dummy;
-            }, (error) => {
-                console.log('Error retriving resources');
-            });
+            }).catch((response)=> {
+                console.log('Failed to retrive daily data');
+            }).finally(() => {                
+                
+            })
+        
     }
     addAllResourceSum() {
         this.arrayGroup = _.groupBy(this.resources, 'site._id');
         this.grouped = [];
         _.forEach(this.arrayGroup, (key,value)=>{
             let all = _.sumBy(key, function (o) { return o.amount; });
-            this.grouped.push({resources:key,total:all,siteName:key[0].site.name});
+            this.grouped.push({
+                resources:key,
+                comments:_.filter(this.comments, function(o) { return o.site._id === key[0].site._id }),
+                total:all,
+                siteName:key[0].site.name,
+                siteId:key[0].site._id});
         });
     }
     getDailyResources() {

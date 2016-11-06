@@ -63,7 +63,7 @@ class UserCtrl {
         this.RoleService.getRoles().then((response) => {
             console.log('User-component');
             this.roles = response.data;
-            this.selectedRole = this.roles[0];
+            this.user.role = this.roles[0];
         }, (error) => {
             console.log('Error retriving Roles');
         });

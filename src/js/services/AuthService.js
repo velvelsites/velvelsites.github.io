@@ -5,9 +5,9 @@ class AuthService {
         this.adminRoles = ['57d27d4313d468481b1fe12e'];
         this.editorRoles = ['57d2805f13d468481b1fe130', '57d27d4313d468481b1fe12e'];
         this.readerRoles = ['57d2837a13d468481b1fe133', '57d27d4313d468481b1fe12e', '57d2805f13d468481b1fe130'];
-        this.adminRoutes = ['role', 'type', 'user'];
+        this.adminRoutes = ['role', 'user'];
         this.editRoutes = ['site', 'user'];
-        this.readerRoutes = ['profile'];
+        this.readerRoutes = ['profile', 'type'];
         this.currentUserRole = 'None';
         this.currentUser = {};
         this.observers = [];

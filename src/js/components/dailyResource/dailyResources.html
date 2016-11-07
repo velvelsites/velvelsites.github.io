@@ -28,7 +28,15 @@
             </button>
     </div>
 </div>
-
+<div class="col-xs-12"  ng-show="$ctrl.currentUser.role._id == '57d27d4313d468481b1fe12e'">
+    <div class="form-group">
+                <input type="text" class="form-control" uib-datepicker-popup="{{$ctrl.format}}" ng-model="$ctrl.dailyResource.date" is-open="$ctrl.popupsOpen.addDate"
+                    ng-change="$ctrl.getAllDailyResources()" datepicker-options="$ctrl.selectedDateOptions" ng-click="$ctrl.openDate('addDate')"
+                    close-text="Close" data-datepicker-popup={{$ctrl.format}} />
+                <span class="input-group-btn">
+                    </span>
+            </div>
+</div>
 <div ng-repeat="currentSite in $ctrl.grouped">
     <div class="horizontal-table col-xs-12">
         <div class="card">

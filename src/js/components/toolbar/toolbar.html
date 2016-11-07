@@ -12,29 +12,29 @@
     <ul class="sidebar-nav">
         <div class="profile-usermenu" ng-show="$ctrl.currentUser">
             <li>
-                <span href="#" ng-click="$ctrl.go('profile')">
+                <span href="#" ng-click="$ctrl.go('profile')" ng-class="{active:$ctrl.current=='profile'}">
                         <i class="glyphicon glyphicon-home" ></i> בית </span>
             </li>
         </div>
         <li ng-show="!$ctrl.currentUser">
-            <span href="#" aria-label="Login" ng-click="$ctrl.login()">
+            <span href="#" aria-label="Login" ng-click="$ctrl.login()" ng-class="{active:$ctrl.current=='login'}">
                 <i class="glyphicon glyphicon-home"></i>
                 כניסה</span>
         </li>
         <div ng-show="$ctrl.currentUser.role._id == '57d2805f13d468481b1fe130' ||
                   $ctrl.currentUser.role._id == '57d27d4313d468481b1fe12e'">
             <li>
-                <span href="#" ng-click="$ctrl.go('site')">
+                <span href="#" ng-click="$ctrl.go('site')" ng-class="{active:$ctrl.current=='site'}">
                     <i class="glyphicon glyphicon-home"></i>
                     אתרים</span>
             </li>
             <li>
-                <span href="#" ng-click="$ctrl.go('user')">
+                <span href="#" ng-click="$ctrl.go('user')" ng-class="{active:$ctrl.current=='user'}>
                     <i class="glyphicon glyphicon-home"></i>
                     משתמשים</span>
             </li>
             <li>
-                <span href="#" ng-click="$ctrl.go('role')">
+                <span href="#" ng-click="$ctrl.go('role')" ng-class="{active:$ctrl.current=='role'}">
                     <i class="glyphicon glyphicon-home"></i>
                     תפקידים</span>
             </li>
@@ -42,7 +42,7 @@
         <div ng-show="$ctrl.currentUser.role._id == '57d2805f13d468481b1fe130' ||
                       $ctrl.currentUser.role._id == '57d2837a13d468481b1fe133'">
             <li>
-                <span href="#" ng-click="$ctrl.go('type')">
+                <span href="#" ng-click="$ctrl.go('type')" ng-class="{active:$ctrl.current=='type'}">
                     <i class="glyphicon glyphicon-home"></i>
                     משאבים</span>
             </li>

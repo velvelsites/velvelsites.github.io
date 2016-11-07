@@ -12,6 +12,7 @@ class ToolbarCtrl {
         this.$state.go('login');
     }
     go(tab) {
+        this.current = tab;
         this.toggle = !this.toggle; 
         this.$state.go(tab, this.$state.params);
     }

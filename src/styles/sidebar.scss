@@ -61,7 +61,7 @@
     border-radius: 5px;
 }
 
-.sidebar-nav li a:hover, .sidebar-nav li span:hover {
+.sidebar-nav li a:hover, .sidebar-nav li span:hover, .sidebar-nav li .active {
     background: rgba(255, 255, 255, 0.2);
     color: #fff;
     text-decoration: none;

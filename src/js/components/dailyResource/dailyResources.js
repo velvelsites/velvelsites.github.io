@@ -16,6 +16,7 @@ class DailyResourceCtrl {
         AuthService.registerUserUpdateCallback(() => {
             this.currentUser = AuthService.currentUser;
         });
+        this.currentUser = AuthService.currentUser;
         this.initSites();
         this.initResources();
         this.initDates();

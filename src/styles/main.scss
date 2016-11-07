@@ -1,6 +1,7 @@
 $bold-font: 600;
 $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 @import '~bootstrap-sass/assets/stylesheets/_bootstrap.scss';
+@import "../js/components/loader/loader";
 // $fa-font-path: '~font-awesome/fonts/';
 // @import '~font-awesome/scss/font-awesome.scss';
 
@@ -11,6 +12,7 @@ html {
     font-weight:500;
     color:black;
     direction:rtl;
+    overflow-y: scroll;
 }
 input, html input[disabled] {
     font-weight:600;

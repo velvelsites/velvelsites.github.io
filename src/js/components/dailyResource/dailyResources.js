@@ -3,6 +3,7 @@ let DATE_FORMAT = 'yyyy-MM-dd';
 @Inject('ResourceService', 'SiteService', '$scope', 'TypeService','CommentService','AuthService', '$q')
 class DailyResourceCtrl {
     constructor() {
+        this.loading = true;
         this.dailyResource = {};
         this.resourceTypes = TypeService.resourceTypes;
         this.editDisabled = {};
@@ -68,12 +69,12 @@ class DailyResourceCtrl {
         }
     }
     addDefault() {
-        this.loading = true;
+        this.adding = true;
         let dailyResource = Object.assign({}, this.dailyResource);
         dailyResource.date = this.formatDate(dailyResource.date);
         this.ResourceService.addDailyDefaultResources(dailyResource).then((response) => {
             this.getAllDailyResources();
-            this.loading = false;
+            this.adding = false;
         });
     }
     addDailyResource(isValid) {
@@ -177,7 +178,7 @@ class DailyResourceCtrl {
             }).catch((response)=> {
                 console.log('Failed to retrive daily data');
             }).finally(() => {                
-                
+                this.loading = false;
             })
         
     }

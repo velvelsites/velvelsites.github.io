@@ -1,0 +1,177 @@
+body, html { 
+    overflow-x: hidden; 
+    overflow-y: auto;
+}
+#loader{
+      z-index: 200;
+  position:fixed;
+  width:100%;
+  height:100%;
+  top:0;
+  left:0;
+  background: rgba(0,0,0,0.6);
+}
+#loader2{
+      z-index: 200;
+  position:fixed;
+  width:100%;
+  height:100%;
+  top:0;
+  left:0;
+  background: rgba(0,0,0,0.6);
+}
+// <div class="loader">Loading...</div>
+.sk-spinner-cube-grid {
+  left:49%;
+  top:49%;
+  position: fixed;
+}
+  .sk-spinner-cube-grid.sk-spinner {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto; }
+  .sk-spinner-cube-grid .sk-cube {
+    width: 33%;
+    height: 33%;
+    background: #FFF;
+    float: left;
+    -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
+            animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out; 
+  }
+  .sk-spinner-cube-grid .sk-cube:nth-child(1) {
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s; }
+  .sk-spinner-cube-grid .sk-cube:nth-child(2) {
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s; }
+  .sk-spinner-cube-grid .sk-cube:nth-child(3) {
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s; }
+  .sk-spinner-cube-grid .sk-cube:nth-child(4) {
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s; }
+  .sk-spinner-cube-grid .sk-cube:nth-child(5) {
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s; }
+  .sk-spinner-cube-grid .sk-cube:nth-child(6) {
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s; }
+  .sk-spinner-cube-grid .sk-cube:nth-child(7) {
+    -webkit-animation-delay: 0s;
+            animation-delay: 0s; }
+  .sk-spinner-cube-grid .sk-cube:nth-child(8) {
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s; }
+  .sk-spinner-cube-grid .sk-cube:nth-child(9) {
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s; }
+
+@-webkit-keyframes sk-cubeGridScaleDelay {
+  0%, 70%, 100% {
+    -webkit-transform: scale3D(1, 1, 1);
+            transform: scale3D(1, 1, 1); }
+
+  35% {
+    -webkit-transform: scale3D(0, 0, 1);
+            transform: scale3D(0, 0, 1); } }
+
+@keyframes sk-cubeGridScaleDelay {
+  0%, 70%, 100% {
+    -webkit-transform: scale3D(1, 1, 1);
+            transform: scale3D(1, 1, 1); }
+
+  35% {
+    -webkit-transform: scale3D(0, 0, 1);
+            transform: scale3D(0, 0, 1); } }
+
+/*
+ *  Usage:
+ *
+ *    <div class="sk-spinner sk-spinner-fading-circle">
+ *      <div class="sk-circle1 sk-circle"></div>
+ *      <div class="sk-circle2 sk-circle"></div>
+ *      <div class="sk-circle3 sk-circle"></div>
+ *      <div class="sk-circle4 sk-circle"></div>
+ *      <div class="sk-circle5 sk-circle"></div>
+ *      <div class="sk-circle6 sk-circle"></div>
+ *      <div class="sk-circle7 sk-circle"></div>
+ *      <div class="sk-circle8 sk-circle"></div>
+ *      <div class="sk-circle9 sk-circle"></div>
+ *      <div class="sk-circle10 sk-circle"></div>
+ *      <div class="sk-circle11 sk-circle"></div>
+ *      <div class="sk-circle12 sk-circle"></div>
+ *    </div>
+ *
+ */
+ $colors-logo: (
+	1: #ffffff,
+	2: #e9e9e9,
+	3: #cbcbcb,
+	4: #bebebe,
+	5: #b1b1b1,
+	6: #a5a5a5,
+	7: #a5a5a5,
+	8: #808080,
+	9: #727272
+);
+
+// ==========================================================================
+// Loader Base
+// ==========================================================================
+
+$loader-size: 100px;
+$animation-duration: 2s;
+$animation-delay: .1s;
+
+.loader {
+	width: $loader-size;
+	height: $loader-size;
+	perspective: $loader-size;
+	
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -($loader-size/2);
+	margin-left: -($loader-size/2);
+}
+
+
+.loader__tile {
+	display: block;
+	float: left;
+	width: 33.33%;
+	height: 33.33%;
+
+	animation-name: flip;
+  transform-style: preserve-3d;
+  animation-iteration-count: infinite;
+  animation-duration: $animation-duration;
+  animation-timing-function: ease-in-out;
+  transform: rotateY(0deg);
+  z-index: 0;
+}
+
+
+
+// ==========================================================================
+// Loader Parts
+// ==========================================================================
+
+@each $key, $color in $colors-logo {
+	.loader__tile__#{$key} {
+		background-color: $color;
+		animation-delay: ($animation-delay * $key);
+	}
+}
+
+
+
+
+// ==========================================================================
+// Loader Animation
+// ==========================================================================
+
+@keyframes flip {
+  0% { transform: rotateY(0deg); }
+	11% { transform: rotateY(180deg); }
+}

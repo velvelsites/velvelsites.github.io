@@ -1,6 +1,6 @@
 import "babel-polyfill";
 import angular from 'angular';
-import $ from 'expose?jQuery!expose?$!jquery';
+// import $ from 'expose?jQuery!expose?$!jquery';
 import "angular-ui-bootstrap";
 import "angular-ui-router";
 import "angular-sanitize";

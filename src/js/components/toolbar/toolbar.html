@@ -21,6 +21,13 @@
                 <i class="glyphicon glyphicon-home"></i>
                 כניסה</span>
         </li>
+        <div ng-show="$ctrl.currentUser.role._id == '57d27d4313d468481b1fe12e'">
+            <li>
+                <span href="#" ng-click="$ctrl.go('role')" ng-class="{active:$ctrl.current=='role'}">
+                    <i class="glyphicon glyphicon-home"></i>
+                    תפקידים</span>
+            </li>
+        </div>
         <div ng-show="$ctrl.currentUser.role._id == '57d2805f13d468481b1fe130' ||
                   $ctrl.currentUser.role._id == '57d27d4313d468481b1fe12e'">
             <li>
@@ -33,11 +40,7 @@
                     <i class="glyphicon glyphicon-home"></i>
                     משתמשים</span>
             </li>
-            <li>
-                <span href="#" ng-click="$ctrl.go('role')" ng-class="{active:$ctrl.current=='role'}">
-                    <i class="glyphicon glyphicon-home"></i>
-                    תפקידים</span>
-            </li>
+            
         </div>
         <div ng-show="$ctrl.currentUser.role._id == '57d2805f13d468481b1fe130' ||
                       $ctrl.currentUser.role._id == '57d2837a13d468481b1fe133'">

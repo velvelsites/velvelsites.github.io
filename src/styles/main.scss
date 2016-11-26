@@ -368,7 +368,8 @@ table{
 }
 .date-card{
     min-height:400px;
-}
-.uib-datepicker{
-    direction:ltr!important;
+    .uib-datepicker{
+        direction:ltr!important;
+        /*position:inherit;*/
+    }
 }

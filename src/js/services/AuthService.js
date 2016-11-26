@@ -32,11 +32,11 @@ class AuthService {
         return this.currentUser;
     }
     validateStatePrivileges(stateName) {
-        if (_.includes(this.adminRoutes, stateName)) {
-            return this.validateAdminRole();
-        }
-        else if (_.includes(this.editRoutes, stateName)) {
+        if (_.includes(this.editRoutes, stateName)) {
             return this.validateEditorRole();
+        }
+        else if (_.includes(this.adminRoutes, stateName)) {
+            return this.validateAdminRole();
         }
         else {
             return this.validateReaderRole();

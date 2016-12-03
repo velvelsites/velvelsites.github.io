@@ -19,6 +19,13 @@ class ResourceService {
 		}
 		return this.$http.get(url + '/api/getResource', {id:id});
 	}
+	addLastDailyResources(object){
+		let promise = this.validateClientObject(object);
+		if (promise) {
+			return promise;
+		}
+		return this.$http.post(url + '/api/addLastSiteResources',object);
+	}
 	addDailyDefaultResources(resource){
 		let promise = this.validateClientObject(resource);
 		if (promise) {

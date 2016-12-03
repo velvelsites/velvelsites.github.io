@@ -88,6 +88,15 @@ class DailyResourceCtrl {
             });
         }
     }
+    addLastDailyResources(siteId){
+        let object = {
+            siteId: siteId
+        }
+        object.date = this.formatDate(this.dailyResource.date);
+        this.ResourceService.addLastDailyResources(object).then((res)=>{
+            this.getAllDailyResources();
+        })
+    }
     addDailyComment(siteId) {
         if (this.dailyComments[siteId].site._id && this.dailyComments[siteId].text) {
             let dailyComment = Object.assign({}, this.dailyComments[siteId]);

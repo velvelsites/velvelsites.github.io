@@ -25,7 +25,10 @@
             <button type="submit" class="btn btn-primary">הוספת משאב</button>
         </form>
         <button type="submit" class="btn btn-primary" ng-click="$ctrl.addDefault()" ladda="$ctrl.adding" data-style="zoom-out">הוספת בסיס
-            </button>
+        </button>
+        <button type="submit" class="btn btn-primary" ng-click="$ctrl.addLastDailyResources($ctrl.dailyResource.site._id)" ladda="$ctrl.adding" data-style="zoom-out">הוספת אחרון
+        </button>
+        
     </div>
 </div>
 <div class="col-xs-12"  ng-show="$ctrl.currentUser.role._id == '57d27d4313d468481b1fe12e'">

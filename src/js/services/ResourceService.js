@@ -1,5 +1,5 @@
 let url = 'https://velvel-server.herokuapp.com';
-// let url = 'http://localhost:3001';
+// let url = 'http://localhost:3001'; 
 @Inject('$http','$q')
 class ResourceService {
 	constructor() {

@@ -8,6 +8,7 @@ class LoginCtrl {
         this.loading = true;
         this.AuthService.login(this.user).then((response) => {
             this.loading = false;
+            alert('success');
             this.$state.go('profile');
         }).catch((err) => {
         });

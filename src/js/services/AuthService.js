@@ -110,18 +110,30 @@ class AuthService {
         this.notifyObservers();
     }
     login(user) {
-        return this.$q((resolve, reject) => {
-            this.$http.post(this.API_ENDPOINT.url + '/authenticate', user).then((result) => {
-                if (result.data.success) {
-                    this.storeUserCredentials(result.data);
-                    this.loadUser(result.data.user);
-                    resolve(result.data.msg);
-                } else {
-                    alert('No go!');
-                    reject(result.data.msg);
-                }
-            });
+
+        let promise = this.$http.post(this.API_ENDPOINT.url + '/authenticate', user).then((result)=>{
+            if (result.data.success) {
+                console.log('Success return from authentication');
+                this.storeUserCredentials(result.data);
+                this.loadUser(result.data.user);
+            }
         });
+        return promise;
+
+
+        // return this.$q((resolve, reject) => {
+        //     this.$http.post(this.API_ENDPOINT.url + '/authenticate', user).then((result) => {
+        //         if (result.data.success) {
+        //             console.log('Success return from authentication');
+        //             this.storeUserCredentials(result.data);
+        //             this.loadUser(result.data.user);
+        //             resolve(result.data.msg);
+        //         } else {
+        //             alert('No go!');
+        //             reject(result.data.msg);
+        //         }
+        //     });
+        // });
     };
 
     logout() {

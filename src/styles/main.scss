@@ -373,3 +373,7 @@ table{
         /*position:inherit;*/
     }
 }
+.nav-collapse { 
+    -webkit-transform: none !important; 
+    z-index: 1 !important; 
+}

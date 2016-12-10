@@ -117,6 +117,9 @@ class AuthService {
                 this.storeUserCredentials(result.data);
                 this.loadUser(result.data.user);
             }
+            else{
+                alert('שם משתמש או סיסמה שגויים');
+            }
         });
         return promise;
 

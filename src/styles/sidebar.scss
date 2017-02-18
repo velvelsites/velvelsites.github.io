@@ -34,6 +34,8 @@
 
 /* Sidebar Styles */
 
+
+
 .sidebar-nav {
     position: absolute;
     top: 0;
@@ -43,18 +45,28 @@
     list-style: none;
     height: 100%;
     width: 100%;
-    background: rgba(124, 70, 207,0.82);
+   // background: rgba(124, 70, 207,0.82);
+}
+
+.sidebar-nav li span i {
+    margin-left: 25px;
+    font-size: 5vw;
+    padding: 10px;
+
 }
 
 .sidebar-nav li {
+    font-size: 28px;
     text-indent: 20px;
     line-height: 40px;
+    margin-top: 18%;
+    text-align: center;
 }
 
 .sidebar-nav li a,.sidebar-nav li span {
     display: block;
     color: white;
-    // background: #AC87DD;
+     //background: #9f9f9f;
     margin: 5px 15px;
     text-decoration: none;
     padding: 5px;
@@ -80,7 +92,7 @@
     line-height: 60px;
 }
 #company-logo{
-    background: #996EDB;
+    background: black;
     margin: 0;
     padding: 11px 0px;
     width: 250px;
@@ -140,6 +152,7 @@
     z-index: 4;
 }
 nav{
+	
     z-index: 199;
     .action-wrapper{
         direction: ltr;
@@ -161,7 +174,7 @@ nav{
     cursor: pointer;
     }
     height:60px;
-    background: #7c46cf;
+    background: black;
 }
 @media (max-width:  488px) {
     .card {
@@ -225,12 +238,12 @@ nav{
     overflow-y: auto;
     height: 100%;
     width: 250px;
-    background: #996EDB;
+    background: #707070;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
-    background: url(../img/sidebar-6.jpg);
+   // background: url(../img/sidebar-6.jpg);
 }
 
 #wrapper.toggled #sidebar-wrapper {

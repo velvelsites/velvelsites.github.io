@@ -13,7 +13,9 @@
         <div class="profile-usermenu" ng-show="$ctrl.currentUser">
             <li>
                 <span href="#" ng-click="$ctrl.go('profile')" ng-class="{active:$ctrl.current=='profile'}">
-                        <i class="glyphicon glyphicon-home" ></i> בית </span>
+                        <i class="glyphicon glyphicon-home" ></i> 
+                        <br>
+                        בית </span>
             </li>
         </div>
         <li ng-show="!$ctrl.currentUser">
@@ -24,7 +26,7 @@
         <div ng-show="$ctrl.currentUser.role._id == '57d27d4313d468481b1fe12e'">
             <li>
                 <span href="#" ng-click="$ctrl.go('role')" ng-class="{active:$ctrl.current=='role'}">
-                    <i class="glyphicon glyphicon-home"></i>
+                    <i class="glyphicon glyphicon-cog"></i><br>
                     תפקידים</span>
             </li>
         </div>
@@ -32,12 +34,14 @@
                   $ctrl.currentUser.role._id == '57d27d4313d468481b1fe12e'">
             <li>
                 <span href="#" ng-click="$ctrl.go('site')" ng-class="{active:$ctrl.current=='site'}">
-                    <i class="glyphicon glyphicon-home"></i>
+                    <i class="glyphicon glyphicon-map-marker"></i>
+                    <br>
                     אתרים</span>
             </li>
             <li>
                 <span href="#" ng-click="$ctrl.go('user')" ng-class="{active:$ctrl.current=='user'}">
-                    <i class="glyphicon glyphicon-home"></i>
+                    <i class="glyphicon glyphicon-user"></i>
+                    <br>
                     משתמשים</span>
             </li>
             
@@ -47,6 +51,7 @@
             <li>
                 <span href="#" ng-click="$ctrl.go('type')" ng-class="{active:$ctrl.current=='type'}">
                     <i class="glyphicon glyphicon-home"></i>
+                    <br>
                     משאבים</span>
             </li>
         </div>

@@ -10,18 +10,18 @@
                 <thead>
                     <tr>
                         <!--<th>#</th>-->
-                        <th>שם</th>
-                        <th>מזהה</th>
+                        <th style="font-size: 50px; color: white;">שם</th>
+                        <th style="font-size: 50px; color: white; text-align: center;">מזהה</th>
                         <th></th>
                         <th></th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="role in $ctrl.roles">
+                    <tr style="font-size: 20px; " ng-repeat="role in $ctrl.roles">
                         <!--<th scope="row" ng-bind="$index+1"></th>-->
                         <td><input type="text" ng-disabled="!$ctrl.editDisabled[role._id]" ng-model="role.name"></td>
-                        <td ng-bind="role._id"></td>
+                        <td style="text-align: center;" ng-bind="role._id"></td>
                         <td ng-click="$ctrl.editDisabled[role._id] = !$ctrl.editDisabled[role._id]"><i class="glyphicon glyphicon-pencil"></i></td>
                         <td ng-click="$ctrl.updateRole(role)"><i class="glyphicon glyphicon-floppy-disk"></td>
                     <td ng-click="$ctrl.deleteRole(role._id)"><i class="glyphicon glyphicon-trash"></td>

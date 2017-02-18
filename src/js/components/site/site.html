@@ -31,15 +31,12 @@
             <thead>
                 <tr style="">
                     <!--<th>#</th>-->
-                    <th style="font-size: 50px; color: white; text-align: center;">אתרים</th>
-                    <th></th>
-                    <th></th>
-                    <!--<th></th>-->
-                    <th></th>
+                    <th colspan="6" style="font-size: 50px; color: white; text-align: center;">אתרים</th>
+                    
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="site in $ctrl.userSites">
+                <tr style="font-size: 20px;" ng-repeat="site in $ctrl.userSites">
                     <!--<td scope="row" ng-bind="$index+1"></td>-->
                     <td><input type="text" ng-disabled="!$ctrl.editDisabled[site._id]" ng-model="site.name"/></td>
                     <td ng-click="$ctrl.getSiteUsers(site._id); $ctrl.selectedSite = site">
@@ -57,16 +54,15 @@
 <div ng-show="$ctrl.selectedSite">
     <div class="col-md-6 col-xs-12">
         <div class="card">
-    <h2>מורשי אתר <span ng-bind="$ctrl.selectedSite.name"></span></h2>
+    
         <table class="table table-striped table-inverse">
             <thead>
                 <tr>
-                    <th>שם</th>
-                    <th></th>
+                    <th colspan="2"><h2 style="font-size: 50px; color: white; text-align: center; font-weight: bold;">מורשי אתר <span ng-bind="$ctrl.selectedSite.name"></span></h2></th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="user in $ctrl.siteUsers" >
+                <tr style="font-size: 20px;" ng-repeat="user in $ctrl.siteUsers" >
                     <td ng-bind="user.name">
                     </td>
                     <td ng-click="$ctrl.removeUserFromSite(user._id, $ctrl.selectedSite._id)">

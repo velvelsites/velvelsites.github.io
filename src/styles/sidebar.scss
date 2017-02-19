@@ -50,17 +50,38 @@
 
 .sidebar-nav li span i {
     margin-left: 25px;
-    font-size: 5vw;
+    //font-size: 5vmax;
+    font-size: 8vmin;
     padding: 10px;
 
 }
+
+.sidebar-nav li span {
+    font-size: 5vmin;
+
+}
+
+.res {
+   // margin-bottom: 10%;
+   
+
+}
+
+.res2 {
+   // margin-top: 10%;
+   padding: 0  0 10vmin 0;
+
+}
+
+
 
 .sidebar-nav li {
     font-size: 28px;
     text-indent: 20px;
     line-height: 40px;
-    margin-top: 18%;
+    margin-top: 4vmin;
     text-align: center;
+
 }
 
 .sidebar-nav li a,.sidebar-nav li span {
@@ -73,7 +94,14 @@
     border-radius: 5px;
 }
 
-.sidebar-nav li a:hover, .sidebar-nav li span:hover, .sidebar-nav li .active {
+
+.sidebar-nav li .active {
+    background: rgba(245, 245, 245, 0.6);
+    text-shadow: 2px 2px 3px #707070;
+    //border: 1px solid #4e8bed;
+}
+
+.sidebar-nav li a:hover, .sidebar-nav li span:hover,  {
     background: rgba(255, 255, 255, 0.2);
     color: #fff;
     text-decoration: none;
@@ -98,6 +126,13 @@
     width: 250px;
     text-align: center;
     font-size: 27px;
+
+}
+
+.logo-img {
+    width: 200px;
+    height: 70px;
+
 }
 .sidebar-nav > .sidebar-brand a {
     color: #999999;
@@ -157,6 +192,9 @@ nav{
     .action-wrapper{
         direction: ltr;
         float:left;
+        //line-height: 60px;
+
+
     }
     direction:rtl;
     .btn:hover{
@@ -173,7 +211,7 @@ nav{
     action-btn{
     cursor: pointer;
     }
-    height:60px;
+    height: 100px;
     background: black;
 }
 @media (max-width:  488px) {

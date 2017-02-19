@@ -1,6 +1,6 @@
 <nav>
     <div class="content" id="company-logo">
-        ש.א.ג
+        <img class="logo-img" src="/src/img/logo.png"/ >
     </div>
     <div class="action-wrapper">
         <div class="content" type="button" ng-click="$ctrl.logout()">יציאה</div>
@@ -8,12 +8,14 @@
         <!--<div class="content" ng-bind="$ctrl.currentUser.email"></div>-->
     </div>
 </nav>
-<div id="sidebar-wrapper">
-    <ul class="sidebar-nav">
+<div class ="res" id="sidebar-wrapper">
+    <ul class="res2 sidebar-nav">
         <div class="profile-usermenu" ng-show="$ctrl.currentUser">
             <li>
                 <span href="#" ng-click="$ctrl.go('profile')" ng-class="{active:$ctrl.current=='profile'}">
-                        <i class="glyphicon glyphicon-home" ></i> 
+                        <i class="glyphicon glyphicon-home" >
+                            
+                        </i> 
                         <br>
                         בית </span>
             </li>
@@ -25,8 +27,8 @@
         </li>
         <div ng-show="$ctrl.currentUser.role._id == '57d27d4313d468481b1fe12e'">
             <li>
-                <span href="#" ng-click="$ctrl.go('role')" ng-class="{active:$ctrl.current=='role'}">
-                    <i class="glyphicon glyphicon-cog"></i><br>
+                <span style="padding-bottom: 15px;" href="#" ng-click="$ctrl.go('role')" ng-class="{active:$ctrl.current=='role'}">
+                    <i style="margin-left: 40px;" class="glyphalign glyphicon glyphicon-cog"></i><br>
                     תפקידים</span>
             </li>
         </div>
@@ -45,6 +47,10 @@
                     משתמשים</span>
             </li>
             
+            <li>
+                
+            </li>
+
         </div>
         <div ng-show="$ctrl.currentUser.role._id == '57d2805f13d468481b1fe130' ||
                       $ctrl.currentUser.role._id == '57d2837a13d468481b1fe133'">

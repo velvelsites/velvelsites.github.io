@@ -36,7 +36,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr style="font-size: 20px;" ng-repeat="site in $ctrl.userSites">
+                <tr style="font-size: 18px;" ng-repeat="site in $ctrl.userSites">
                     <!--<td scope="row" ng-bind="$index+1"></td>-->
                     <td><input type="text" ng-disabled="!$ctrl.editDisabled[site._id]" ng-model="site.name"/></td>
                     <td ng-click="$ctrl.getSiteUsers(site._id); $ctrl.selectedSite = site">
@@ -62,7 +62,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr style="font-size: 20px;" ng-repeat="user in $ctrl.siteUsers" >
+                <tr style="font-size: 18px;" ng-repeat="user in $ctrl.siteUsers" >
                     <td ng-bind="user.name">
                     </td>
                     <td ng-click="$ctrl.removeUserFromSite(user._id, $ctrl.selectedSite._id)">

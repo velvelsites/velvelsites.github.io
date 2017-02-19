@@ -1,5 +1,6 @@
 <div class="col-xs-12">
     <div class="card">
+    <br>
         <h2>הוספת תפקיד</h2>
         <form class="form-inline bottom-gap" name="roleForm" ng-submit="$ctrl.addRole(roleForm.$valid)" novalidate>
             <input type="text" placeholder="שם" class="form-control" name="name" id="name" ng-model="$ctrl.role.name" required />
@@ -18,7 +19,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr style="font-size: 20px; " ng-repeat="role in $ctrl.roles">
+                    <tr style="font-size: 18px; " ng-repeat="role in $ctrl.roles">
                         <!--<th scope="row" ng-bind="$index+1"></th>-->
                         <td><input type="text" ng-disabled="!$ctrl.editDisabled[role._id]" ng-model="role.name"></td>
                         <td style="text-align: center;" ng-bind="role._id"></td>

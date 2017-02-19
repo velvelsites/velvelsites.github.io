@@ -33,6 +33,7 @@
 </div>
 <div class="col-xs-12"  ng-show="$ctrl.currentUser.role._id == '57d27d4313d468481b1fe12e'">
     <div class="card date-card">
+    <br>
         <h4>תאריך</h4>
        <div class="col-md-4 col-xs-12">
             <input type="text" class="form-control" uib-datepicker-popup="{{$ctrl.format}}" ng-model="$ctrl.dailyResource.date" is-open="$ctrl.popupsOpen.addDate"
@@ -89,7 +90,7 @@
                 <div class="content table-responsive table-full-width">
                     <table class="table table-hover table-striped"> 
                         <thead>
-                            <tr>
+                            <tr class="bgcolor">
                                 <td>משתמש</td>
                                 <td>הערה</td>
                                 <td></td>

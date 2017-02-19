@@ -120,6 +120,8 @@ select{
         // font-family: OpenSansHebrewBold;
     color: #59554e;
 }
+
+
 table .input-group input, table input,table .form-control {
     border:none;
 }
@@ -227,6 +229,13 @@ button .glyphicon {
         }
     }
 }
+
+.bgcolor {
+   background: #4e8bed;
+   font-size: 50px; 
+   color: white;
+}
+
 @media (max-width:  488px) {
     .comment-wrapper{
         form{
@@ -241,7 +250,7 @@ button .glyphicon {
                 background:#ffffff;
             }
         }
-        .table-responsive > .table > thead > tr > th,
+        .table-tableponsive > .table > thead > tr > th,
         .table-responsive > .table > thead > tr > td,
         .table-responsive > .table > tbody > tr > th,
         .table-responsive > .table > tbody > tr > td,
@@ -375,7 +384,7 @@ button .glyphicon {
 table{
         background-color: #4e8bed;
         color: black;
-               // background-image: linear-gradient(to right, silver, red);
+                //background-image: linear-gradient(to right, silver, red);
         tbody{
                 background-color: #e5e5e5;
 

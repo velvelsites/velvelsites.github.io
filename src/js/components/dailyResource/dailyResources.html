@@ -97,7 +97,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="comment in currentSite.comments">
+                            <tr class="commentsfont" ng-repeat="comment in currentSite.comments">
                                 <td ng-bind="comment.user.name"></td>
                                 <td ng-bind="comment.text"></td>
                                 <td ng-click="$ctrl.deleteDailyComment(comment._id)">

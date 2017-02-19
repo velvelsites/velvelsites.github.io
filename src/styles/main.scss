@@ -121,6 +121,20 @@ select{
     color: #59554e;
 }
 
+.theader {
+    font-size: 40px; 
+    color: white;
+}
+
+.tbodyfont {
+    font-size: 18px;
+}
+
+.roletheader {
+    font-size: 40px;
+    text-align: center;
+    color: white;
+}
 
 table .input-group input, table input,table .form-control {
     border:none;
@@ -232,8 +246,13 @@ button .glyphicon {
 
 .bgcolor {
    background: #4e8bed;
-   font-size: 50px; 
+   font-size: 30px; 
    color: white;
+   font-weight: bold;
+}
+
+.commentsfont {
+    font-size: 20px;
 }
 
 @media (max-width:  488px) {

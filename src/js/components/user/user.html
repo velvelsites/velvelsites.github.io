@@ -32,11 +32,11 @@
         <div class="content table-responsive table-full-width">
             <table class="table-responsive table table-striped table-inverse">
                 <thead>
-                    <tr>
-                        <th style="font-size: 50px; color: white; text-align: center;"></th>
-                        <th style="font-size: 50px; color: white;">שם </th>
-                        <th style="font-size: 50px; color: white;">מייל</th>
-                        <th style="font-size: 50px; color: white;">תפקיד</th>
+                    <tr class="theader">
+                        <th></th>
+                        <th>שם </th>
+                        <th>מייל</th>
+                        <th>תפקיד</th>
                         <!--<th>סיסמה</th>-->
                         <th></th>
                         <th></th>
@@ -48,8 +48,8 @@
                 <tbody>
                     <tr style="font-size: 18px;" ng-repeat="user in $ctrl.users">
                         <th scope="row" ng-bind="$index+1"></th>
-                        <td style="font-size: 18px;"><input type="text" ng-disabled="!$ctrl.editDisabled[user._id]" ng-model="user.name"></td>
-                        <td style="font-size: 18px; "><input type="text" ng-disabled="!$ctrl.editDisabled[user._id]" ng-model="user.email"></td>
+                        <td style=><input type="text" ng-disabled="!$ctrl.editDisabled[user._id]" ng-model="user.name"></td>
+                        <td style=><input type="text" ng-disabled="!$ctrl.editDisabled[user._id]" ng-model="user.email"></td>
                         <td>
                             <select class="form-control" name="role" id="role" ng-disabled="!$ctrl.editDisabled[user._id]" ng-model="user.role._id" ng-options="role._id as role.name for role in $ctrl.roles"></select>
                         </td>

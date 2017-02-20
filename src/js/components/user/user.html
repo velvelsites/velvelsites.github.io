@@ -46,19 +46,19 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr style="font-size: 18px;" ng-repeat="user in $ctrl.users">
+                    <tr class="tbodyfont" ng-repeat="user in $ctrl.users">
                         <th scope="row" ng-bind="$index+1"></th>
-                        <td style=><input type="text" ng-disabled="!$ctrl.editDisabled[user._id]" ng-model="user.name"></td>
-                        <td style=><input type="text" ng-disabled="!$ctrl.editDisabled[user._id]" ng-model="user.email"></td>
+                        <td><input type="text" ng-disabled="!$ctrl.editDisabled[user._id]" ng-model="user.name"></td>
+                        <td><input type="text" ng-disabled="!$ctrl.editDisabled[user._id]" ng-model="user.email"></td>
                         <td>
                             <select class="form-control" name="role" id="role" ng-disabled="!$ctrl.editDisabled[user._id]" ng-model="user.role._id" ng-options="role._id as role.name for role in $ctrl.roles"></select>
                         </td>
                         <!--<td><input type="text" ng-disabled="!$ctrl.editDisabled[user._id]" ng-model="user.password"></td>-->
-                        <td ng-click="$ctrl.getUserSites(user._id); $ctrl.selectedUser = user"><i class="glyphicon glyphicon-info-sign"></td>
-                <td ng-click="$ctrl.editDisabled[user._id] = !$ctrl.editDisabled[user._id]"><i class="glyphicon glyphicon-pencil"></i></td>
-                        <td ng-click="$ctrl.updateUser(user)"><i class="glyphicon glyphicon-floppy-disk"></td>
+                        <td ng-click="$ctrl.getUserSites(user._id); $ctrl.selectedUser = user"><i class=" iconmargin glyphicon glyphicon-info-sign"></td>
+                <td ng-click="$ctrl.editDisabled[user._id] = !$ctrl.editDisabled[user._id]"><i class=" iconmargin glyphicon glyphicon-pencil"></i></td>
+                        <td ng-click="$ctrl.updateUser(user)"><i class=" iconmargin glyphicon glyphicon-floppy-disk"></td>
                 <!--<td ng-click="$ctrl.authenticate(user)"><i class="glyphicon glyphicon-floppy-disk"></td>-->
-                <td ng-click="$ctrl.deleteUser(user._id)"><i class="glyphicon glyphicon-trash"></td>
+                <td ng-click="$ctrl.deleteUser(user._id)"><i class=" iconmargin glyphicon glyphicon-trash"></td>
             </tr>
         </tbody>
     </table>

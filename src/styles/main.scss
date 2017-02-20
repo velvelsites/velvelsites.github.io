@@ -22,7 +22,7 @@ input, html input[disabled] {
     color:black;
 }
 select{
-    border: 1px solid black!important;
+    border: 1px solid #4e8bed!important;
 
     -webkit-appearance: menulist;
 }
@@ -130,10 +130,15 @@ select{
     font-size: 18px;
 }
 
-.roletheader {
+.sitestheader {
     font-size: 40px;
     text-align: center;
     color: white;
+    border-radius: 10px;
+
+                   
+               
+
 }
 
 table .input-group input, table input,table .form-control {
@@ -142,8 +147,9 @@ table .input-group input, table input,table .form-control {
 .input-group input, input, .form-control {
     border-radius: 0px;
     background: transparent;
-    border: 1px solid #325f8c;
+    border: 1px solid #4e8bed;
     border-radius: 10px;
+
 }
 
 .shadow {
@@ -151,11 +157,11 @@ table .input-group input, table input,table .form-control {
 }
 
 .btn:active {
-   background: #287040;
+   background: #e8f0fd;
 }
 
 .btn:hover {
-    background: #0ccc4c;
+    background: #4e8bed;
     border: 1px solid #08a83d;
 }
 
@@ -164,7 +170,7 @@ table .input-group input, table input,table .form-control {
     border-radius: 3px;
     border: 1px solid #359154;
     padding:10px;
-        background: #287040;
+        background:#0e3e8b;
     font-weight: 600;
     border-radius: 10px;
 }
@@ -180,12 +186,20 @@ table .input-group input, table input,table .form-control {
 .container {
     margin-top: -31px;
 }
+
+table tr {
+   // border-radius: 10px;
+}
+
 table th{
- text-align:right;   
+ //text-align:right;   
 }
 .table{
     // margin-top:20px;
-    border: 2px solid #e2e2e2;
+    //border: 2px solid #e2e2e2;
+    border-radius: 10px;
+    background: #4e8bed;
+    box-shadow: 1px 1px 1px 3 black;
 }
 tr{
     border:none;
@@ -220,11 +234,13 @@ button .glyphicon {
     .form-group{
         width:100%;
     }
+
     table{
-        background-color: #4f6fad;
-                background-image: linear-gradient(to right, #ee9cb4, #4f6fad);
+        //background-color: #4f6fad;
+               // background-image: linear-gradient(to right, #ee9cb4, #4f6fad);
+             
         tbody{
-                background-color: #f5f5f5;
+                //background-color: #f5f5f5;
         }
     }
     form{
@@ -244,11 +260,15 @@ button .glyphicon {
     }
 }
 
-.bgcolor {
-   background: #4e8bed;
+/*.bgcolor {
+   //background: #4e8bed;
    font-size: 30px; 
-   color: white;
+   //color: white;
    font-weight: bold;
+}*/
+
+.iconmargin {
+    margin-top: 10px;
 }
 
 .commentsfont {
@@ -276,9 +296,18 @@ button .glyphicon {
         .table-responsive > .table > tfoot > tr > th,
         .table-responsive > .table > tfoot > tr > td{
             white-space: normal;
+
+
         }
     }
 }
+
+tfoot {
+    width: 100%;
+    height: 20px;
+    background: grey;
+}
+
 .horizontal-table > div > .sum-row{
     display: block;
     width:100%;
@@ -401,16 +430,19 @@ button .glyphicon {
     float: right;
 }
 table{
-        background-color: #4e8bed;
+        
         color: black;
                 //background-image: linear-gradient(to right, silver, red);
+
         tbody{
                 background-color: #e5e5e5;
+
 
         }
     }
     .table-responsive .table {
     max-width: none;
+
 }
 .date-card{
     min-height:400px;

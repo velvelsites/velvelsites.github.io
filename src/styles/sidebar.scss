@@ -46,18 +46,35 @@
     height: 100%;
     width: 100%;
    // background: rgba(124, 70, 207,0.82);
+
 }
 
 .sidebar-nav li span i {
-    margin-left: 25px;
+    margin-left: 10px;
     //font-size: 5vmax;
-    font-size: 8vmin;
-    padding: 10px;
+    font-size: 6vmin;
+    padding-top: 10px;
+
 
 }
 
 .sidebar-nav li span {
-    font-size: 5vmin;
+     font-size: 3vmin;
+        
+    
+    .icon {
+        margin-left: 15px;
+    }
+
+    .spa {
+    margin-top: -17px;
+
+    }
+    .spa:hover{
+        background: transparent;
+
+
+    }
 
 }
 
@@ -70,20 +87,18 @@
 
 .res2 {
    // margin-top: 10%;
-   height: 50vh;
+   //height: 50vh;
 
 }
 
-.sidebarfix {
-    margin-bottom: 200px;
-}
+
 
 .sidebar-nav li {
     font-size: 28px;
     text-indent: 20px;
     line-height: 40px;
-    margin-top: 4vmin;
     text-align: center;
+
 
 }
 
@@ -133,7 +148,7 @@
 }
 
 #company-logo2{
-    background: grey;
+    background: #707070;
     margin: 0;
     padding: 11px 0px;
     width: 250px;
@@ -289,7 +304,7 @@ nav{
     right: 0px;
     z-index: -5;
     overflow-y: auto;
-    height: 90vmin;
+    height: 100%;
     width: 250px;
     background: #707070;
     -webkit-transition: all 0.5s ease;

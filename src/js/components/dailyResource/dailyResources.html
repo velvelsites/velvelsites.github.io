@@ -46,18 +46,21 @@
 <div ng-repeat="currentSite in $ctrl.grouped">
     <div class="horizontal-table col-xs-12">
         <div class="card">
-            <div    class="card-header" 
+            <div    class="card-header row" 
                     ng-click="$ctrl.showSection[currentSite.siteId] = !$ctrl.showSection[currentSite.siteId]">
-                <span class="col-md-2">
+                <span class="lead-button">
                     <i  class="glyphicon glyphicon glyphicon-plus"
                     ng-show="!$ctrl.showSection[currentSite.siteId]"></i>
                 <i  class="glyphicon glyphicon glyphicon-minus"
                     ng-show="$ctrl.showSection[currentSite.siteId]"></i>
-                <i  class="glyphicon glyphicon glyphicon-envelope"
-                    ng-show="currentSite.comments.length>0"></i>
                 </span>
-                <span class="title col-md-2" ng-bind="currentSite.siteName"></span>
-                <span class="amount col-md-8" ng-bind="'  סך הכל משאבים: ' + currentSite.total"></span>
+                <span class="title" ng-bind="currentSite.siteName"></span>
+                <span class="amount" ng-bind="' משאבים: ' + currentSite.total"></span>
+                <span class="trail-button">
+                    <i  class="glyphicon glyphicon glyphicon-envelope"
+                    ng-show="currentSite.comments.length>0"></i>    
+                </span>
+                
             </div>
             <div class="card-content" ng-show="$ctrl.showSection[currentSite.siteId]">
                 <!-- <h3 ng-bind="currentSite.siteName"></h3> -->

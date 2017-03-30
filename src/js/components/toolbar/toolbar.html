@@ -43,25 +43,21 @@
             <li>
                 <span href="#" ng-click="$ctrl.go('user')" ng-class="{active:$ctrl.current=='user'}">
                     <i class="glyphicon glyphicon-user"></i>
-                    <br>
-                    <div class="spa">משתמשים</div></span>
-            </li>
-            
-            <li>
-               
-        
-   
+                    <div class="spa">משתמשים</div>
+                </span>
             </li>
         </div>
         
 
         <div ng-show="$ctrl.currentUser.role._id == '57d2805f13d468481b1fe130' ||
-                      $ctrl.currentUser.role._id == '57d2837a13d468481b1fe133'">
+                                        $ctrl.currentUser.role._id == '57d27d4313d468481b1fe12e'">
             <li>
                 <span href="#" ng-click="$ctrl.go('type')" ng-class="{active:$ctrl.current=='type'}">
                     <i class="glyphicon glyphicon-home"></i>
-                    <br>
-                    משאבים</span>
+                    <div class="spa">
+                        משאבים
+                    </div>
+                </span>
             </li>
         </div>
 

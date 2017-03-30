@@ -46,67 +46,82 @@
 <div ng-repeat="currentSite in $ctrl.grouped">
     <div class="horizontal-table col-xs-12">
         <div class="card">
-            <h3 ng-bind="currentSite.siteName"></h3>
-            <div ng-repeat="item in currentSite.resources" class="cell">
-                <div ng-bind="item.resourceType.name" class="header"></div>
-                <div class="body">
-                    <div class="button-holder">
-                        <div ng-click="$ctrl.increaceDailyResource(item)">
-                            <i class="glyphicon glyphicon glyphicon-plus"></i>
+            <div    class="card-header" 
+                    ng-click="$ctrl.showSection[currentSite.siteId] = !$ctrl.showSection[currentSite.siteId]">
+                <span class="col-md-2">
+                    <i  class="glyphicon glyphicon glyphicon-plus"
+                    ng-show="!$ctrl.showSection[currentSite.siteId]"></i>
+                <i  class="glyphicon glyphicon glyphicon-minus"
+                    ng-show="$ctrl.showSection[currentSite.siteId]"></i>
+                <i  class="glyphicon glyphicon glyphicon-envelope"
+                    ng-show="currentSite.comments.length>0"></i>
+                </span>
+                <span class="title col-md-2" ng-bind="currentSite.siteName"></span>
+                <span class="amount col-md-8" ng-bind="'  סך הכל משאבים: ' + currentSite.total"></span>
+            </div>
+            <div class="card-content" ng-show="$ctrl.showSection[currentSite.siteId]">
+                <!-- <h3 ng-bind="currentSite.siteName"></h3> -->
+                <div ng-repeat="item in currentSite.resources" class="cell">
+                    <div ng-bind="item.resourceType.name" class="header"></div>
+                    <div class="body">
+                        <div class="button-holder">
+                            <div ng-click="$ctrl.increaceDailyResource(item)">
+                                <i class="glyphicon glyphicon glyphicon-plus"></i>
+                            </div>
+                            <div ng-click="$ctrl.decreaseDailyResource(item)">
+                                <i class="glyphicon glyphicon-minus"></i>
+                            </div>
                         </div>
-                        <div ng-click="$ctrl.decreaseDailyResource(item)">
-                            <i class="glyphicon glyphicon-minus"></i>
-                        </div>
-                    </div>
-                    <div><input type="text" ng-disabled="!$ctrl.editDisabled[item._id]" ng-model="item.amount"></div>
-                    <div class="button-holder" ng-show="!item.sum">
-                        <div ng-click="$ctrl.editField(item)" ng-class="{'inverse':$ctrl.editDisabled[item._id]}">
-                            <i class="glyphicon glyphicon glyphicon-edit"></i>
-                        </div>
-                        <div ng-click="$ctrl.deleteDailyResource(item._id)">
-                            <i class="glyphicon glyphicon-remove-circle"></i>
+                        <div><input type="text" ng-disabled="!$ctrl.editDisabled[item._id]" ng-model="item.amount"></div>
+                        <div class="button-holder" ng-show="!item.sum">
+                            <div ng-click="$ctrl.editField(item)" ng-class="{'inverse':$ctrl.editDisabled[item._id]}">
+                                <i class="glyphicon glyphicon glyphicon-edit"></i>
+                            </div>
+                            <div ng-click="$ctrl.deleteDailyResource(item._id)">
+                                <i class="glyphicon glyphicon-remove-circle"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="sum-row">
-                <span>סך הכל:</span><span ng-bind="currentSite.total"></span>
-            </div>
-            <div class="comment-wrapper">
-                <h3>הערות</h3>
-                <form class="" name="commentForm" ng-submit="$ctrl.addDailyComment(currentSite.siteId)" novalidate>
-                    <input type="hidden"    ng-model="$ctrl.dailyComments[currentSite.siteId].site._id"
-                                            value="{{currentSite.siteId}}"
-                                            ng-init="$ctrl.dailyComments[currentSite.siteId].site._id=currentSite.siteId"
-                    />
-                    <div class="form-group filter-panel-searchbox">
-                        <textarea   type="text" placeholder="הוספת הערה" class="form-control amount-field"
-                                    ng-model="$ctrl.dailyComments[currentSite.siteId].text">
-                        </textarea>
-                    </div>
-                    <div class="divider"></div>
-                    <button type="submit" class="btn btn-primary">הוספת הערה</button>
-                </form>
-                <div class="content table-responsive table-full-width">
-                    <table class="table table-hover table-striped"> 
-                        <thead>
-                            <tr class="bgcolor">
-                                <td>משתמש</td>
-                                <td>הערה</td>
-                                <td></td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="commentsfont" ng-repeat="comment in currentSite.comments">
-                                <td ng-bind="comment.user.name"></td>
-                                <td ng-bind="comment.text"></td>
-                                <td ng-click="$ctrl.deleteDailyComment(comment._id)">
-                                    <i class="glyphicon glyphicon-remove-circle"></i>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                 </div>
+                <div class="sum-row">
+                    <span>סך הכל:</span><span ng-bind="currentSite.total"></span>
+                </div>
+                <div class="comment-wrapper">
+                    <h3>הערות</h3>
+                    <form class="" name="commentForm" ng-submit="$ctrl.addDailyComment(currentSite.siteId)" novalidate>
+                        <input type="hidden"    ng-model="$ctrl.dailyComments[currentSite.siteId].site._id"
+                                                value="{{currentSite.siteId}}"
+                                                ng-init="$ctrl.dailyComments[currentSite.siteId].site._id=currentSite.siteId"
+                        />
+                        <div class="form-group filter-panel-searchbox">
+                            <textarea   type="text" placeholder="הוספת הערה" class="form-control amount-field"
+                                        ng-model="$ctrl.dailyComments[currentSite.siteId].text">
+                            </textarea>
+                        </div>
+                        <div class="divider"></div>
+                        <button type="submit" class="btn btn-primary">הוספת הערה</button>
+                    </form>
+                    <div class="content table-responsive table-full-width">
+                        <table class="table table-hover table-striped"> 
+                            <thead>
+                                <tr class="bgcolor">
+                                    <td>משתמש</td>
+                                    <td>הערה</td>
+                                    <td></td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="commentsfont" ng-repeat="comment in currentSite.comments">
+                                    <td ng-bind="comment.user.name"></td>
+                                    <td ng-bind="comment.text"></td>
+                                    <td ng-click="$ctrl.deleteDailyComment(comment._id)">
+                                        <i class="glyphicon glyphicon-remove-circle"></i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                     </div>
+                </div>
             </div>
         </div>
     </div>

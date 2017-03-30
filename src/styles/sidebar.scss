@@ -49,31 +49,28 @@
 
 }
 
-.sidebar-nav li span i {
-    margin-left: 10px;
-    //font-size: 5vmax;
-    font-size: 6vmin;
-    padding-top: 10px;
+.sidebar-nav li span{
+    i {
+        margin-left: 10px;
+        font-size: 22px;
+        padding-top: 10px;
+    }
+    .spa {
+        margin-top: -17px;
+        font-size:20px
+    }
+} 
 
 
-}
+
 
 .sidebar-nav li span {
-     font-size: 3vmin;
-        
-    
     .icon {
         margin-left: 15px;
     }
 
-    .spa {
-    margin-top: -17px;
-
-    }
     .spa:hover{
         background: transparent;
-
-
     }
 
 }
@@ -94,7 +91,7 @@
 
 
 .sidebar-nav li {
-    font-size: 28px;
+    font-size: 20px;
     text-indent: 20px;
     line-height: 40px;
     text-align: center;
@@ -316,4 +313,21 @@ nav{
 
 #wrapper.toggled #sidebar-wrapper {
     
+}
+@media (max-width: 488px) {
+    #sidebar-wrapper{
+        width:150px;
+    }
+    .sidebar-nav li span{
+        text-align: center;
+        i {
+        margin-left: 10px;
+        font-size: 18px;
+        padding-top: 10px;
+    }   
+    .spa {
+        margin-top: -17px;
+        font-size:18px;
+    }
+    } 
 }

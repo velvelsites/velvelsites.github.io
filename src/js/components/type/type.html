@@ -35,18 +35,26 @@
                     <tr>
                         <!--<th>#</th>-->
                         <th>שם</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
+                        <div ng-show="$ctrl.currentUser.role._id == '57d2805f13d468481b1fe130' ||
+                                        $ctrl.currentUser.role._id == '57d27d4313d468481b1fe12e'">
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </div>
+                        
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="type in $ctrl.types">
                         <!--<th scope="row" ng-bind="$index+1"></th>-->
                         <td><input type="text" ng-disabled="!$ctrl.editDisabled[type._id]" ng-model="type.name"></td>
-                        <td ng-click="$ctrl.editDisabled[type._id] = !$ctrl.editDisabled[type._id]"><i class="glyphicon glyphicon-pencil"></i></td>
+                        <div ng-show="$ctrl.currentUser.role._id == '57d2805f13d468481b1fe130' ||
+                  $ctrl.currentUser.role._id == '57d27d4313d468481b1fe12e'">
+                            <td ng-click="$ctrl.editDisabled[type._id] = !$ctrl.editDisabled[type._id]"><i class="glyphicon glyphicon-pencil"></i></td>
                         <td ng-click="$ctrl.updateType(type)"><i class="glyphicon glyphicon-floppy-disk"></td>
                         <td ng-click="$ctrl.deleteType(type._id)"><i class="glyphicon glyphicon-trash"></td>
+                        </div>
+                        
                     </tr>
                 </tbody>
             </table>

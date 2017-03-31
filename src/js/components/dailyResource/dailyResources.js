@@ -192,6 +192,10 @@ class DailyResourceCtrl {
         
     }
     addAllResourceSum() {
+        this.overview = {
+            sitesCount:0,
+            totalResources:0,
+        }
         this.arrayGroup = _.groupBy(this.resources, 'site._id');
         this.grouped = [];
         _.forEach(this.arrayGroup, (key,value)=>{
@@ -202,6 +206,8 @@ class DailyResourceCtrl {
                 total:all,
                 siteName:key[0].site.name,
                 siteId:key[0].site._id});
+            this.overview.sitesCount += 1;
+            this.overview.totalResources += all;
         });
     }
     getDailyResources() {

@@ -24,12 +24,20 @@ body{
 input, html input[disabled] {
     font-weight:600;
     color:black;
+    background: transparent;
 }
 select{
-    border: 1px solid #4e8bed!important;
+    // border: 1px solid #4e8bed!important;
 
     -webkit-appearance: menulist;
 }
+.table .form-control[disabled]{
+    background-color: transparent;
+}
+.table .form-control{
+    background-color: #eeeeee;    
+}
+
 // button[disabled], html input[disabled] {
 //     background: transparent;
 //     border-color: transparent;
@@ -68,8 +76,17 @@ select{
 //     margin-right:1%;
 // }
 .card {
+    .form-inline{
+        background: #C7DAFA;
+        padding: 10px;
+        display: inline-block;
+    }
+    .card-content{
+        padding:10px;
+    }
     .row{
-        margin:0px
+        margin:0px;
+        padding: 10px;
     }
     h4 {
         margin-top: 0px;
@@ -91,7 +108,6 @@ select{
     float: left;
     width: 100%;
 }
-
 .form-control {
     background-color: #FFFFFF;
     border: 1px solid #E3E3E3;
@@ -105,7 +121,11 @@ select{
 
 
 
-
+.horizontal-table{
+    .card{
+        padding:0px;
+    }
+}
 
 
 
@@ -128,7 +148,7 @@ select{
     color: #59554e;
 }
 
-.theader {
+thead tr{
     font-size: 18px; 
     color: white;
 }
@@ -153,9 +173,9 @@ table .input-group input, table input,table .form-control {
 }
 .input-group input, input, .form-control {
     border-radius: 0px;
-    background: transparent;
-    border: 1px solid #4e8bed;
-    border-radius: 10px;
+    background: #F8F8F8;
+    // border: 1px solid #4e8bed;
+    border-radius: 4%;
 
 }
 
@@ -168,18 +188,21 @@ table .input-group input, table input,table .form-control {
 }
 
 .btn:hover {
-    background: #4e8bed;
-    border: 1px solid #08a83d;
+        color: #B396CE;
+    background: #ffffff;
+    border-color: #ffffff;
 }
 
 .btn {
-    background: #D9CFCE;
+    background: #AEB4D8;
     border-radius: 3px;
-    border: 1px solid #359154;
+    border: 1px solid #AEB4D8;
     padding:10px;
-        background:#0e3e8b;
+        background:#AEB4D8;
     font-weight: 600;
-    border-radius: 10px;
+    // border-radius: 10px;
+        border-radius: 4% !important;
+    box-shadow: 1px 1px 3px 1px grey !important;
 }
 .horizontal-table{
         .button-holder{
@@ -204,8 +227,8 @@ table th{
 .table{
     // margin-top:20px;
     //border: 2px solid #e2e2e2;
-    border-radius: 10px;
-    background: #4e8bed;
+    border-radius: 4px;
+    background: #C7DAFA;
     box-shadow: 1px 1px 1px 3 black;
 }
 tr{
@@ -221,8 +244,13 @@ button .glyphicon {
     margin-left: 0px;
     padding: 7px 11px;
 }
-.form-inline .amount-field{
-    width:60px;
+.form-inline {
+    .btn{
+        margin-right: 5px;
+    }
+    .amount-field{
+        width:60px;
+    }
 }
 .horizontal-table  div > .cell, .horizontal-table  input{
     display: inline-block;
@@ -348,7 +376,7 @@ button .glyphicon {
 .pull-left{
     float:left;
 }
-.filter-panel-searchbox{
+.comment-wrapper .filter-panel-searchbox{
     margin-top: 15px;
 }
 tfoot {
@@ -386,6 +414,7 @@ tfoot {
 .horizontal-table .body  input[disabled] {
     background:white;
     color:#000000;
+    border-color: transparent;
 }
 .horizontal-table .body  input {
     background: #D6BBDF;
@@ -494,7 +523,8 @@ table{
 
 }
 .date-card{
-    margin-top:55px;
+    // margin-top:55px;
+    padding: 15px 10px;
     .uib-datepicker{
         direction:ltr!important;
         /*position:inherit;*/

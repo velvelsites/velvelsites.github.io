@@ -1,39 +1,16 @@
-<!--<div class="col-xs-12 col-md-6">
-    <div class="card">
-        <h2>הוספת סוג משאב</h2>
-        <form class="form-inline" name="typeForm" ng-submit="$ctrl.addType(typeForm.$valid)" novalidate>
-            <div class="form-group">
-                <label class="sr-only" for="name">Name:</label>
-                <input type="text" placeholder="שם" class="form-control" name="name" id="name" ng-model="$ctrl.type.name" required />
-            </div>
-            <button type="submit" class="btn btn-primary" data-style="zoom-out" ladda="$ctrl.addingType">הוספה</button>
-        </form>
-    </div>
-</div>
-<div class="col-md-6 col-xs-12">
-    <div class="card">
-        <h2>הוספת למשאבים יומיים</h2>        
-        <form name="dailyDefaultForm" ng-submit="$ctrl.addDailyDefault(dailyDefaultForm.$valid)">
-            <div class="form-group">
-                <label class="sr-only" for="dailyDefault">user:</label>
-                <select class="form-control" name="dailyDefault" id="dailyDefault" ng-model="$ctrl.selectedType" ng-options="type as type.name for type in $ctrl.types"></select>
-                <button type="submit" class="btn btn-primary" data-style="zoom-out">הוספה</button>
-            </div>
-        </form>
-    </div>
-</div>-->
 <div class="col-md-6 col-xs-12">
     <div class="card">
         <h2>משאבים</h2>
         <form class="form-inline bottom-gap" name="typeForm" ng-submit="$ctrl.addType(typeForm.$valid)" novalidate>
                 <input type="text" placeholder="שם" class="form-control" name="name" id="name" ng-model="$ctrl.type.name" required />
             <button type="submit" class="btn btn-primary" data-style="zoom-out" ladda="$ctrl.addingType">הוספה</button>
-        </form>      
+        </form>
+    </div>
+    <div class="card">   
         <div class="content table-responsive table-full-width">
             <table class="table table-striped table-inverse">
                 <thead>
                     <tr>
-                        <!--<th>#</th>-->
                         <th>שם</th>
                         <div ng-show="$ctrl.currentUser.role._id == '57d2805f13d468481b1fe130' ||
                                         $ctrl.currentUser.role._id == '57d27d4313d468481b1fe12e'">
@@ -46,7 +23,6 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="type in $ctrl.types">
-                        <!--<th scope="row" ng-bind="$index+1"></th>-->
                         <td><input type="text" ng-disabled="!$ctrl.editDisabled[type._id]" ng-model="type.name"></td>
                         <div ng-show="$ctrl.currentUser.role._id == '57d2805f13d468481b1fe130' ||
                   $ctrl.currentUser.role._id == '57d27d4313d468481b1fe12e'">
@@ -67,15 +43,15 @@
         <form class="form-inline bottom-gap" name="dailyDefaultForm" ng-submit="$ctrl.addDailyDefault(dailyDefaultForm.$valid)">
                 <select class="form-control" name="dailyDefault" id="dailyDefault" ng-model="$ctrl.selectedType" ng-options="type as type.name for type in $ctrl.types"></select>
                 <button type="submit" class="btn btn-primary" data-style="zoom-out">הוספה</button>
-        </form>            
+        </form> 
+    </div>
+    <div class="card">          
          <div class="content table-responsive table-full-width">
             <table class="table table-striped table-inverse">
                 <thead>
                     <tr>
                         <th>#</th>
                         <th>שם</th>
-                        <!--<th>Value</th>-->
-                        <!--<th>מזהה</th>-->
                         <th></th>
                     </tr>
                 </thead>
@@ -85,10 +61,6 @@
                         <td ><input type="text" 
                                     ng-disabled="!$ctrl.editDisabled[type._id]"
                                     ng-model="type.name"></td>
-                        <!--<td ><input type="text" 
-                                    ng-disabled="!$ctrl.editDisabled[type._id]"
-                                    ng-model="type.value"></td>-->
-                        <!--<td ng-bind="type._id"></td>-->
                         <td ng-click="$ctrl.deleteDailyDefault(type._id)"><i class="glyphicon glyphicon-remove-circle"></td>
                     </tr>
                 </tbody>

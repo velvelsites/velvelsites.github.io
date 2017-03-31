@@ -6,6 +6,28 @@
             <button type="submit" class="btn btn-primary">הוספה</button>
         </form>
     </div>
+
+    <div class="card">
+        <div class="content table-responsive table-full-width">
+            <table class="table table-striped table-inverse">
+                <thead>
+                    <tr>
+                        <th colspan="6">אתרים</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="site in $ctrl.userSites">
+                        <td><input type="text" ng-disabled="!$ctrl.editDisabled[site._id]" ng-model="site.name"/></td>
+                        <td ng-click="$ctrl.getSiteUsers(site._id); $ctrl.selectedSite = site">
+                            <i class="glyphicon glyphicon-user"></i>
+                        </td>
+                        <td ng-click="$ctrl.editDisabled[site._id] = !$ctrl.editDisabled[site._id]"><i class="glyphicon glyphicon-pencil"></i></td>
+                        <td ng-click="$ctrl.deleteSite(site._id)"><i class="glyphicon glyphicon-trash"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 <div class="col-md-6 col-xs-12">
     <div class="card">
@@ -22,55 +44,24 @@
             <button type="submit" class="btn btn-primary">הוספה</button>
         </form>
     </div>
-</div>
-<div class="col-md-6 col-xs-12">
-    <div class="card">
-        <!--h2><span>אתרים</span></h2-->
-        <div class="content table-responsive table-full-width">
-        <table class="table table-striped table-inverse">
-            <thead>
-                <tr>
-                    <!--<th>#</th>-->
-                    <th colspan="6" class="sitestheader">אתרים</th>
-                    
-                </tr>
-            </thead>
-            <tbody>
-                <tr style="font-size: 18px;" ng-repeat="site in $ctrl.userSites">
-                    <!--<td scope="row" ng-bind="$index+1"></td>-->
-                    <td><input type="text" ng-disabled="!$ctrl.editDisabled[site._id]" ng-model="site.name"/></td>
-                    <td ng-click="$ctrl.getSiteUsers(site._id); $ctrl.selectedSite = site">
-                        <i class="glyphicon glyphicon-user"></i>
-                    </td>
-                    <td ng-click="$ctrl.editDisabled[site._id] = !$ctrl.editDisabled[site._id]"><i class="glyphicon glyphicon-pencil"></i></td>
-                    <!--<td ng-click="$ctrl.updateSite(site)"><i class="glyphicon glyphicon-floppy-disk"></td>-->
-                    <td ng-click="$ctrl.deleteSite(site._id)"><i class="glyphicon glyphicon-trash"></td>
-                </tr>
-            </tbody>
-
-        </table>
-    </div>
-</div>
-</div>
-<div ng-show="$ctrl.selectedSite">
-    <div class="col-md-6 col-xs-12">
+    <div ng-show="$ctrl.selectedSite">
         <div class="card">
-    
-        <table class="table table-striped table-inverse">
-            <thead>
-                <tr >
-                    <th colspan="2"><h2 style="font-size: 40px; font-weight: bold; text-align: center; color: white; padding-top: 5px;">מורשי אתר <span ng-bind="$ctrl.selectedSite.name"></span></h2></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr style="font-size: 18px;" ng-repeat="user in $ctrl.siteUsers" >
-                    <td ng-bind="user.name">
-                    </td>
-                    <td ng-click="$ctrl.removeUserFromSite(user._id, $ctrl.selectedSite._id)">
-                        <i class="glyphicon glyphicon-remove-circle"></i>
-                    </td>
-                </tr>
-            </tbody>
+            <table class="table table-striped table-inverse">
+                <thead>
+                    <tr >
+                        <th colspan="2">מורשי אתר <span ng-bind="$ctrl.selectedSite.name"></span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="user in $ctrl.siteUsers" >
+                        <td ng-bind="user.name">
+                        </td>
+                        <td ng-click="$ctrl.removeUserFromSite(user._id, $ctrl.selectedSite._id)">
+                            <i class="glyphicon glyphicon-remove-circle"></i>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
 </div>

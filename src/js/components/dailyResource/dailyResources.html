@@ -2,7 +2,7 @@
                                 || $ctrl.currentUser.role._id == '57d2837a13d468481b1fe133'">
     <div class="card">
         <h2>משאבי אתר</h2>
-        <form class="form-inline" name="resourceForm" ng-submit="$ctrl.addDailyResource(resourceForm.$valid)" novalidate>
+        <form class="form-inline row" name="resourceForm" ng-submit="$ctrl.addDailyResource(resourceForm.$valid)" novalidate>
             <div class="form-group col-xs-3-">
                 <label class="sr-only" for="site">site:</label>
                 <select class="form-control" name="site" id="site" ng-model="$ctrl.dailyResource.site" ng-change="$ctrl.getAllDailyResources()"
@@ -24,10 +24,13 @@
             </div>
             <button type="submit" class="btn btn-primary">הוספת משאב</button>
         </form>
-        <button type="submit" class="btn btn-primary" ng-click="$ctrl.addDefault()" ladda="$ctrl.adding" data-style="zoom-out">הוספת בסיס
-        </button>
-        <button type="submit" class="btn btn-primary" ng-click="$ctrl.addLastDailyResources($ctrl.dailyResource.site._id)">הוספת אחרון
-        </button> 
+        <div class="row">
+            <button type="submit" class="btn btn-primary" ng-click="$ctrl.addDefault()" ladda="$ctrl.adding" data-style="   zoom-out">הוספת בסיס
+            </button>
+            <button type="submit" class="btn btn-primary" ng-click="$ctrl.addLastDailyResources($ctrl.dailyResource.site._id)">הוספת אחרון
+            </button>     
+        </div>
+        
         
     </div>
 </div>
@@ -43,7 +46,8 @@
         </div>
     </div>
 </div>
-<div ng-repeat="currentSite in $ctrl.grouped">
+<div class="col-md-8">
+    <div ng-repeat="currentSite in $ctrl.grouped">
     <div class="horizontal-table col-xs-12">
         <div class="card">
             <div    class="card-header row" 
@@ -128,7 +132,20 @@
             </div>
         </div>
     </div>
+    </div>    
 </div>
+<div class="col-md-4">
+    <div class="card">
+        <div class="row">
+            <span> אתרים פעילים:</span> <span ng-bind="$ctrl.overview.sitesCount"></span>    
+        </div>
+        <div class="row">
+            <span> סך הכל משאבים:</span> <span ng-bind="$ctrl.overview.totalResources"></span>    
+        </div>
+    </div>
+</div>
+
+
 <div class="col-xs-12" ng-show="$ctrl.currentUser.role._id == '57d2805f13d468481b1fe130'
                                 || $ctrl.currentUser.role._id == '57d2837a13d468481b1fe133'">
     <div class="card">

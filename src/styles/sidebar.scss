@@ -22,7 +22,7 @@
 #page-content-wrapper {
     padding: 0px;
     padding-right: 250px;
-    padding-top: 60px;
+    padding-top: 110px;
     width: 100%;
         background: rgba(203, 203, 210, 0.15);
 }
@@ -135,7 +135,7 @@
     line-height: 60px;
 }
 #company-logo{
-    background: black;
+    background: transparent;
     margin: 0;
     padding: 11px 0px;
     width: 250px;
@@ -145,7 +145,7 @@
 }
 
 #company-logo2{
-    background: #707070;
+    background: transparent;
     margin: 0;
     padding: 11px 0px;
     width: 250px;
@@ -238,7 +238,7 @@ nav{
     cursor: pointer;
     }
     height: 100px;
-    background: black;
+    background: #444E76;
 }
 @media (max-width:  488px) {
     .card {
@@ -303,7 +303,7 @@ nav{
     overflow-y: auto;
     height: 100%;
     width: 250px;
-    background: #707070;
+    background: #8B9BD6;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;

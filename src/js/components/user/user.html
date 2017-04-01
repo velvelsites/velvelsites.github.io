@@ -41,7 +41,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="tbodyfont" ng-repeat="user in $ctrl.users">
+                    <tr ng-repeat="user in $ctrl.users">
                         <td><input type="text" ng-disabled="!$ctrl.editDisabled[user._id]" ng-model="user.name"></td>
                         <td><input type="text" ng-disabled="!$ctrl.editDisabled[user._id]" ng-model="user.email"></td>
                         <td>

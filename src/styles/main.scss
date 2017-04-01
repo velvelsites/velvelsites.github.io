@@ -5,7 +5,20 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 // $fa-font-path: '~font-awesome/fonts/';
 // @import '~font-awesome/scss/font-awesome.scss';
 
+@font-face {
+    font-family: OpenSansHebrew;
+    src: url(../fonts/OpenSansHebrew-Regular.ttf);
+}
 
+@font-face {
+    font-family: OpenSansHebrewBold;
+    src: url(../fonts/OpenSansHebrew-Bold.ttf);
+}
+
+@font-face {
+    font-family: OpenSansHebrewLight;
+    src: url(../fonts/OpenSansHebrew-Light.ttf);
+}
 
 html {
 	
@@ -18,6 +31,7 @@ html {
     overflow-y: scroll;
 }
 body{
+    font-family: OpenSansHebrew;
     background-color: #e9ebee;
     min-height:800px
 }
@@ -98,6 +112,7 @@ select{
     h2{
         padding-top:0px;
         margin-top:0px;
+        font-size:22px;
     }
     padding: 15px;
     border-radius: 4px;
@@ -149,12 +164,7 @@ select{
 }
 
 thead tr{
-    font-size: 18px; 
     color: white;
-}
-
-.tbodyfont {
-    font-size: 18px;
 }
 
 .sitestheader {
@@ -237,9 +247,9 @@ tr{
 thead{
     border:none;
 }
-button .glyphicon {
-    color: white;
-}
+// button .glyphicon {
+//     color: white;
+// }
 .input-group-btn:last-child > .btn, .input-group-btn:last-child > .btn-group {
     margin-left: 0px;
     padding: 7px 11px;
@@ -311,6 +321,11 @@ button .glyphicon {
 }
 
 @media (max-width:  488px) {
+    .card{
+        h2{
+            font-size:20px;
+        }
+    }
     .comment-wrapper{
         form{
             width: 100%;
@@ -523,14 +538,44 @@ table{
 
 }
 .date-card{
-    // margin-top:55px;
-    padding: 15px 10px;
     .uib-datepicker{
         direction:ltr!important;
-        /*position:inherit;*/
     }
 }
 .nav-collapse { 
     -webkit-transform: none !important; 
     z-index: 1 !important; 
 }
+.uib-datepicker-popup{
+    left: inherit!important;
+    right: 30px;
+    direction:ltr;
+    .btn-success, .btn-danger{
+        color:rgb(51, 51, 51);
+    }
+    .btn{
+        box-shadow: none!important;
+        padding: 5px 25px;
+        border-right: 1px solid #cccccc;
+        background: #f6f6f6;
+        border: 1px solid #cccccc;
+        font-family: "Louis Vuitton";
+        font-size: 12px;
+        padding: 5px 15px;
+        font-family: openSansHebrewLight;
+    }
+    .btn:focus, li:focus{
+        outline-color: transparent;
+    }
+    .btn:hover{
+        background: #f6f6f6;
+    }
+
+}
+
+
+
+
+
+
+

@@ -36,7 +36,6 @@
 </div>
 <div class="col-xs-12"  ng-show="$ctrl.currentUser.role._id == '57d27d4313d468481b1fe12e'">
     <div class="card date-card">
-    <br>
         <h4>תאריך</h4>
        <div class="col-md-4 col-xs-12">
             <input type="text" class="form-control" uib-datepicker-popup="{{$ctrl.format}}" ng-model="$ctrl.dailyResource.date" is-open="$ctrl.popupsOpen.addDate"
@@ -184,13 +183,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="tbodyfont" ng-repeat="currentDailyWorker in $ctrl.dailyWorkers">
+                    <tr ng-repeat="currentDailyWorker in $ctrl.dailyWorkers">
                         <td><input type="text" ng-disabled="!$ctrl.editDisabled[currentDailyWorker._id]" ng-model="currentDailyWorker.worker.name"></td>
                         <td><input type="text" ng-disabled="!$ctrl.editDisabled[currentDailyWorker._id]" ng-model="currentDailyWorker.hours"></td>
                         <td><input type="text" ng-disabled="!$ctrl.editDisabled[currentDailyWorker._id]" ng-model="currentDailyWorker.hourlyRate"></td>
                         <td><input  type="text" ng-disabled="!$ctrl.editDisabled[currentDailyWorker._id]"
                                     ng-model="currentDailyWorker.commute"></td>
-                        <td class="tbodyfont" ng-bind="$ctrl.dailyWorkerTotal(currentDailyWorker.hourlyRate,currentDailyWorker.hours,currentDailyWorker.commute)"></td>
+                        <td ng-bind="$ctrl.dailyWorkerTotal(currentDailyWorker.hourlyRate,currentDailyWorker.hours,currentDailyWorker.commute)"></td>
                         <td ng-click="$ctrl.editDisabled[currentDailyWorker._id] = !$ctrl.editDisabled[currentDailyWorker._id]"><i class="glyphicon glyphicon-pencil"></i></td>
                         <td ng-click="$ctrl.updateCurrentDailyWorker(currentDailyWorker)"><i class="glyphicon glyphicon-floppy-disk"></td>
                     <td ng-click="$ctrl.deleteCurrentDailyWorker(currentDailyWorker._id)"><i class="glyphicon glyphicon-trash"></td>

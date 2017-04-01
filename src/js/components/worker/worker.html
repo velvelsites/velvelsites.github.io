@@ -22,7 +22,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="tbodyfont" ng-repeat="worker in $ctrl.workers">
+                    <tr ng-repeat="worker in $ctrl.workers">
                         <td><input type="text" ng-disabled="!$ctrl.editDisabled[worker._id]" ng-model="worker.name"></td>
                         <td><input type="text" ng-disabled="!$ctrl.editDisabled[worker._id]" ng-model="worker.hourlyRate"></td>
                         <td ng-click="$ctrl.editDisabled[worker._id] = !$ctrl.editDisabled[worker._id]"><i class="glyphicon glyphicon-pencil"></i></td>

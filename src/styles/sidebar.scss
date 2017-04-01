@@ -50,11 +50,6 @@
 }
 
 .sidebar-nav li span{
-    i {
-        margin-left: 10px;
-        font-size: 22px;
-        padding-top: 10px;
-    }
     .spa {
         margin-top: -17px;
         font-size:20px
@@ -65,10 +60,7 @@
 
 
 .sidebar-nav li span {
-    .icon {
-        margin-left: 15px;
-    }
-
+     border-bottom: 1px solid rgba(255,255,255,0.2);
     .spa:hover{
         background: transparent;
     }
@@ -91,19 +83,13 @@
 
 
 .sidebar-nav li {
-    font-size: 20px;
-    text-indent: 20px;
     line-height: 40px;
     text-align: center;
-
-
 }
 
 .sidebar-nav li a,.sidebar-nav li span {
     display: block;
     color: white;
-     //background: #9f9f9f;
-    margin: 5px 15px;
     text-decoration: none;
     padding: 5px;
     border-radius: 5px;
@@ -233,7 +219,18 @@ nav{
         margin: 8px 3px;
         background: transparent;
         display: inline-block;
+        line-height: 64px;
+        a{
+            color:#ffffff;
+        }
+        a:hover{
+            cursor: pointer;
+        }
     }
+    .content:hover{
+            cursor: pointer;
+            background: rgba(255,255,255,0.1);
+        }
     action-btn{
     cursor: pointer;
     }
@@ -264,6 +261,7 @@ nav{
         .content{
             margin:0px;
             font-size:14px;
+            line-height:inherit;
         }
         padding:0px;
         height:45px;
@@ -282,7 +280,6 @@ nav{
     .sidebar-nav li span {
     display: block;
     color: white;
-    margin: 5px 15px;
     text-decoration: none;
     padding: 5px;
     border-radius: 5px;
@@ -317,18 +314,13 @@ nav{
 }
 @media (max-width: 488px) {
     #sidebar-wrapper{
-        width:150px;
+        width:120px;
     }
     .sidebar-nav li span{
-        text-align: center;
-        i {
-        margin-left: 10px;
-        font-size: 18px;
-        padding-top: 10px;
-    }   
+        text-align: center; 
     .spa {
         margin-top: -17px;
-        font-size:18px;
+        font-size:16px;
     }
     } 
 }

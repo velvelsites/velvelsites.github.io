@@ -5,6 +5,7 @@ class DailyWorkerService {
 	constructor() {
 		this.observers = [];
 		this.dailyWorkers = {}
+		this.allDailyWorkers = {}
 	}
 	notifyObservers() {
         _.forEach(this.observers, (callback) => {
@@ -29,15 +30,15 @@ class DailyWorkerService {
 		return this.$http.post(url + '/api/addDailyWorker',dailyWorker);
 
 	}
-	getDailyWorkers() {
-		let promise =  this.$http.get(url + '/api/getDailyWorkers');
+	getAllDailyWorkers() {
+		let promise =  this.$http.get(url + '/api/getAllDailyWorkers');
 		promise.then((res) => {
-			this.dailyWorkers = res.data;
+			this.allDailyWorkers = res.data;
 			this.notifyObservers();
 		});
 		return promise;
 	}
-	getAllDailyWorkers(object) {
+	getDailyWorkers(object) {
 		return this.$http.get(url + '/api/getDailyWorkers', {
 			params: {
 				date: object.date,
@@ -48,7 +49,7 @@ class DailyWorkerService {
 	updateDailyWorker(dailyWorker){
 		return this.$http.put(url + '/api/updateDailyWorker/' + dailyWorker._id,dailyWorker);
 	}
-	deleteDailyWorker(DailyWorkerId){
+	deleteDailyWorker(dailyWorkerId){
 		return this.$http.delete(url + '/api/deleteDailyWorker/' + dailyWorkerId);
 	}
 	validateClientObject(clientObject) {

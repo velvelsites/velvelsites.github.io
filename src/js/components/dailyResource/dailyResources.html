@@ -144,8 +144,17 @@
         </div>
     </div>
 </div>
-
-
+<div class="col-xs-12" ng-show="$ctrl.currentUser.role._id == '57d2805f13d468481b1fe130'
+                                || $ctrl.currentUser.role._id == '57d2837a13d468481b1fe133'">
+    <div class="card">
+        <h2>הוספת סוג משאב</h2>
+        <form class="form-inline" name="typeForm" ng-submit="$ctrl.addType(typeForm.$valid)" novalidate>
+            <label class="sr-only" for="name">Name:</label>
+            <input type="text" placeholder="שם" class="form-control" name="name" id="name" ng-model="$ctrl.type.name" required />
+            <button type="submit" class="btn btn-primary" data-style="zoom-out" ladda="$ctrl.addingType">הוספת סוג משאב</button>
+        </form>
+    </div>
+</div>
 <div class="col-xs-12" ng-show="$ctrl.currentUser.role._id == '57d2805f13d468481b1fe130'
                                 || $ctrl.currentUser.role._id == '57d2837a13d468481b1fe133'">
     <div class="card">
@@ -153,8 +162,9 @@
         <form class="form-inline" name="dailyWorkerForm" ng-submit="$ctrl.addDailyWorker(dailyWorkerForm.$valid)" novalidate>
             <label class="sr-only" for="name">Name:</label>
             <select class="form-control" name="worker" id="worker" ng-model="$ctrl.dailyWorker.worker" ng-options="worker as worker.name for worker in $ctrl.workers"></select>
-            <input type="number" placeholder="שעות" class="form-control" name="hours" id="hours" ng-model="$ctrl.dailyWorker.hours" required />
+            <input type="number" placeholder="שעות" min="1" value="1" class="form-control" name="hours" id="hours" ng-model="$ctrl.dailyWorker.hours" required />
             <input type="number" placeholder="שכר שעתי" class="form-control" name="hourlyRate" id="hourlyRate" ng-model="$ctrl.dailyWorker.worker.hourlyRate" required />
+            <input type="number" placeholder="נסיעות" class="form-control" name="commute" min="0" value="0" id="commute" ng-model="$ctrl.dailyWorker.commute" required />
             <button type="submit" class="btn btn-primary" data-style="zoom-out" ladda="$ctrl.addingWorker">הוספת סוג משאב</button>
         </form>
     </div>
@@ -166,6 +176,7 @@
                         <th>שם</th>
                         <th>שעות</th>
                         <th>שכר שעתי</th>
+                        <th>נסיעות</th>
                         <th>לתשלום</th>
                         <th></th>
                         <th></th>
@@ -175,11 +186,11 @@
                 <tbody>
                     <tr class="tbodyfont" ng-repeat="currentDailyWorker in $ctrl.dailyWorkers">
                         <td><input type="text" ng-disabled="!$ctrl.editDisabled[currentDailyWorker._id]" ng-model="currentDailyWorker.worker.name"></td>
-                        <!-- <td class="tbodyfont" ng-bind="currentDailyWorker.hours"></td> -->
                         <td><input type="text" ng-disabled="!$ctrl.editDisabled[currentDailyWorker._id]" ng-model="currentDailyWorker.hours"></td>
                         <td><input type="text" ng-disabled="!$ctrl.editDisabled[currentDailyWorker._id]" ng-model="currentDailyWorker.hourlyRate"></td>
-                        <!-- <td class="tbodyfont" ng-bind="currentDailyWorker.hourlyRate"></td> -->
-                        <td class="tbodyfont" ng-bind="currentDailyWorker.hourlyRate*currentDailyWorker.hours"></td>
+                        <td><input  type="text" ng-disabled="!$ctrl.editDisabled[currentDailyWorker._id]"
+                                    ng-model="currentDailyWorker.commute"></td>
+                        <td class="tbodyfont" ng-bind="$ctrl.dailyWorkerTotal(currentDailyWorker.hourlyRate,currentDailyWorker.hours,currentDailyWorker.commute)"></td>
                         <td ng-click="$ctrl.editDisabled[currentDailyWorker._id] = !$ctrl.editDisabled[currentDailyWorker._id]"><i class="glyphicon glyphicon-pencil"></i></td>
                         <td ng-click="$ctrl.updateCurrentDailyWorker(currentDailyWorker)"><i class="glyphicon glyphicon-floppy-disk"></td>
                     <td ng-click="$ctrl.deleteCurrentDailyWorker(currentDailyWorker._id)"><i class="glyphicon glyphicon-trash"></td>
@@ -187,16 +198,5 @@
                 </tbody>
             </table>
         </div>
-    </div>
-</div>
-<div class="col-xs-6" ng-show="$ctrl.currentUser.role._id == '57d2805f13d468481b1fe130'
-                                || $ctrl.currentUser.role._id == '57d2837a13d468481b1fe133'">
-    <div class="card">
-        <h2>הוספת סוג משאב</h2>
-        <form class="form-inline" name="typeForm" ng-submit="$ctrl.addType(typeForm.$valid)" novalidate>
-            <label class="sr-only" for="name">Name:</label>
-            <input type="text" placeholder="שם" class="form-control" name="name" id="name" ng-model="$ctrl.type.name" required />
-            <button type="submit" class="btn btn-primary" data-style="zoom-out" ladda="$ctrl.addingType">הוספת סוג משאב</button>
-        </form>
     </div>
 </div>

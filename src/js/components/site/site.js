@@ -69,7 +69,9 @@ class SiteCtrl {
         this.UserService.getUsers().then((response) => {
             console.log('User-component');
             this.users = response.data;
-            this.selectedUser = this.users[0];
+            if(this.users[0]){
+                this.selectedUser = this.users[0];   
+            }
         }, (error) => {
             console.log('Error retriving Users');
         });

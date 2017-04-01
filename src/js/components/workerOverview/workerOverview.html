@@ -1,0 +1,27 @@
+<div class="col-xs-12">
+  <div class="card">
+         <div ng-repeat="worker in $ctrl.grouped" class="table-responsive">
+            <h2 ng-bind="worker.workerName"></h2>
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr class="theader">
+                        <th>שם</th>
+                        <th>שעות</th>
+                        <th>שכר שעתי</th>
+                        <th>נסיעות</th>
+                        <th>לתשלום</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="tbodyfont" ng-repeat="currentDailyWorker in worker.sites">
+                        <td ng-bind="currentDailyWorker.name"></td>
+                        <td ng-bind="currentDailyWorker.hours"></td>
+                        <td ng-bind="currentDailyWorker.hourlyRate"></td>
+                        <td ng-bind="currentDailyWorker.commute"></td>
+                        <td ng-bind="$ctrl.dailyWorkerTotal(currentDailyWorker.hourlyRate,currentDailyWorker.hours,currentDailyWorker.commute)"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

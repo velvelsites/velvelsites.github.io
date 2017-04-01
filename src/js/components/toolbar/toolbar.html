@@ -6,8 +6,8 @@
     <div class="action-wrapper">
         <div class="content" type="button" ng-click="$ctrl.logout()">יציאה</div>
         <div class="content" ng-bind="$ctrl.currentUser.name"></div>
-        <div class="content" >
-            <a href="mailto:shlomoariel@gmail.com?Subject=Velvel resources site" target="_top">
+        <a class="content" href="mailto:shlomoariel@gmail.com?Subject=Velvel resources site">
+            <!-- <a href="mailto:shlomoariel@gmail.com?Subject=Velvel resources site" target="_top"> -->
             <span class="hidden-xs">Copyright </span>© Shlomo Ariel
             </a>
         </div>
@@ -34,7 +34,7 @@
         <div ng-show="$ctrl.currentUser.role._id == '57d27d4313d468481b1fe12e'">
             <li>
                 <span  href="#" ng-click="$ctrl.go('role')" ng-class="{active:$ctrl.current=='role'}">
-                    <i style="margin-left: 20px;" class="glyphalign glyphicon glyphicon-cog"></i>
+                    <i class="glyphalign glyphicon glyphicon-cog"></i>
                     <div class="spa">תפקידים</div></span>
             </li>
         </div>
@@ -62,6 +62,17 @@
                     <i class="glyphicon glyphicon-home"></i>
                     <div class="spa">
                         משאבים
+                    </div>
+                </span>
+            </li>
+        </div>
+        <div ng-show="$ctrl.currentUser.role._id == '57d2805f13d468481b1fe130' ||
+                                        $ctrl.currentUser.role._id == '57d27d4313d468481b1fe12e'">
+            <li>
+                <span href="#" ng-click="$ctrl.go('workerOverview')" ng-class="{active:$ctrl.current=='workerOverview'}">
+                    <i class="glyphicon glyphicon-home"></i>
+                    <div class="spa">
+                        פועלים
                     </div>
                 </span>
             </li>

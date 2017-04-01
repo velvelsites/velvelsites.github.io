@@ -149,6 +149,19 @@ class DailyResourceCtrl {
         }
         this.editDisabled[item._id] = !this.editDisabled[item._id];
     }
+    getDailyWorkers(){
+        let object = {};
+        object.date = this.formatDate(this.dailyResource.date);
+        object.sites = [];
+        _.mapValues(this.sites, function (o) {
+            object.sites.push(o._id);
+        });
+        let resourceCall = this.ResourceService.getAllDailyResources(object);
+        let commentCall = this.CommentService.getAllDailyComments(object);
+        this.DailyWorkerService.getDailyWorkers(object).then((res)=>{
+            this.dailyWorkers = res.data;
+        });
+    }
      updateDailyResource(resource) {
         this.ResourceService.updateDailyResource(resource)
             .then((res) => {
@@ -204,6 +217,12 @@ class DailyResourceCtrl {
                 this.getAllDailyResources();
             });
     }
+    deleteCurrentDailyWorker(id){
+        this.DailyWorkerService.deleteDailyWorker(id)
+            .then((res) => {
+                this.getDailyWorkers();
+            });
+    }
     getAllDailyResources() {
         if (!this.sites || this.sites.length === undefined || this.sites.length < 1) {
             return;
@@ -216,7 +235,7 @@ class DailyResourceCtrl {
         });
         let resourceCall = this.ResourceService.getAllDailyResources(object);
         let commentCall = this.CommentService.getAllDailyComments(object);
-        let dailyWorkerCall = this.DailyWorkerService.getAllDailyWorkers(object);
+        let dailyWorkerCall = this.DailyWorkerService.getDailyWorkers(object);
 
         this.$q.all([resourceCall, commentCall, dailyWorkerCall])
             .then((resArray)=> {
@@ -230,6 +249,9 @@ class DailyResourceCtrl {
                 this.loading = false;
             })
         
+    }
+    dailyWorkerTotal(hours, hourlyRate, commute){
+        return (hours * hourlyRate) + commute;
     }
     addAllResourceSum() {
         this.overview = {

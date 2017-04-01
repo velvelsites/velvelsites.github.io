@@ -1,9 +1,25 @@
 @Inject('ResourceService', 'TypeService')
 class ResourceCtrl {
     constructor() {
-        this.getResources();
-        this.getTypes();
+        this.initResources();
+        this.initTypes();
         this.resource = {};
+    }
+    initResources(){
+        if(this.ResourceService.resources.length){
+            this.resources = this.ResourceService.Resources;
+            this.selectedResource = this.resources[0];
+        } else{
+            this.getResources();
+        }
+    }
+    initTypes(){
+        if(this.TypeService.types.length){
+            this.types = this.TypeService.types;
+            this.selectedType = this.types[0];
+        } else{
+            this.getTypes();
+        }
     }
     addResource(isValid) {
         if (isValid) {

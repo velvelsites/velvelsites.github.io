@@ -7,7 +7,8 @@
         <div class="content" type="button" ng-click="$ctrl.logout()">יציאה</div>
         <div class="content" ng-bind="$ctrl.currentUser.name"></div>
         <div class="content" >
-            <a href="mailto:shlomoariel@gmail.com?Subject=Velvel resources site" target="_top">Copyright © Shlomo Ariel
+            <a href="mailto:shlomoariel@gmail.com?Subject=Velvel resources site" target="_top">
+            <span class="hidden-xs">Copyright </span>© Shlomo Ariel
             </a>
         </div>
         <!--<div class="content" ng-bind="$ctrl.currentUser.email"></div>-->
@@ -61,6 +62,16 @@
                     <i class="glyphicon glyphicon-home"></i>
                     <div class="spa">
                         משאבים
+                    </div>
+                </span>
+            </li>
+        </div>
+        <div ng-show="$ctrl.currentUser.role._id == '57d2837a13d468481b1fe133'">
+            <li>
+                <span href="#" ng-click="$ctrl.go('worker')" ng-class="{active:$ctrl.current=='worker'}">
+                    <i class="glyphicon glyphicon-home"></i>
+                    <div class="spa">
+                        פועלים
                     </div>
                 </span>
             </li>

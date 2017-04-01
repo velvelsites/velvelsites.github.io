@@ -1,8 +1,23 @@
 @Inject('MainService', 'TypeService','ResourceService')
 class TypeCtrl {
     constructor() {
-        this.getTypes();
-        this.getDailyDefaults();
+        this.initTypes();
+        this.initDailyDefaults();
+    }
+    initTypes(){
+        if(this.TypeService.types.length){
+            this.types = this.TypeService.types;
+            this.selectedType = this.types[0];
+        } else{
+            this.getTypes();
+        }
+    }
+    initDailyDefaults(){
+        if(this.ResourceService.dailyDefaults.length){
+            this.dailyDefaults = this.ResourceService.dailyDefaults;
+        } else{
+            this.getDailyDefaults();
+        }
     }
     addType(isValid) {
         if (isValid) {

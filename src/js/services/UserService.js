@@ -3,6 +3,8 @@ let url = 'https://velvel-server.herokuapp.com';
 @Inject('$http','$q')
 class UserService {
 	constructor() {
+		this.users = [];
+		this.userSites = [];
 	}
 	addUser(user) {
 		let promise = this.validateClientObject(user);
@@ -19,7 +21,11 @@ class UserService {
 		return this.$http.get(url + '/api/getUser/' + id);
 	}
 	getUsers() {
-		return this.$http.get(url + '/api/getUsers');
+		let promise = this.$http.get(url + '/api/getUsers');
+		promise.then((res) => {
+			this.users = res.data
+		});
+		return promise;
 	}
 	authenticate(user){
 		let promise = this.validateClientObject(user);
@@ -36,7 +42,11 @@ class UserService {
 		return this.$http.post(url + '/api/changePassword', user);
 	}
 	getUserSites(userId) {
-		return this.$http.get(url + '/api/getUserSites/' + userId);
+		let promise = this.$http.get(url + '/api/getUserSites/' + userId);
+		promise.then((res) => {
+			this.userSites = res.data
+		});
+		return promise;
 	}
 	updateUser(user){
 		return this.$http.put(url + '/api/updateUser/' + user._id,user);

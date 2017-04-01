@@ -3,6 +3,7 @@ let url = 'https://velvel-server.herokuapp.com';
 @Inject('$http','$q')
 class RoleService {
 	constructor() {
+		this.roles = [];
 	}
 	getRole(id) {
 		let promise = this.validateClientObject(id);
@@ -21,7 +22,11 @@ class RoleService {
 
 	}
 	getRoles() {
-		return this.$http.get(url + '/api/getRoles');
+		let promise = this.$http.get(url + '/api/getRoles');
+		promise.then((res) => {
+			this.roles = res.data
+		});
+		return promise;
 	}
 	updateRole(role){
 		return this.$http.put(url + '/api/updateRole/' + role._id,role);

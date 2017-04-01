@@ -55705,14 +55705,18 @@
 		"./components/type/type.js": 464,
 		"./components/user/state.user.js": 466,
 		"./components/user/user.js": 467,
-		"./services/AuthService.js": 469,
-		"./services/CommentService.js": 471,
-		"./services/ResourceService.js": 472,
-		"./services/RoleService.js": 473,
-		"./services/SiteService.js": 474,
-		"./services/TypeService.js": 475,
-		"./services/UserService.js": 476,
-		"./services/mainService.js": 477
+		"./components/worker/state.worker.js": 469,
+		"./components/worker/worker.js": 470,
+		"./services/AuthService.js": 472,
+		"./services/CommentService.js": 474,
+		"./services/DailyWorkerService.js": 475,
+		"./services/ResourceService.js": 476,
+		"./services/RoleService.js": 477,
+		"./services/SiteService.js": 478,
+		"./services/TypeService.js": 479,
+		"./services/UserService.js": 480,
+		"./services/WorkerService.js": 481,
+		"./services/mainService.js": 482
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -55747,13 +55751,15 @@
 	var DATE_FORMAT = 'yyyy-MM-dd';
 
 	var DailyResourceCtrl = function () {
-	    DailyResourceCtrl.$inject = ["ResourceService", "SiteService", "$scope", "TypeService", "CommentService", "AuthService", "$q"];
-	    function DailyResourceCtrl(ResourceService, SiteService, $scope, TypeService, CommentService, AuthService, $q) {
+	    DailyResourceCtrl.$inject = ["ResourceService", "SiteService", "$scope", "TypeService", "CommentService", "AuthService", "WorkerService", "DailyWorkerService", "$q"];
+	    function DailyResourceCtrl(ResourceService, SiteService, $scope, TypeService, CommentService, AuthService, WorkerService, DailyWorkerService, $q) {
 	        var _this = this;
 
 	        _classCallCheck(this, DailyResourceCtrl);
 
 	        this.$q = $q;
+	        this.DailyWorkerService = DailyWorkerService;
+	        this.WorkerService = WorkerService;
 	        this.AuthService = AuthService;
 	        this.CommentService = CommentService;
 	        this.TypeService = TypeService;
@@ -55763,6 +55769,7 @@
 
 	        this.loading = true;
 	        this.dailyResource = {};
+	        this.dailyWorker = {};
 	        this.resourceTypes = TypeService.resourceTypes;
 	        this.editDisabled = {};
 	        this.moment = _momentTimezone2.default;
@@ -55772,6 +55779,12 @@
 	        this.TypeService.registerUserUpdateCallback(function () {
 	            _this.initResources();
 	        });
+	        this.DailyWorkerService.registerUserUpdateCallback(function () {
+	            _this.initDailyWorkers();
+	        });
+	        this.WorkerService.registerUserUpdateCallback(function () {
+	            _this.initWorkers();
+	        });
 	        AuthService.registerUserUpdateCallback(function () {
 	            _this.currentUser = AuthService.currentUser;
 	        });
@@ -55779,6 +55792,8 @@
 	        this.initSites();
 	        this.initResources();
 	        this.initDates();
+	        this.initWorkers();
+	        this.initDailyWorkers();
 	    }
 
 	    _createClass(DailyResourceCtrl, [{
@@ -55786,6 +55801,17 @@
 	        value: function initResources() {
 	            this.resourceTypes = this.TypeService.types;
 	            this.dailyResource.resourceType = this.resourceTypes[0];
+	        }
+	    }, {
+	        key: 'initWorkers',
+	        value: function initWorkers() {
+	            this.workers = this.WorkerService.workers;
+	            this.dailyWorker.worker = this.workers[0];
+	        }
+	    }, {
+	        key: 'initDailyWorkers',
+	        value: function initDailyWorkers() {
+	            this.dailyWorkers = this.DailyWorkerService.dailyWorkers;
 	        }
 	    }, {
 	        key: 'initSites',
@@ -55846,22 +55872,42 @@
 	            }
 	        }
 	    }, {
+	        key: 'addDailyWorker',
+	        value: function addDailyWorker(isValid) {
+	            var _this4 = this;
+
+	            if (isValid) {
+	                this.addingWorker = true;
+	                var dailyResource = Object.assign({}, this.dailyResource);
+	                this.dailyWorker.date = this.formatDate(dailyResource.date);
+	                this.dailyWorker.user = {};
+	                this.dailyWorker.user._id = this.currentUser._id;
+	                this.dailyWorker.site = this.dailyResource.site;
+	                this.dailyWorker.hourlyRate = this.dailyWorker.worker.hourlyRate;
+	                this.DailyWorkerService.addDailyWorker(this.dailyWorker).then(function (response) {
+	                    // this.getTypes();
+	                }).finally(function () {
+	                    _this4.addingWorker = false;
+	                });
+	            }
+	        }
+	    }, {
 	        key: 'addDefault',
 	        value: function addDefault() {
-	            var _this4 = this;
+	            var _this5 = this;
 
 	            this.adding = true;
 	            var dailyResource = Object.assign({}, this.dailyResource);
 	            dailyResource.date = this.formatDate(dailyResource.date);
 	            this.ResourceService.addDailyDefaultResources(dailyResource).then(function (response) {
-	                _this4.getAllDailyResources();
-	                _this4.adding = false;
+	                _this5.getAllDailyResources();
+	                _this5.adding = false;
 	            });
 	        }
 	    }, {
 	        key: 'addDailyResource',
 	        value: function addDailyResource(isValid) {
-	            var _this5 = this;
+	            var _this6 = this;
 
 	            if (isValid) {
 	                var dailyResource = Object.assign({}, this.dailyResource);
@@ -55869,27 +55915,27 @@
 	                dailyResource.site = {};
 	                dailyResource.site._id = this.dailyResource.site._id;
 	                this.ResourceService.addDailyResource(dailyResource).then(function (response) {
-	                    _this5.getAllDailyResources();
+	                    _this6.getAllDailyResources();
 	                });
 	            }
 	        }
 	    }, {
 	        key: 'addLastDailyResources',
 	        value: function addLastDailyResources(siteId) {
-	            var _this6 = this;
+	            var _this7 = this;
 
 	            var object = {
 	                siteId: siteId
 	            };
 	            object.date = this.formatDate(this.dailyResource.date);
 	            this.ResourceService.addLastDailyResources(object).then(function (res) {
-	                _this6.getAllDailyResources();
+	                _this7.getAllDailyResources();
 	            });
 	        }
 	    }, {
 	        key: 'addDailyComment',
 	        value: function addDailyComment(siteId) {
-	            var _this7 = this;
+	            var _this8 = this;
 
 	            if (this.dailyComments[siteId].site._id && this.dailyComments[siteId].text) {
 	                var dailyComment = Object.assign({}, this.dailyComments[siteId]);
@@ -55897,7 +55943,7 @@
 	                dailyComment.user._id = this.currentUser._id;
 	                dailyComment.date = this.formatDate(dailyComment.date);
 	                this.CommentService.addDailyComment(dailyComment).then(function (res) {
-	                    _this7.getAllDailyResources();
+	                    _this8.getAllDailyResources();
 	                });
 	            }
 	        }
@@ -55915,32 +55961,41 @@
 	    }, {
 	        key: 'updateDailyResource',
 	        value: function updateDailyResource(resource) {
-	            var _this8 = this;
+	            var _this9 = this;
 
 	            this.ResourceService.updateDailyResource(resource).then(function (res) {
-	                _this8.editDisabled[resource._id] = false;
+	                _this9.editDisabled[resource._id] = false;
+	            });
+	        }
+	    }, {
+	        key: 'updateCurrentDailyWorker',
+	        value: function updateCurrentDailyWorker(dailyWorker) {
+	            var _this10 = this;
+
+	            this.DailyWorkerService.updateDailyWorker(dailyWorker).then(function (res) {
+	                _this10.editDisabled[dailyWorker._id] = false;
 	            });
 	        }
 	    }, {
 	        key: 'increaceDailyResource',
 	        value: function increaceDailyResource(resource) {
-	            var _this9 = this;
+	            var _this11 = this;
 
 	            resource.amount += 1;
 	            this.ResourceService.updateDailyResource(resource).then(function (res) {
-	                _this9.addAllResourceSum();
+	                _this11.addAllResourceSum();
 	                // resource.amount += 1;
 	            });
 	        }
 	    }, {
 	        key: 'decreaseDailyResource',
 	        value: function decreaseDailyResource(resource) {
-	            var _this10 = this;
+	            var _this12 = this;
 
 	            this.ResourceService.updateDailyResource(resource);
 	            resource.amount -= 1;
 	            this.ResourceService.updateDailyResource(resource).then(function (res) {
-	                _this10.addAllResourceSum();
+	                _this12.addAllResourceSum();
 	                // resource.amount -= 1;
 	            });
 	        }
@@ -55965,25 +56020,25 @@
 	    }, {
 	        key: 'deleteDailyResource',
 	        value: function deleteDailyResource(dailyResourceId) {
-	            var _this11 = this;
+	            var _this13 = this;
 
 	            this.ResourceService.deleteDailyResource(dailyResourceId).then(function (res) {
-	                _this11.getAllDailyResources();
+	                _this13.getAllDailyResources();
 	            });
 	        }
 	    }, {
 	        key: 'deleteDailyComment',
 	        value: function deleteDailyComment(dailyCommentId) {
-	            var _this12 = this;
+	            var _this14 = this;
 
 	            this.CommentService.deleteDailyComment(dailyCommentId).then(function (res) {
-	                _this12.getAllDailyResources();
+	                _this14.getAllDailyResources();
 	            });
 	        }
 	    }, {
 	        key: 'getAllDailyResources',
 	        value: function getAllDailyResources() {
-	            var _this13 = this;
+	            var _this15 = this;
 
 	            if (!this.sites || this.sites.length === undefined || this.sites.length < 1) {
 	                return;
@@ -55996,21 +56051,23 @@
 	            });
 	            var resourceCall = this.ResourceService.getAllDailyResources(object);
 	            var commentCall = this.CommentService.getAllDailyComments(object);
+	            var dailyWorkerCall = this.DailyWorkerService.getAllDailyWorkers(object);
 
-	            this.$q.all([resourceCall, commentCall]).then(function (resArray) {
-	                _this13.resources = resArray[0].data;
-	                _this13.comments = resArray[1].data;
-	                _this13.addAllResourceSum();
+	            this.$q.all([resourceCall, commentCall, dailyWorkerCall]).then(function (resArray) {
+	                _this15.resources = resArray[0].data;
+	                _this15.comments = resArray[1].data;
+	                _this15.dailyWorkers = resArray[2].data;
+	                _this15.addAllResourceSum();
 	            }).catch(function (response) {
 	                console.log('Failed to retrive daily data');
 	            }).finally(function () {
-	                _this13.loading = false;
+	                _this15.loading = false;
 	            });
 	        }
 	    }, {
 	        key: 'addAllResourceSum',
 	        value: function addAllResourceSum() {
-	            var _this14 = this;
+	            var _this16 = this;
 
 	            this.overview = {
 	                sitesCount: 0,
@@ -56022,29 +56079,29 @@
 	                var all = _.sumBy(key, function (o) {
 	                    return o.amount;
 	                });
-	                _this14.grouped.push({
+	                _this16.grouped.push({
 	                    resources: key,
-	                    comments: _.filter(_this14.comments, function (o) {
+	                    comments: _.filter(_this16.comments, function (o) {
 	                        return o.site._id === key[0].site._id;
 	                    }),
 	                    total: all,
 	                    siteName: key[0].site.name,
 	                    siteId: key[0].site._id });
-	                _this14.overview.sitesCount += 1;
-	                _this14.overview.totalResources += all;
+	                _this16.overview.sitesCount += 1;
+	                _this16.overview.totalResources += all;
 	            });
 	        }
 	    }, {
 	        key: 'getDailyResources',
 	        value: function getDailyResources() {
-	            var _this15 = this;
+	            var _this17 = this;
 
 	            if (this.dailyResource.site) {
 	                var resourcesDate = this.dailyResource.date;
 	                resourcesDate = this.formatDate(resourcesDate);
 	                this.ResourceService.getAllDailyResources(resourcesDate, this.dailyResource.site._id).then(function (response) {
 	                    console.log('resource-component');
-	                    _this15.resources = response.data;
+	                    _this17.resources = response.data;
 	                }, function (error) {
 	                    console.log('Error retriving resources');
 	                });
@@ -56055,7 +56112,7 @@
 	    return DailyResourceCtrl;
 	}();
 
-	DailyResourceCtrl.$inject = ['ResourceService', 'SiteService', '$scope', 'TypeService', 'CommentService', 'AuthService', '$q'];
+	DailyResourceCtrl.$inject = ['ResourceService', 'SiteService', '$scope', 'TypeService', 'CommentService', 'AuthService', 'WorkerService', 'DailyWorkerService', '$q'];
 
 	angular.module('velvel-app').component('dailyResources', {
 	    template: __webpack_require__(437),
@@ -72186,7 +72243,7 @@
 /* 437 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"col-xs-12\" ng-show=\"$ctrl.currentUser.role._id == '57d2805f13d468481b1fe130'\n                                || $ctrl.currentUser.role._id == '57d2837a13d468481b1fe133'\">\n    <div class=\"card\">\n        <h2>משאבי אתר</h2>\n        <form class=\"form-inline row\" name=\"resourceForm\" ng-submit=\"$ctrl.addDailyResource(resourceForm.$valid)\" novalidate>\n            <div class=\"form-group col-xs-3-\">\n                <label class=\"sr-only\" for=\"site\">site:</label>\n                <select class=\"form-control\" name=\"site\" id=\"site\" ng-model=\"$ctrl.dailyResource.site\" ng-change=\"$ctrl.getAllDailyResources()\"\n                    ng-options=\"site as site.name for site in $ctrl.sites\"></select>\n            </div>\n            <div class=\"form-group col-xs-3-\">\n                <label class=\"sr-only\" for=\"site\">site:</label>\n                <select class=\"form-control\" name=\"site\" id=\"site\" ng-model=\"$ctrl.dailyResource.resourceType\" ng-options=\"resourceType as resourceType.name for resourceType in $ctrl.resourceTypes\"></select>\n            </div>\n            <div class=\"form-group filter-panel-searchbox\">\n                <input type=\"text\" placeholder=\"כמות\" class=\"form-control amount-field\" ng-model=\"$ctrl.dailyResource.amount\">\n            </div>\n            <div class=\"form-group\">\n                <input type=\"text\" class=\"form-control\" uib-datepicker-popup=\"{{$ctrl.format}}\" ng-model=\"$ctrl.dailyResource.date\" is-open=\"$ctrl.popupsOpen.addDate\"\n                    ng-change=\"$ctrl.getAllDailyResources()\" datepicker-options=\"$ctrl.selectedDateOptions\" ng-click=\"$ctrl.openDate('addDate')\"\n                    close-text=\"Close\" data-datepicker-popup={{$ctrl.format}} />\n                <span class=\"input-group-btn\">\n                    </span>\n            </div>\n            <button type=\"submit\" class=\"btn btn-primary\">הוספת משאב</button>\n        </form>\n        <div class=\"row\">\n            <button type=\"submit\" class=\"btn btn-primary\" ng-click=\"$ctrl.addDefault()\" ladda=\"$ctrl.adding\" data-style=\"   zoom-out\">הוספת בסיס\n            </button>\n            <button type=\"submit\" class=\"btn btn-primary\" ng-click=\"$ctrl.addLastDailyResources($ctrl.dailyResource.site._id)\">הוספת אחרון\n            </button>     \n        </div>\n        \n        \n    </div>\n</div>\n<div class=\"col-xs-12\"  ng-show=\"$ctrl.currentUser.role._id == '57d27d4313d468481b1fe12e'\">\n    <div class=\"card date-card\">\n    <br>\n        <h4>תאריך</h4>\n       <div class=\"col-md-4 col-xs-12\">\n            <input type=\"text\" class=\"form-control\" uib-datepicker-popup=\"{{$ctrl.format}}\" ng-model=\"$ctrl.dailyResource.date\" is-open=\"$ctrl.popupsOpen.addDate\"\n                ng-change=\"$ctrl.getAllDailyResources()\" datepicker-options=\"$ctrl.selectedDateOptions\" ng-click=\"$ctrl.openDate('addDate')\"\n                close-text=\"Close\" data-datepicker-popup={{$ctrl.format}} />\n            <span class=\"input-group-btn\"></span>\n        </div>\n    </div>\n</div>\n<div class=\"col-md-8\">\n    <div ng-repeat=\"currentSite in $ctrl.grouped\">\n    <div class=\"horizontal-table col-xs-12\">\n        <div class=\"card\">\n            <div    class=\"card-header row\" \n                    ng-click=\"$ctrl.showSection[currentSite.siteId] = !$ctrl.showSection[currentSite.siteId]\">\n                <span class=\"lead-button\">\n                    <i  class=\"glyphicon glyphicon glyphicon-plus\"\n                    ng-show=\"!$ctrl.showSection[currentSite.siteId]\"></i>\n                <i  class=\"glyphicon glyphicon glyphicon-minus\"\n                    ng-show=\"$ctrl.showSection[currentSite.siteId]\"></i>\n                </span>\n                <span class=\"title\" ng-bind=\"currentSite.siteName\"></span>\n                <span class=\"amount\" ng-bind=\"' משאבים: ' + currentSite.total\"></span>\n                <span class=\"trail-button\">\n                    <i  class=\"glyphicon glyphicon glyphicon-envelope\"\n                    ng-show=\"currentSite.comments.length>0\"></i>    \n                </span>\n                \n            </div>\n            <div class=\"card-content\" ng-show=\"$ctrl.showSection[currentSite.siteId]\">\n                <!-- <h3 ng-bind=\"currentSite.siteName\"></h3> -->\n                <div ng-repeat=\"item in currentSite.resources\" class=\"cell\">\n                    <div ng-bind=\"item.resourceType.name\" class=\"header\"></div>\n                    <div class=\"body\">\n                        <div class=\"button-holder\">\n                            <div ng-click=\"$ctrl.increaceDailyResource(item)\">\n                                <i class=\"glyphicon glyphicon glyphicon-plus\"></i>\n                            </div>\n                            <div ng-click=\"$ctrl.decreaseDailyResource(item)\">\n                                <i class=\"glyphicon glyphicon-minus\"></i>\n                            </div>\n                        </div>\n                        <div><input type=\"text\" ng-disabled=\"!$ctrl.editDisabled[item._id]\" ng-model=\"item.amount\"></div>\n                        <div class=\"button-holder\" ng-show=\"!item.sum\">\n                            <div ng-click=\"$ctrl.editField(item)\" ng-class=\"{'inverse':$ctrl.editDisabled[item._id]}\">\n                                <i class=\"glyphicon glyphicon glyphicon-edit\"></i>\n                            </div>\n                            <div ng-click=\"$ctrl.deleteDailyResource(item._id)\">\n                                <i class=\"glyphicon glyphicon-remove-circle\"></i>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"sum-row\">\n                    <span>סך הכל:</span><span ng-bind=\"currentSite.total\"></span>\n                </div>\n                <div class=\"comment-wrapper\">\n                    <h3>הערות</h3>\n                    <form class=\"\" name=\"commentForm\" ng-submit=\"$ctrl.addDailyComment(currentSite.siteId)\" novalidate>\n                        <input type=\"hidden\"    ng-model=\"$ctrl.dailyComments[currentSite.siteId].site._id\"\n                                                value=\"{{currentSite.siteId}}\"\n                                                ng-init=\"$ctrl.dailyComments[currentSite.siteId].site._id=currentSite.siteId\"\n                        />\n                        <div class=\"form-group filter-panel-searchbox\">\n                            <textarea   type=\"text\" placeholder=\"הוספת הערה\" class=\"form-control amount-field\"\n                                        ng-model=\"$ctrl.dailyComments[currentSite.siteId].text\">\n                            </textarea>\n                        </div>\n                        <div class=\"divider\"></div>\n                        <button type=\"submit\" class=\"btn btn-primary\">הוספת הערה</button>\n                    </form>\n                    <div class=\"content table-responsive table-full-width\">\n                        <table class=\"table table-hover table-striped\"> \n                            <thead>\n                                <tr class=\"bgcolor\">\n                                    <td>משתמש</td>\n                                    <td>הערה</td>\n                                    <td></td>\n                                </tr>\n                            </thead>\n                            <tbody>\n                                <tr class=\"commentsfont\" ng-repeat=\"comment in currentSite.comments\">\n                                    <td ng-bind=\"comment.user.name\"></td>\n                                    <td ng-bind=\"comment.text\"></td>\n                                    <td ng-click=\"$ctrl.deleteDailyComment(comment._id)\">\n                                        <i class=\"glyphicon glyphicon-remove-circle\"></i>\n                                    </td>\n                                </tr>\n                            </tbody>\n                        </table>\n                     </div>\n                </div>\n            </div>\n        </div>\n    </div>\n    </div>    \n</div>\n<div class=\"col-md-4\">\n    <div class=\"card\">\n        <div class=\"row\">\n            <span> אתרים פעילים:</span> <span ng-bind=\"$ctrl.overview.sitesCount\"></span>    \n        </div>\n        <div class=\"row\">\n            <span> סך הכל משאבים:</span> <span ng-bind=\"$ctrl.overview.totalResources\"></span>    \n        </div>\n    </div>\n</div>\n\n\n<div class=\"col-xs-12\" ng-show=\"$ctrl.currentUser.role._id == '57d2805f13d468481b1fe130'\n                                || $ctrl.currentUser.role._id == '57d2837a13d468481b1fe133'\">\n    <div class=\"card\">\n        <h2>הוספת סוג משאב</h2>\n        <form class=\"form-inline\" name=\"typeForm\" ng-submit=\"$ctrl.addType(typeForm.$valid)\" novalidate>\n            <label class=\"sr-only\" for=\"name\">Name:</label>\n            <input type=\"text\" placeholder=\"שם\" class=\"form-control\" name=\"name\" id=\"name\" ng-model=\"$ctrl.type.name\" required />\n            <button type=\"submit\" class=\"btn btn-primary\" data-style=\"zoom-out\" ladda=\"$ctrl.addingType\">הוספת סוג משאב</button>\n        </form>\n    </div>\n</div>";
+	module.exports = "<div class=\"col-xs-12\" ng-show=\"$ctrl.currentUser.role._id == '57d2805f13d468481b1fe130'\n                                || $ctrl.currentUser.role._id == '57d2837a13d468481b1fe133'\">\n    <div class=\"card\">\n        <h2>משאבי אתר</h2>\n        <form class=\"form-inline row\" name=\"resourceForm\" ng-submit=\"$ctrl.addDailyResource(resourceForm.$valid)\" novalidate>\n            <div class=\"form-group col-xs-3-\">\n                <label class=\"sr-only\" for=\"site\">site:</label>\n                <select class=\"form-control\" name=\"site\" id=\"site\" ng-model=\"$ctrl.dailyResource.site\" ng-change=\"$ctrl.getAllDailyResources()\"\n                    ng-options=\"site as site.name for site in $ctrl.sites\"></select>\n            </div>\n            <div class=\"form-group col-xs-3-\">\n                <label class=\"sr-only\" for=\"site\">site:</label>\n                <select class=\"form-control\" name=\"site\" id=\"site\" ng-model=\"$ctrl.dailyResource.resourceType\" ng-options=\"resourceType as resourceType.name for resourceType in $ctrl.resourceTypes\"></select>\n            </div>\n            <div class=\"form-group filter-panel-searchbox\">\n                <input type=\"text\" placeholder=\"כמות\" class=\"form-control amount-field\" ng-model=\"$ctrl.dailyResource.amount\">\n            </div>\n            <div class=\"form-group\">\n                <input type=\"text\" class=\"form-control\" uib-datepicker-popup=\"{{$ctrl.format}}\" ng-model=\"$ctrl.dailyResource.date\" is-open=\"$ctrl.popupsOpen.addDate\"\n                    ng-change=\"$ctrl.getAllDailyResources()\" datepicker-options=\"$ctrl.selectedDateOptions\" ng-click=\"$ctrl.openDate('addDate')\"\n                    close-text=\"Close\" data-datepicker-popup={{$ctrl.format}} />\n                <span class=\"input-group-btn\">\n                    </span>\n            </div>\n            <button type=\"submit\" class=\"btn btn-primary\">הוספת משאב</button>\n        </form>\n        <div class=\"row\">\n            <button type=\"submit\" class=\"btn btn-primary\" ng-click=\"$ctrl.addDefault()\" ladda=\"$ctrl.adding\" data-style=\"   zoom-out\">הוספת בסיס\n            </button>\n            <button type=\"submit\" class=\"btn btn-primary\" ng-click=\"$ctrl.addLastDailyResources($ctrl.dailyResource.site._id)\">הוספת אחרון\n            </button>     \n        </div>\n        \n        \n    </div>\n</div>\n<div class=\"col-xs-12\"  ng-show=\"$ctrl.currentUser.role._id == '57d27d4313d468481b1fe12e'\">\n    <div class=\"card date-card\">\n    <br>\n        <h4>תאריך</h4>\n       <div class=\"col-md-4 col-xs-12\">\n            <input type=\"text\" class=\"form-control\" uib-datepicker-popup=\"{{$ctrl.format}}\" ng-model=\"$ctrl.dailyResource.date\" is-open=\"$ctrl.popupsOpen.addDate\"\n                ng-change=\"$ctrl.getAllDailyResources()\" datepicker-options=\"$ctrl.selectedDateOptions\" ng-click=\"$ctrl.openDate('addDate')\"\n                close-text=\"Close\" data-datepicker-popup={{$ctrl.format}} />\n            <span class=\"input-group-btn\"></span>\n        </div>\n    </div>\n</div>\n<div class=\"col-md-8\">\n    <div ng-repeat=\"currentSite in $ctrl.grouped\">\n    <div class=\"horizontal-table col-xs-12\">\n        <div class=\"card\">\n            <div    class=\"card-header row\" \n                    ng-click=\"$ctrl.showSection[currentSite.siteId] = !$ctrl.showSection[currentSite.siteId]\">\n                <span class=\"lead-button\">\n                    <i  class=\"glyphicon glyphicon glyphicon-plus\"\n                    ng-show=\"!$ctrl.showSection[currentSite.siteId]\"></i>\n                <i  class=\"glyphicon glyphicon glyphicon-minus\"\n                    ng-show=\"$ctrl.showSection[currentSite.siteId]\"></i>\n                </span>\n                <span class=\"title\" ng-bind=\"currentSite.siteName\"></span>\n                <span class=\"amount\" ng-bind=\"' משאבים: ' + currentSite.total\"></span>\n                <span class=\"trail-button\">\n                    <i  class=\"glyphicon glyphicon glyphicon-envelope\"\n                    ng-show=\"currentSite.comments.length>0\"></i>    \n                </span>\n                \n            </div>\n            <div class=\"card-content\" ng-show=\"$ctrl.showSection[currentSite.siteId]\">\n                <!-- <h3 ng-bind=\"currentSite.siteName\"></h3> -->\n                <div ng-repeat=\"item in currentSite.resources\" class=\"cell\">\n                    <div ng-bind=\"item.resourceType.name\" class=\"header\"></div>\n                    <div class=\"body\">\n                        <div class=\"button-holder\">\n                            <div ng-click=\"$ctrl.increaceDailyResource(item)\">\n                                <i class=\"glyphicon glyphicon glyphicon-plus\"></i>\n                            </div>\n                            <div ng-click=\"$ctrl.decreaseDailyResource(item)\">\n                                <i class=\"glyphicon glyphicon-minus\"></i>\n                            </div>\n                        </div>\n                        <div><input type=\"text\" ng-disabled=\"!$ctrl.editDisabled[item._id]\" ng-model=\"item.amount\"></div>\n                        <div class=\"button-holder\" ng-show=\"!item.sum\">\n                            <div ng-click=\"$ctrl.editField(item)\" ng-class=\"{'inverse':$ctrl.editDisabled[item._id]}\">\n                                <i class=\"glyphicon glyphicon glyphicon-edit\"></i>\n                            </div>\n                            <div ng-click=\"$ctrl.deleteDailyResource(item._id)\">\n                                <i class=\"glyphicon glyphicon-remove-circle\"></i>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"sum-row\">\n                    <span>סך הכל:</span><span ng-bind=\"currentSite.total\"></span>\n                </div>\n                <div class=\"comment-wrapper\">\n                    <h3>הערות</h3>\n                    <form class=\"\" name=\"commentForm\" ng-submit=\"$ctrl.addDailyComment(currentSite.siteId)\" novalidate>\n                        <input type=\"hidden\"    ng-model=\"$ctrl.dailyComments[currentSite.siteId].site._id\"\n                                                value=\"{{currentSite.siteId}}\"\n                                                ng-init=\"$ctrl.dailyComments[currentSite.siteId].site._id=currentSite.siteId\"\n                        />\n                        <div class=\"form-group filter-panel-searchbox\">\n                            <textarea   type=\"text\" placeholder=\"הוספת הערה\" class=\"form-control amount-field\"\n                                        ng-model=\"$ctrl.dailyComments[currentSite.siteId].text\">\n                            </textarea>\n                        </div>\n                        <div class=\"divider\"></div>\n                        <button type=\"submit\" class=\"btn btn-primary\">הוספת הערה</button>\n                    </form>\n                    <div class=\"content table-responsive table-full-width\">\n                        <table class=\"table table-hover table-striped\"> \n                            <thead>\n                                <tr class=\"bgcolor\">\n                                    <td>משתמש</td>\n                                    <td>הערה</td>\n                                    <td></td>\n                                </tr>\n                            </thead>\n                            <tbody>\n                                <tr class=\"commentsfont\" ng-repeat=\"comment in currentSite.comments\">\n                                    <td ng-bind=\"comment.user.name\"></td>\n                                    <td ng-bind=\"comment.text\"></td>\n                                    <td ng-click=\"$ctrl.deleteDailyComment(comment._id)\">\n                                        <i class=\"glyphicon glyphicon-remove-circle\"></i>\n                                    </td>\n                                </tr>\n                            </tbody>\n                        </table>\n                     </div>\n                </div>\n            </div>\n        </div>\n    </div>\n    </div>    \n</div>\n<div class=\"col-md-4\">\n    <div class=\"card\">\n        <div class=\"row\">\n            <span> אתרים פעילים:</span> <span ng-bind=\"$ctrl.overview.sitesCount\"></span>    \n        </div>\n        <div class=\"row\">\n            <span> סך הכל משאבים:</span> <span ng-bind=\"$ctrl.overview.totalResources\"></span>    \n        </div>\n    </div>\n</div>\n\n\n<div class=\"col-xs-12\" ng-show=\"$ctrl.currentUser.role._id == '57d2805f13d468481b1fe130'\n                                || $ctrl.currentUser.role._id == '57d2837a13d468481b1fe133'\">\n    <div class=\"card\">\n        <h2>הוספת פועל יומי</h2>\n        <form class=\"form-inline\" name=\"dailyWorkerForm\" ng-submit=\"$ctrl.addDailyWorker(dailyWorkerForm.$valid)\" novalidate>\n            <label class=\"sr-only\" for=\"name\">Name:</label>\n            <select class=\"form-control\" name=\"worker\" id=\"worker\" ng-model=\"$ctrl.dailyWorker.worker\" ng-options=\"worker as worker.name for worker in $ctrl.workers\"></select>\n            <input type=\"number\" placeholder=\"שעות\" class=\"form-control\" name=\"hours\" id=\"hours\" ng-model=\"$ctrl.dailyWorker.hours\" required />\n            <input type=\"number\" placeholder=\"שכר שעתי\" class=\"form-control\" name=\"hourlyRate\" id=\"hourlyRate\" ng-model=\"$ctrl.dailyWorker.worker.hourlyRate\" required />\n            <button type=\"submit\" class=\"btn btn-primary\" data-style=\"zoom-out\" ladda=\"$ctrl.addingWorker\">הוספת סוג משאב</button>\n        </form>\n    </div>\n    <div class=\"card\">\n         <div class=\"table-responsive\">\n            <table class=\"table table-hover table-striped\">\n                <thead>\n                    <tr class=\"theader\">\n                        <th>שם</th>\n                        <th>שעות</th>\n                        <th>שכר שעתי</th>\n                        <th>לתשלום</th>\n                        <th></th>\n                        <th></th>\n                        <th></th>\n                    </tr>\n                </thead>\n                <tbody>\n                    <tr class=\"tbodyfont\" ng-repeat=\"currentDailyWorker in $ctrl.dailyWorkers\">\n                        <td><input type=\"text\" ng-disabled=\"!$ctrl.editDisabled[currentDailyWorker._id]\" ng-model=\"currentDailyWorker.worker.name\"></td>\n                        <!-- <td class=\"tbodyfont\" ng-bind=\"currentDailyWorker.hours\"></td> -->\n                        <td><input type=\"text\" ng-disabled=\"!$ctrl.editDisabled[currentDailyWorker._id]\" ng-model=\"currentDailyWorker.hours\"></td>\n                        <td><input type=\"text\" ng-disabled=\"!$ctrl.editDisabled[currentDailyWorker._id]\" ng-model=\"currentDailyWorker.hourlyRate\"></td>\n                        <!-- <td class=\"tbodyfont\" ng-bind=\"currentDailyWorker.hourlyRate\"></td> -->\n                        <td class=\"tbodyfont\" ng-bind=\"currentDailyWorker.hourlyRate*currentDailyWorker.hours\"></td>\n                        <td ng-click=\"$ctrl.editDisabled[currentDailyWorker._id] = !$ctrl.editDisabled[currentDailyWorker._id]\"><i class=\"glyphicon glyphicon-pencil\"></i></td>\n                        <td ng-click=\"$ctrl.updateCurrentDailyWorker(currentDailyWorker)\"><i class=\"glyphicon glyphicon-floppy-disk\"></td>\n                    <td ng-click=\"$ctrl.deleteCurrentDailyWorker(currentDailyWorker._id)\"><i class=\"glyphicon glyphicon-trash\"></td>\n                    </tr>\n                </tbody>\n            </table>\n        </div>\n    </div>\n</div>\n<div class=\"col-xs-6\" ng-show=\"$ctrl.currentUser.role._id == '57d2805f13d468481b1fe130'\n                                || $ctrl.currentUser.role._id == '57d2837a13d468481b1fe133'\">\n    <div class=\"card\">\n        <h2>הוספת סוג משאב</h2>\n        <form class=\"form-inline\" name=\"typeForm\" ng-submit=\"$ctrl.addType(typeForm.$valid)\" novalidate>\n            <label class=\"sr-only\" for=\"name\">Name:</label>\n            <input type=\"text\" placeholder=\"שם\" class=\"form-control\" name=\"name\" id=\"name\" ng-model=\"$ctrl.type.name\" required />\n            <button type=\"submit\" class=\"btn btn-primary\" data-style=\"zoom-out\" ladda=\"$ctrl.addingType\">הוספת סוג משאב</button>\n        </form>\n    </div>\n</div>";
 
 /***/ },
 /* 438 */
@@ -72471,12 +72528,32 @@
 	        this.TypeService = TypeService;
 	        this.ResourceService = ResourceService;
 
-	        this.getResources();
-	        this.getTypes();
+	        this.initResources();
+	        this.initTypes();
 	        this.resource = {};
 	    }
 
 	    _createClass(ResourceCtrl, [{
+	        key: 'initResources',
+	        value: function initResources() {
+	            if (this.ResourceService.resources.length) {
+	                this.resources = this.ResourceService.Resources;
+	                this.selectedResource = this.resources[0];
+	            } else {
+	                this.getResources();
+	            }
+	        }
+	    }, {
+	        key: 'initTypes',
+	        value: function initTypes() {
+	            if (this.TypeService.types.length) {
+	                this.types = this.TypeService.types;
+	                this.selectedType = this.types[0];
+	            } else {
+	                this.getTypes();
+	            }
+	        }
+	    }, {
 	        key: 'addResource',
 	        value: function addResource(isValid) {
 	            var _this = this;
@@ -72595,10 +72672,20 @@
 	        this.RoleService = RoleService;
 	        this.MainService = MainService;
 
-	        this.getRoles();
+	        this.initRoles();
 	    }
 
 	    _createClass(RoleCtrl, [{
+	        key: 'initRoles',
+	        value: function initRoles() {
+	            if (this.RoleService.roles.length) {
+	                this.roles = this.RoleService.roles;
+	                this.selectedUser = this.roles[0];
+	            } else {
+	                this.getRoles();
+	            }
+	        }
+	    }, {
 	        key: 'addRole',
 	        value: function addRole(isValid) {
 	            var _this = this;
@@ -72695,26 +72782,11 @@
 	        this.SiteService = SiteService;
 	        this.MainService = MainService;
 
-	        // this.getSites();
-	        this.getUsers();
 	        this.SiteService.registerUserUpdateCallback(function () {
 	            _this.initSites();
 	        });
 	        this.initSites();
-	        // AuthService.registerUserUpdateCallback(() => {
-	        //     this.currentUser = AuthService.currentUser;
-	        //     if (this.currentUser && this.currentUser._id) {
-	        //         if (this.currentUser.role._id == '57d27d4313d468481b1fe12e') {// if is admin TODO
-	        //             this.SiteService.getSites().then((res) => {
-	        //                 this.userSites = res.data;
-	        //             });
-	        //         }
-	        //         else {
-	        //             this.getUserSites();
-	        //         }
-	        //     }
-	        // });
-	        // this.updateUser();
+	        this.initUsers();
 	    }
 
 	    _createClass(SiteCtrl, [{
@@ -72723,25 +72795,20 @@
 	            if (this.SiteService.userSites.length) {
 	                this.userSites = this.SiteService.userSites;
 	                this.selectedSite = this.userSites[0];
-	                this.getSiteUsers(this.selectedSite._id);
+	            } else {
+	                this.getSites();
 	            }
 	        }
-	        // updateUser() {
-	        //     this.currentUser = this.AuthService.currentUser
-	        //     if (this.currentUser && this.currentUser._id) {
-	        //         if (this.currentUser.role._id == '57d27d4313d468481b1fe12e') {// if is admin TODO
-	        //             this.SiteService.getSites().then((res) => {
-	        //                 this.userSites = res.data;
-	        //             });
-	        //         }
-	        //         else {
-	        //             this.UserService.getUserSites(this.currentUser._id).then((res) => {
-	        //                 this.userSites = res.data;
-	        //             });
-	        //         }
-	        //     }
-	        // }
-
+	    }, {
+	        key: 'initUsers',
+	        value: function initUsers() {
+	            if (this.UserService.users.length) {
+	                this.users = this.UserService.users;
+	                this.selectedUser = this.users[0];
+	            } else {
+	                this.getUsers();
+	            }
+	        }
 	    }, {
 	        key: 'addSite',
 	        value: function addSite(isValid) {
@@ -72927,7 +72994,7 @@
 /* 462 */
 /***/ function(module, exports) {
 
-	module.exports = "<nav>\n    <div class=\"content\" id=\"company-logo\">\n        <img class=\"logo-img\" src=\"/src/img/logo.png\"/ >\n    </div>\n\n    <div class=\"action-wrapper\">\n        <div class=\"content\" type=\"button\" ng-click=\"$ctrl.logout()\">יציאה</div>\n        <div class=\"content\" ng-bind=\"$ctrl.currentUser.name\"></div>\n        <div class=\"content\" >\n            <a href=\"mailto:shlomoariel@gmail.com?Subject=Velvel resources site\" target=\"_top\">Copyright © Shlomo Ariel\n            </a>\n        </div>\n        <!--<div class=\"content\" ng-bind=\"$ctrl.currentUser.email\"></div>-->\n    </div>\n</nav>\n<div class =\"res\" id=\"sidebar-wrapper\">\n    <ul class=\"res2 sidebar-nav\">\n        <div class=\"profile-usermenu\" ng-show=\"$ctrl.currentUser\">\n            <li>\n                <span href=\"#\" ng-click=\"$ctrl.go('profile')\" ng-class=\"{active:$ctrl.current=='profile'}\">\n                        <i class=\"icon glyphicon glyphicon-home\" >\n                            \n                        </i> \n                        \n                       <div class=\"spa\"> בית</div> </span>\n            </li>\n        </div>\n        <li ng-show=\"!$ctrl.currentUser\">\n            <span href=\"#\" aria-label=\"Login\" ng-click=\"$ctrl.login()\" ng-class=\"{active:$ctrl.current=='login'}\">\n                <i class=\"glyphicon glyphicon-home\"></i>\n                כניסה</span>\n        </li>\n        <div ng-show=\"$ctrl.currentUser.role._id == '57d27d4313d468481b1fe12e'\">\n            <li>\n                <span  href=\"#\" ng-click=\"$ctrl.go('role')\" ng-class=\"{active:$ctrl.current=='role'}\">\n                    <i style=\"margin-left: 20px;\" class=\"glyphalign glyphicon glyphicon-cog\"></i>\n                    <div class=\"spa\">תפקידים</div></span>\n            </li>\n        </div>\n        <div ng-show=\"$ctrl.currentUser.role._id == '57d2805f13d468481b1fe130' ||\n                  $ctrl.currentUser.role._id == '57d27d4313d468481b1fe12e'\">\n            <li>\n                <span href=\"#\" ng-click=\"$ctrl.go('site')\" ng-class=\"{active:$ctrl.current=='site'}\">\n                    <i class=\"icon glyphicon glyphicon-map-marker\"></i>\n                    \n                    <div class=\"spa\">אתרים</div></span>\n            </li>\n            <li>\n                <span href=\"#\" ng-click=\"$ctrl.go('user')\" ng-class=\"{active:$ctrl.current=='user'}\">\n                    <i class=\"glyphicon glyphicon-user\"></i>\n                    <div class=\"spa\">משתמשים</div>\n                </span>\n            </li>\n        </div>\n        \n\n        <div ng-show=\"$ctrl.currentUser.role._id == '57d2805f13d468481b1fe130' ||\n                                        $ctrl.currentUser.role._id == '57d27d4313d468481b1fe12e'\">\n            <li>\n                <span href=\"#\" ng-click=\"$ctrl.go('type')\" ng-class=\"{active:$ctrl.current=='type'}\">\n                    <i class=\"glyphicon glyphicon-home\"></i>\n                    <div class=\"spa\">\n                        משאבים\n                    </div>\n                </span>\n            </li>\n        </div>\n\n    </ul>\n</div>\n";
+	module.exports = "<nav>\n    <div class=\"content\" id=\"company-logo\">\n        <img class=\"logo-img\" src=\"/src/img/logo.png\"/ >\n    </div>\n\n    <div class=\"action-wrapper\">\n        <div class=\"content\" type=\"button\" ng-click=\"$ctrl.logout()\">יציאה</div>\n        <div class=\"content\" ng-bind=\"$ctrl.currentUser.name\"></div>\n        <div class=\"content\" >\n            <a href=\"mailto:shlomoariel@gmail.com?Subject=Velvel resources site\" target=\"_top\">\n            <span class=\"hidden-xs\">Copyright </span>© Shlomo Ariel\n            </a>\n        </div>\n        <!--<div class=\"content\" ng-bind=\"$ctrl.currentUser.email\"></div>-->\n    </div>\n</nav>\n<div class =\"res\" id=\"sidebar-wrapper\">\n    <ul class=\"res2 sidebar-nav\">\n        <div class=\"profile-usermenu\" ng-show=\"$ctrl.currentUser\">\n            <li>\n                <span href=\"#\" ng-click=\"$ctrl.go('profile')\" ng-class=\"{active:$ctrl.current=='profile'}\">\n                        <i class=\"icon glyphicon glyphicon-home\" >\n                            \n                        </i> \n                        \n                       <div class=\"spa\"> בית</div> </span>\n            </li>\n        </div>\n        <li ng-show=\"!$ctrl.currentUser\">\n            <span href=\"#\" aria-label=\"Login\" ng-click=\"$ctrl.login()\" ng-class=\"{active:$ctrl.current=='login'}\">\n                <i class=\"glyphicon glyphicon-home\"></i>\n                כניסה</span>\n        </li>\n        <div ng-show=\"$ctrl.currentUser.role._id == '57d27d4313d468481b1fe12e'\">\n            <li>\n                <span  href=\"#\" ng-click=\"$ctrl.go('role')\" ng-class=\"{active:$ctrl.current=='role'}\">\n                    <i style=\"margin-left: 20px;\" class=\"glyphalign glyphicon glyphicon-cog\"></i>\n                    <div class=\"spa\">תפקידים</div></span>\n            </li>\n        </div>\n        <div ng-show=\"$ctrl.currentUser.role._id == '57d2805f13d468481b1fe130' ||\n                  $ctrl.currentUser.role._id == '57d27d4313d468481b1fe12e'\">\n            <li>\n                <span href=\"#\" ng-click=\"$ctrl.go('site')\" ng-class=\"{active:$ctrl.current=='site'}\">\n                    <i class=\"icon glyphicon glyphicon-map-marker\"></i>\n                    \n                    <div class=\"spa\">אתרים</div></span>\n            </li>\n            <li>\n                <span href=\"#\" ng-click=\"$ctrl.go('user')\" ng-class=\"{active:$ctrl.current=='user'}\">\n                    <i class=\"glyphicon glyphicon-user\"></i>\n                    <div class=\"spa\">משתמשים</div>\n                </span>\n            </li>\n        </div>\n        \n\n        <div ng-show=\"$ctrl.currentUser.role._id == '57d2805f13d468481b1fe130' ||\n                                        $ctrl.currentUser.role._id == '57d27d4313d468481b1fe12e'\">\n            <li>\n                <span href=\"#\" ng-click=\"$ctrl.go('type')\" ng-class=\"{active:$ctrl.current=='type'}\">\n                    <i class=\"glyphicon glyphicon-home\"></i>\n                    <div class=\"spa\">\n                        משאבים\n                    </div>\n                </span>\n            </li>\n        </div>\n        <div ng-show=\"$ctrl.currentUser.role._id == '57d2837a13d468481b1fe133'\">\n            <li>\n                <span href=\"#\" ng-click=\"$ctrl.go('worker')\" ng-class=\"{active:$ctrl.current=='worker'}\">\n                    <i class=\"glyphicon glyphicon-home\"></i>\n                    <div class=\"spa\">\n                        פועלים\n                    </div>\n                </span>\n            </li>\n        </div>\n\n    </ul>\n</div>\n";
 
 /***/ },
 /* 463 */
@@ -72961,11 +73028,30 @@
 	        this.TypeService = TypeService;
 	        this.MainService = MainService;
 
-	        this.getTypes();
-	        this.getDailyDefaults();
+	        this.initTypes();
+	        this.initDailyDefaults();
 	    }
 
 	    _createClass(TypeCtrl, [{
+	        key: 'initTypes',
+	        value: function initTypes() {
+	            if (this.TypeService.types.length) {
+	                this.types = this.TypeService.types;
+	                this.selectedType = this.types[0];
+	            } else {
+	                this.getTypes();
+	            }
+	        }
+	    }, {
+	        key: 'initDailyDefaults',
+	        value: function initDailyDefaults() {
+	            if (this.ResourceService.dailyDefaults.length) {
+	                this.dailyDefaults = this.ResourceService.dailyDefaults;
+	            } else {
+	                this.getDailyDefaults();
+	            }
+	        }
+	    }, {
 	        key: 'addType',
 	        value: function addType(isValid) {
 	            var _this = this;
@@ -73095,12 +73181,32 @@
 	        this.UserService = UserService;
 	        this.MainService = MainService;
 
-	        this.getUsers();
-	        this.getRoles();
+	        this.initUsers();
+	        this.initRoles();
 	        this.addingRole = false;
 	    }
 
 	    _createClass(UserCtrl, [{
+	        key: 'initUsers',
+	        value: function initUsers() {
+	            if (this.UserService.users.length) {
+	                this.users = this.UserService.users;
+	                this.selectedUser = this.users[0];
+	            } else {
+	                this.getUsers();
+	            }
+	        }
+	    }, {
+	        key: 'initRoles',
+	        value: function initRoles() {
+	            if (this.RoleService.roles.length) {
+	                this.roles = this.RoleService.roles;
+	                this.selectedUser = this.roles[0];
+	            } else {
+	                this.getRoles();
+	            }
+	        }
+	    }, {
 	        key: 'addUser',
 	        value: function addUser(isValid) {
 	            var _this = this;
@@ -73224,13 +73330,113 @@
 
 /***/ },
 /* 469 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	angular.module('velvel-app').config(["$stateProvider", function ($stateProvider) {
+	    $stateProvider.state('worker', {
+	        url: '/worker',
+	        template: '<worker></worker>'
+	    });
+	}]);
+
+/***/ },
+/* 470 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _lodash = __webpack_require__(470);
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var WorkerCtrl = function () {
+	    WorkerCtrl.$inject = ["MainService", "WorkerService"];
+	    function WorkerCtrl(MainService, WorkerService) {
+	        _classCallCheck(this, WorkerCtrl);
+
+	        this.WorkerService = WorkerService;
+	        this.MainService = MainService;
+
+	        this.getWorkers();
+	    }
+
+	    _createClass(WorkerCtrl, [{
+	        key: 'addWorker',
+	        value: function addWorker(isValid) {
+	            var _this = this;
+
+	            if (isValid) {
+	                this.addingWorker = true;
+	                this.WorkerService.addWorker(this.worker).then(function (response) {
+	                    _this.getWorkers();
+	                    _this.addingWorker = false;
+	                }).catch(function (err) {
+	                    console.log("err adding user " + err);
+	                });;
+	            }
+	        }
+	    }, {
+	        key: 'getWorkers',
+	        value: function getWorkers() {
+	            var _this2 = this;
+
+	            this.WorkerService.getWorkers().then(function (response) {
+	                console.log('worker-component');
+	                _this2.workers = response.data;
+	            }, function (error) {
+	                console.log('Error retriving workers');
+	            });
+	        }
+	    }, {
+	        key: 'updateWorker',
+	        value: function updateWorker(worker) {
+	            var _this3 = this;
+
+	            this.WorkerService.updateWorker(worker).then(function (res) {
+	                _this3.editDisabled[worker._id] = false;
+	            }).catch(function (err) {
+	                console.log("err updating user " + err);
+	            });
+	        }
+	    }, {
+	        key: 'deleteWorker',
+	        value: function deleteWorker(workerId) {
+	            var _this4 = this;
+
+	            this.WorkerService.deleteWorker(workerId).then(function (res) {
+	                _this4.getWorkers();
+	            });
+	        }
+	    }]);
+
+	    return WorkerCtrl;
+	}();
+
+	WorkerCtrl.$inject = ['MainService', 'WorkerService'];
+
+	angular.module('velvel-app').component('worker', {
+	    template: __webpack_require__(471),
+	    bindings: {},
+	    controller: WorkerCtrl
+	});
+
+/***/ },
+/* 471 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"col-xs-12\">\n    <div class=\"card\">\n        <h2>הוספת פועל</h2>\n        <form class=\"form-inline bottom-gap\" name=\"workerForm\" ng-submit=\"$ctrl.addWorker(workerForm.$valid)\" novalidate>\n            <input type=\"text\" placeholder=\"שם\" class=\"form-control\" name=\"name\" id=\"name\" ng-model=\"$ctrl.worker.name\" required />\n            <input type=\"number\" placeholder=\"שכר שעתי\" class=\"form-control\" name=\"name\" id=\"name\" ng-model=\"$ctrl.worker.hourlyRate\" required />\n            <button type=\"submit\" class=\"btn btn-primary\" data-style=\"zoom-out\" ladda=\"$ctrl.addingworker\">הוספה</button>\n        </form>\n    </div>\n</div>\n<div class=\"col-xs-12\">\n    <div class=\"card\">\n        <div class=\"table-responsive\">\n            <table class=\"table table-hover table-striped\">\n                <thead>\n                    <tr class=\"theader\">\n                        <th>שם</th>\n                        <th>שכר שעתי</th>\n                        <th></th>\n                        <th></th>\n                        <th></th>\n                    </tr>\n                </thead>\n                <tbody>\n                    <tr class=\"tbodyfont\" ng-repeat=\"worker in $ctrl.workers\">\n                        <td><input type=\"text\" ng-disabled=\"!$ctrl.editDisabled[worker._id]\" ng-model=\"worker.name\"></td>\n                        <td><input type=\"text\" ng-disabled=\"!$ctrl.editDisabled[worker._id]\" ng-model=\"worker.hourlyRate\"></td>\n                        <td ng-click=\"$ctrl.editDisabled[worker._id] = !$ctrl.editDisabled[worker._id]\"><i class=\"glyphicon glyphicon-pencil\"></i></td>\n                        <td ng-click=\"$ctrl.updateWorker(worker)\"><i class=\"glyphicon glyphicon-floppy-disk\"></td>\n                    <td ng-click=\"$ctrl.deleteWorker(worker._id)\"><i class=\"glyphicon glyphicon-trash\"></td>\n                    </tr>\n                </tbody>\n            </table>\n        </div>\n    </div>\n</div>";
+
+/***/ },
+/* 472 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _lodash = __webpack_require__(473);
 
 	var _lodash2 = _interopRequireDefault(_lodash);
 
@@ -73239,9 +73445,11 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var AuthService = function () {
-	    function AuthService($q, $http, UserService, SiteService, TypeService, ResourceService) {
+	    function AuthService($q, $http, UserService, SiteService, TypeService, ResourceService, WorkerService, DailyWorkerService) {
 	        _classCallCheck(this, AuthService);
 
+	        this.DailyWorkerService = DailyWorkerService;
+	        this.WorkerService = WorkerService;
 	        this.ResourceService = ResourceService;
 	        this.TypeService = TypeService;
 	        this.SiteService = SiteService;
@@ -73382,6 +73590,8 @@
 	            this.currentUserRole = user.role._id;
 	            this.SiteService.getUserSites(user._id);
 	            this.TypeService.getTypes();
+	            this.WorkerService.getWorkers();
+	            // this.DailyWorkerService.getDailyWorkers();
 	            // this.ResourceService.initUser(user);
 	            this.notifyObservers();
 	        }
@@ -73423,15 +73633,15 @@
 	        }
 	    }], [{
 	        key: 'AuthFactory',
-	        value: function AuthFactory($q, $http, UserService, SiteService, TypeService, ResourceService) {
-	            return new AuthService($q, $http, UserService, SiteService, TypeService, ResourceService);
+	        value: function AuthFactory($q, $http, UserService, SiteService, TypeService, ResourceService, WorkerService, DailyWorkerService) {
+	            return new AuthService($q, $http, UserService, SiteService, TypeService, ResourceService, WorkerService, DailyWorkerService);
 	        }
 	    }]);
 
 	    return AuthService;
 	}();
 
-	AuthService.$inject = ['$q', '$http', 'UserService', 'SiteService', 'TypeService', 'ResourceService'];
+	AuthService.$inject = ['$q', '$http', 'UserService', 'SiteService', 'TypeService', 'ResourceService', 'WorkerService', 'DailyWorkerService'];
 
 	angular.module('velvel-app').factory('AuthService', AuthService.AuthFactory);
 
@@ -73484,7 +73694,7 @@
 	}]);
 
 /***/ },
-/* 470 */
+/* 473 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global, module) {/**
@@ -90575,7 +90785,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(326)(module)))
 
 /***/ },
-/* 471 */
+/* 474 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -90654,7 +90864,122 @@
 	angular.module('velvel-app').service('CommentService', CommentService);
 
 /***/ },
-/* 472 */
+/* 475 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var url = 'https://velvel-server.herokuapp.com';
+	// let url = 'http://localhost:3001';
+
+	var DailyWorkerService = function () {
+		DailyWorkerService.$inject = ["$http", "$q"];
+		function DailyWorkerService($http, $q) {
+			_classCallCheck(this, DailyWorkerService);
+
+			this.$q = $q;
+			this.$http = $http;
+
+			this.observers = [];
+			this.dailyWorkers = {};
+		}
+
+		_createClass(DailyWorkerService, [{
+			key: 'notifyObservers',
+			value: function notifyObservers() {
+				_.forEach(this.observers, function (callback) {
+					callback();
+				});
+			}
+		}, {
+			key: 'registerUserUpdateCallback',
+			value: function registerUserUpdateCallback(callback) {
+				this.observers.push(callback);
+			}
+		}, {
+			key: 'getDailyWorker',
+			value: function getDailyWorker(id) {
+				var promise = this.validateClientObject(id);
+				if (promise) {
+					return promise;
+				}
+				return this.$http.get(url + '/api/getDailyWorker', { id: id });
+			}
+		}, {
+			key: 'addDailyWorker',
+			value: function addDailyWorker(dailyWorker) {
+				var promise = this.validateClientObject(dailyWorker);
+				if (promise) {
+					return promise;
+				}
+				return this.$http.post(url + '/api/addDailyWorker', dailyWorker);
+			}
+		}, {
+			key: 'getDailyWorkers',
+			value: function getDailyWorkers() {
+				var _this = this;
+
+				var promise = this.$http.get(url + '/api/getDailyWorkers');
+				promise.then(function (res) {
+					_this.dailyWorkers = res.data;
+					_this.notifyObservers();
+				});
+				return promise;
+			}
+		}, {
+			key: 'getAllDailyWorkers',
+			value: function getAllDailyWorkers(object) {
+				return this.$http.get(url + '/api/getDailyWorkers', {
+					params: {
+						date: object.date,
+						sites: object.sites
+					}
+				});
+			}
+		}, {
+			key: 'updateDailyWorker',
+			value: function updateDailyWorker(dailyWorker) {
+				return this.$http.put(url + '/api/updateDailyWorker/' + dailyWorker._id, dailyWorker);
+			}
+		}, {
+			key: 'deleteDailyWorker',
+			value: function deleteDailyWorker(DailyWorkerId) {
+				return this.$http.delete(url + '/api/deleteDailyWorker/' + dailyWorkerId);
+			}
+		}, {
+			key: 'validateClientObject',
+			value: function validateClientObject(clientObject) {
+				if (!clientObject || clientObject == undefined) {
+					var deff = this.$q.defer();
+					deff.reject({ type: 'Invalid filter', message: 'search filter is invalid' });
+					return deff.promise;
+				}
+				return null;
+			}
+		}, {
+			key: 'findDailyWorkerLike',
+			value: function findDailyWorkerLike(searchObject) {
+				return this.$http.get(url + '/api/findDailyWorkerLike', {
+					params: {
+						searchString: searchObject.searchString
+					}
+				});
+			}
+		}]);
+
+		return DailyWorkerService;
+	}();
+
+	DailyWorkerService.$inject = ['$http', '$q'];
+
+	angular.module('velvel-app').service('DailyWorkerService', DailyWorkerService);
+
+/***/ },
+/* 476 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -90673,6 +90998,9 @@
 
 			this.$q = $q;
 			this.$http = $http;
+
+			this.resources = [];
+			this.dailyDefaults = [];
 		}
 
 		_createClass(ResourceService, [{
@@ -90732,12 +91060,18 @@
 		}, {
 			key: 'getDailyDefaults',
 			value: function getDailyDefaults(date, site) {
-				return this.$http.get(url + '/api/getDailyDefaults', {
+				var _this = this;
+
+				var promise = this.$http.get(url + '/api/getDailyDefaults', {
 					params: {
 						date: date,
 						site: site
 					}
 				});
+				promise.then(function (res) {
+					_this.dailyDefaults = res.data;
+				});
+				return promise;
 			}
 		}, {
 			key: 'deleteDailyDefault',
@@ -90757,7 +91091,13 @@
 		}, {
 			key: 'getResources',
 			value: function getResources() {
-				return this.$http.get(url + '/api/getResources');
+				var _this2 = this;
+
+				var promise = this.$http.get(url + '/api/getResources');
+				promise.then(function (res) {
+					_this2.resources = res.data;
+				});
+				return promise;
 			}
 		}, {
 			key: 'updateResource',
@@ -90808,7 +91148,7 @@
 	angular.module('velvel-app').service('ResourceService', ResourceService);
 
 /***/ },
-/* 473 */
+/* 477 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -90827,6 +91167,8 @@
 
 			this.$q = $q;
 			this.$http = $http;
+
+			this.roles = [];
 		}
 
 		_createClass(RoleService, [{
@@ -90851,7 +91193,13 @@
 		}, {
 			key: 'getRoles',
 			value: function getRoles() {
-				return this.$http.get(url + '/api/getRoles');
+				var _this = this;
+
+				var promise = this.$http.get(url + '/api/getRoles');
+				promise.then(function (res) {
+					_this.roles = res.data;
+				});
+				return promise;
 			}
 		}, {
 			key: 'updateRole',
@@ -90892,7 +91240,7 @@
 	angular.module('velvel-app').service('RoleService', RoleService);
 
 /***/ },
-/* 474 */
+/* 478 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -90972,7 +91320,8 @@
 				var _this = this;
 
 				var promise = this.$http.get(url + '/api/getSites');
-				promise.then(function () {
+				promise.then(function (res) {
+					_this.sites = res.data;
 					_this.notifyObservers();
 				});
 				return promise;
@@ -91033,7 +91382,7 @@
 	angular.module('velvel-app').service('SiteService', SiteService);
 
 /***/ },
-/* 475 */
+/* 479 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -91142,7 +91491,7 @@
 	angular.module('velvel-app').service('TypeService', TypeService);
 
 /***/ },
-/* 476 */
+/* 480 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -91161,6 +91510,9 @@
 
 			this.$q = $q;
 			this.$http = $http;
+
+			this.users = [];
+			this.userSites = [];
 		}
 
 		_createClass(UserService, [{
@@ -91184,7 +91536,13 @@
 		}, {
 			key: 'getUsers',
 			value: function getUsers() {
-				return this.$http.get(url + '/api/getUsers');
+				var _this = this;
+
+				var promise = this.$http.get(url + '/api/getUsers');
+				promise.then(function (res) {
+					_this.users = res.data;
+				});
+				return promise;
 			}
 		}, {
 			key: 'authenticate',
@@ -91207,7 +91565,13 @@
 		}, {
 			key: 'getUserSites',
 			value: function getUserSites(userId) {
-				return this.$http.get(url + '/api/getUserSites/' + userId);
+				var _this2 = this;
+
+				var promise = this.$http.get(url + '/api/getUserSites/' + userId);
+				promise.then(function (res) {
+					_this2.userSites = res.data;
+				});
+				return promise;
 			}
 		}, {
 			key: 'updateUser',
@@ -91248,7 +91612,112 @@
 	angular.module('velvel-app').service('UserService', UserService);
 
 /***/ },
-/* 477 */
+/* 481 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var url = 'https://velvel-server.herokuapp.com';
+	// let url = 'http://localhost:3001';
+
+	var WorkerService = function () {
+		WorkerService.$inject = ["$http", "$q"];
+		function WorkerService($http, $q) {
+			_classCallCheck(this, WorkerService);
+
+			this.$q = $q;
+			this.$http = $http;
+
+			this.observers = [];
+			this.workers = {};
+		}
+
+		_createClass(WorkerService, [{
+			key: 'notifyObservers',
+			value: function notifyObservers() {
+				_.forEach(this.observers, function (callback) {
+					callback();
+				});
+			}
+		}, {
+			key: 'registerUserUpdateCallback',
+			value: function registerUserUpdateCallback(callback) {
+				this.observers.push(callback);
+			}
+		}, {
+			key: 'getWorker',
+			value: function getWorker(id) {
+				var promise = this.validateClientObject(id);
+				if (promise) {
+					return promise;
+				}
+				return this.$http.get(url + '/api/getWorker', { id: id });
+			}
+		}, {
+			key: 'addWorker',
+			value: function addWorker(worker) {
+				var promise = this.validateClientObject(worker);
+				if (promise) {
+					return promise;
+				}
+				return this.$http.post(url + '/api/addWorker', worker);
+			}
+		}, {
+			key: 'getWorkers',
+			value: function getWorkers() {
+				var _this = this;
+
+				var promise = this.$http.get(url + '/api/getWorkers');
+				promise.then(function (res) {
+					_this.workers = res.data;
+					_this.notifyObservers();
+				});
+				return promise;
+			}
+		}, {
+			key: 'updateWorker',
+			value: function updateWorker(worker) {
+				return this.$http.put(url + '/api/updateWorker/' + worker._id, worker);
+			}
+		}, {
+			key: 'deleteWorker',
+			value: function deleteWorker(workerId) {
+				return this.$http.delete(url + '/api/deleteWorker/' + workerId);
+			}
+		}, {
+			key: 'validateClientObject',
+			value: function validateClientObject(clientObject) {
+				if (!clientObject || clientObject == undefined) {
+					var deff = this.$q.defer();
+					deff.reject({ type: 'Invalid filter', message: 'search filter is invalid' });
+					return deff.promise;
+				}
+				return null;
+			}
+		}, {
+			key: 'findWorkerLike',
+			value: function findWorkerLike(searchObject) {
+				return this.$http.get(url + '/api/findWorkerLike', {
+					params: {
+						searchString: searchObject.searchString
+					}
+				});
+			}
+		}]);
+
+		return WorkerService;
+	}();
+
+	WorkerService.$inject = ['$http', '$q'];
+
+	angular.module('velvel-app').service('WorkerService', WorkerService);
+
+/***/ },
+/* 482 */
 /***/ function(module, exports) {
 
 	'use strict';

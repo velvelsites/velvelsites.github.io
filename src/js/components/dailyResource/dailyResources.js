@@ -1,10 +1,11 @@
 import moment from 'moment-timezone';
 let DATE_FORMAT = 'yyyy-MM-dd';
-@Inject('ResourceService', 'SiteService', '$scope', 'TypeService','CommentService','AuthService', '$q')
+@Inject('ResourceService', 'SiteService', '$scope', 'TypeService','CommentService','AuthService','WorkerService','DailyWorkerService' , '$q')
 class DailyResourceCtrl {
     constructor() {
         this.loading = true;
         this.dailyResource = {};
+        this.dailyWorker = {};
         this.resourceTypes = TypeService.resourceTypes;
         this.editDisabled = {};
         this.moment = moment;
@@ -14,6 +15,12 @@ class DailyResourceCtrl {
         this.TypeService.registerUserUpdateCallback(() => {
             this.initResources();
         });
+        this.DailyWorkerService.registerUserUpdateCallback(() => {
+            this.initDailyWorkers();
+        });
+        this.WorkerService.registerUserUpdateCallback(() => {
+            this.initWorkers();
+        });
         AuthService.registerUserUpdateCallback(() => {
             this.currentUser = AuthService.currentUser;
         });
@@ -21,10 +28,19 @@ class DailyResourceCtrl {
         this.initSites();
         this.initResources();
         this.initDates();
+        this.initWorkers()
+        this.initDailyWorkers()
     }
     initResources() {
         this.resourceTypes = this.TypeService.types;
         this.dailyResource.resourceType = this.resourceTypes[0];
+    }
+    initWorkers() {
+        this.workers = this.WorkerService.workers;
+        this.dailyWorker.worker = this.workers[0];
+    }
+    initDailyWorkers() {
+        this.dailyWorkers = this.DailyWorkerService.dailyWorkers;
     }
     initSites() {
         this.sites = this.SiteService.userSites;
@@ -65,6 +81,22 @@ class DailyResourceCtrl {
             this.TypeService.addType(this.type).then((response) => {
                 this.getTypes();
                 this.addingType = false;
+            });
+        }
+    }
+    addDailyWorker(isValid) {
+        if (isValid) {
+            this.addingWorker = true;
+            let dailyResource = Object.assign({}, this.dailyResource);
+            this.dailyWorker.date = this.formatDate(dailyResource.date);
+            this.dailyWorker.user = {};
+            this.dailyWorker.user._id = this.currentUser._id;
+            this.dailyWorker.site = this.dailyResource.site;
+            this.dailyWorker.hourlyRate = this.dailyWorker.worker.hourlyRate
+            this.DailyWorkerService.addDailyWorker(this.dailyWorker).then((response) => {
+                // this.getTypes();
+            }).finally(()=>{
+                this.addingWorker = false;
             });
         }
     }
@@ -123,6 +155,12 @@ class DailyResourceCtrl {
                 this.editDisabled[resource._id] = false;
             });
     }
+    updateCurrentDailyWorker(dailyWorker) {
+        this.DailyWorkerService.updateDailyWorker(dailyWorker)
+            .then((res) => {
+                this.editDisabled[dailyWorker._id] = false;
+            });
+    }
     increaceDailyResource(resource) {
         resource.amount += 1;
         this.ResourceService.updateDailyResource(resource)
@@ -178,11 +216,13 @@ class DailyResourceCtrl {
         });
         let resourceCall = this.ResourceService.getAllDailyResources(object);
         let commentCall = this.CommentService.getAllDailyComments(object);
+        let dailyWorkerCall = this.DailyWorkerService.getAllDailyWorkers(object);
 
-        this.$q.all([resourceCall, commentCall])
+        this.$q.all([resourceCall, commentCall, dailyWorkerCall])
             .then((resArray)=> {
                 this.resources = resArray[0].data;
                 this.comments = resArray[1].data;
+                this.dailyWorkers = resArray[2].data;
                 this.addAllResourceSum();
             }).catch((response)=> {
                 console.log('Failed to retrive daily data');

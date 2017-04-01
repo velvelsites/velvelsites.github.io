@@ -1,9 +1,25 @@
 @Inject('MainService', 'UserService', 'RoleService', '$http')
 class UserCtrl {
     constructor() {
-        this.getUsers();
-        this.getRoles();
+        this.initUsers();
+        this.initRoles();
         this.addingRole = false;
+    }
+    initUsers(){
+        if(this.UserService.users.length){
+            this.users = this.UserService.users;
+            this.selectedUser = this.users[0];
+        } else{
+            this.getUsers();
+        }
+    }
+    initRoles(){
+        if(this.RoleService.roles.length){
+            this.roles = this.RoleService.roles;
+            this.selectedUser = this.roles[0];
+        } else{
+            this.getRoles();
+        }
     }
     addUser(isValid) {
         if (isValid) {

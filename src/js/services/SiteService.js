@@ -48,7 +48,8 @@ class SiteService {
 	}
 	getSites() {
 		let promise = this.$http.get(url + '/api/getSites');
-		promise.then(() => {
+		promise.then((res) => {
+			this.sites = res.data
 			this.notifyObservers();
 		});
 		return promise;

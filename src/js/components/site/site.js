@@ -1,49 +1,29 @@
 @Inject('MainService', 'SiteService', 'UserService','AuthService')
 class SiteCtrl {
     constructor() {
-        // this.getSites();
-        this.getUsers();
         this.SiteService.registerUserUpdateCallback(() => {
             this.initSites();
         });
         this.initSites();
-        // AuthService.registerUserUpdateCallback(() => {
-        //     this.currentUser = AuthService.currentUser;
-        //     if (this.currentUser && this.currentUser._id) {
-        //         if (this.currentUser.role._id == '57d27d4313d468481b1fe12e') {// if is admin TODO
-        //             this.SiteService.getSites().then((res) => {
-        //                 this.userSites = res.data;
-        //             });
-        //         }
-        //         else {
-        //             this.getUserSites();
-        //         }
-        //     }
-        // });
-        // this.updateUser();
+        this.initUsers();
     }
     initSites(){
         if(this.SiteService.userSites.length){
             this.userSites = this.SiteService.userSites;
             this.selectedSite = this.userSites[0];
-            this.getSiteUsers(this.selectedSite._id);
+        } else{
+            this.getSites();
         }
     }
-    // updateUser() {
-    //     this.currentUser = this.AuthService.currentUser
-    //     if (this.currentUser && this.currentUser._id) {
-    //         if (this.currentUser.role._id == '57d27d4313d468481b1fe12e') {// if is admin TODO
-    //             this.SiteService.getSites().then((res) => {
-    //                 this.userSites = res.data;
-    //             });
-    //         }
-    //         else {
-    //             this.UserService.getUserSites(this.currentUser._id).then((res) => {
-    //                 this.userSites = res.data;
-    //             });
-    //         }
-    //     }
-    // }
+    initUsers(){
+        if(this.UserService.users.length){
+            this.users = this.UserService.users;
+            this.selectedUser = this.users[0];
+        } else{
+            this.getUsers();
+        }
+    }
+    
     addSite(isValid) {
         if (isValid) {
             this.SiteService.addSite(this.site).then((response) => {

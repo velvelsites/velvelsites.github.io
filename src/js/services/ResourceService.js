@@ -3,6 +3,8 @@ let url = 'https://velvel-server.herokuapp.com';
 @Inject('$http','$q')
 class ResourceService {
 	constructor() {
+		this.resources = [];
+		this.dailyDefaults = [];
 	}
 	addResource(resource) {
 		let promise = this.validateClientObject(resource);
@@ -48,12 +50,16 @@ class ResourceService {
 		return this.$http.post(url + '/api/addDailyResource',resource);
 	}
     getDailyDefaults(date, site){
-		return this.$http.get(url + '/api/getDailyDefaults',{
+		let promise = this.$http.get(url + '/api/getDailyDefaults',{
 			params:{
 				date:date,
 				site:site
 			}
 		});
+		promise.then((res) => {
+			this.dailyDefaults = res.data
+		});
+		return promise;
 	}
 	deleteDailyDefault(resourceId){
 		return this.$http.delete(url + '/api/deleteDailyDefault/' + resourceId);
@@ -67,7 +73,11 @@ class ResourceService {
 		});
 	}
 	getResources() {
-		return this.$http.get(url + '/api/getResources');
+		let promise = this.$http.get(url + '/api/getResources');
+		promise.then((res) => {
+			this.resources = res.data
+		});
+		return promise;
 	}
 	updateResource(resource){
 		return this.$http.put(url + '/api/updateResource/' + resource._id,resource);

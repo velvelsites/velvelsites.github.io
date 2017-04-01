@@ -1,7 +1,15 @@
 @Inject('MainService', 'RoleService')
 class RoleCtrl {
     constructor() {
-        this.getRoles();
+        this.initRoles()
+    }
+    initRoles(){
+        if(this.RoleService.roles.length){
+            this.roles = this.RoleService.roles;
+            this.selectedUser = this.roles[0];
+        } else{
+            this.getRoles();
+        }
     }
     addRole(isValid) {
         if (isValid) {

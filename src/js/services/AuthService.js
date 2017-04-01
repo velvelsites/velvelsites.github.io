@@ -1,5 +1,5 @@
 import _ from 'lodash';
-@Inject('$q', '$http', 'UserService', 'SiteService', 'TypeService', 'ResourceService')
+@Inject('$q', '$http', 'UserService', 'SiteService', 'TypeService', 'ResourceService','WorkerService','DailyWorkerService')
 class AuthService {
     constructor() {
         this.adminRoles = ['57d27d4313d468481b1fe12e'];
@@ -106,6 +106,8 @@ class AuthService {
         this.currentUserRole = user.role._id;
         this.SiteService.getUserSites(user._id);
         this.TypeService.getTypes();
+        this.WorkerService.getWorkers();
+        // this.DailyWorkerService.getDailyWorkers();
         // this.ResourceService.initUser(user);
         this.notifyObservers();
     }
@@ -143,8 +145,8 @@ class AuthService {
         this.destroyUserCredentials();
         this.notifyObservers();
     };
-    static AuthFactory($q, $http, UserService, SiteService,TypeService,ResourceService) {
-        return new AuthService($q, $http, UserService, SiteService,TypeService,ResourceService);
+    static AuthFactory($q, $http, UserService, SiteService,TypeService,ResourceService,WorkerService,DailyWorkerService) {
+        return new AuthService($q, $http, UserService, SiteService,TypeService,ResourceService,WorkerService,DailyWorkerService);
     }
 }
 angular.module('velvel-app').factory('AuthService', AuthService.AuthFactory);

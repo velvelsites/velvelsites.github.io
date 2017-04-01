@@ -548,7 +548,7 @@ table{
 }
 .uib-datepicker-popup{
     left: inherit!important;
-    right: 30px;
+    right: 0px;
     direction:ltr;
     .btn-success, .btn-danger{
         color:rgb(51, 51, 51);
@@ -572,7 +572,9 @@ table{
     }
 
 }
-
+.btn-info.active{
+    color:#8B9BD6;
+}
 
 
 

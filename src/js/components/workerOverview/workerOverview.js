@@ -88,7 +88,9 @@ class WorkerOverviewCtrl {
                     finalObject.sites.push(newSite)    
                 }
             })
-            this.grouped.push(finalObject)
+            if(finalObject.sites.length > 0){
+                this.grouped.push(finalObject)    
+            }
         });
     }
     initDates() {

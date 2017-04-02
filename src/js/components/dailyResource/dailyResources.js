@@ -5,6 +5,7 @@ class DailyResourceCtrl {
     constructor() {
         this.loading = true;
         this.dailyResource = {};
+        this.dailyResource.amount = 1;
         this.dailyWorker = {};
         this.resourceTypes = TypeService.resourceTypes;
         this.editDisabled = {};

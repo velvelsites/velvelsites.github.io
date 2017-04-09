@@ -4,9 +4,14 @@ let DATE_FORMAT = 'yyyy-MM';
 @Inject('MainService', 'DailyWorkerService')
 class WorkerOverviewCtrl {
     constructor() {
-        this.initOverview()
-        this.groupWorkers()
+        this.sites = {}
+        this.siteObject = {}
+        this.sitesArray =[]
+        this.showSection = {}
         this.moment = moment;
+        this.monthlyTotal = 0;
+        this.initOverview()
+        this.getMonthlyWorkers()
         this.initDates();
     }
     initOverview(){
@@ -24,7 +29,7 @@ class WorkerOverviewCtrl {
     getAllDailyWorkers() {
         this.DailyWorkerService.getAllDailyWorkers().then((response) => {
             this.allDailyWorkers = response.data;
-            this.groupWorkers()
+            this.getMonthlyWorkers()
         }, (error) => {
             console.log('Error retriving worker overview');
         });
@@ -36,10 +41,11 @@ class WorkerOverviewCtrl {
         this.workers = _.groupBy(this.allDailyWorkers, 'worker._id');
         this.grouped = [];
         _.forEach(this.workers, (workerUnits, workerId)=>{
+            let workerName = workerUnits[0].worker.name
             let finalObject = {
-                workerId:workerId,
-                workerName:workerUnits[0].worker.name,
-                sites:[]
+                workerId: workerId,
+                workerName: workerName,
+                sites: []
             }
             let siteGroup = _.groupBy(workerUnits, 'site._id');
             let hours = 0;
@@ -62,10 +68,14 @@ class WorkerOverviewCtrl {
     groupWorkersByYearMonth(year, month){
         this.workers = _.groupBy(this.allDailyWorkers, 'worker._id');
         this.grouped = [];
+        this.sites = {};    
+        this.monthlyTotal = 0;
         _.forEach(this.workers, (workerUnits, workerId)=>{
+            let workerName = workerUnits[0].worker.name
             let finalObject = {
                 workerId:workerId,
-                workerName:workerUnits[0].worker.name,
+                workerMonthly:0,
+                workerName:workerName,
                 sites:[]
             }
             let siteGroup = _.groupBy(workerUnits, 'site._id');
@@ -74,7 +84,8 @@ class WorkerOverviewCtrl {
                 let newSite = {id:siteId, days:0, hours:0, 
                     name:site[0].site.name,
                     hourlyRate:site[0].hourlyRate, 
-                    commute:0}
+                    commute:0,
+                    monthlyTotal:0}
                 _.forEach(site, (siteDay)=>{
                     let siteDayYear = this.moment(siteDay.date).year()
                     let siteDayMonth = this.moment(siteDay.date).month()
@@ -85,13 +96,28 @@ class WorkerOverviewCtrl {
                     }
                 })
                 if(newSite.days > 0){
-                    finalObject.sites.push(newSite)    
+                    newSite.siteTotal = this.dailyWorkerTotal(newSite.hourlyRate,newSite.hours,newSite.commute)
+                    this.monthlyTotal += newSite.siteTotal;
+                    finalObject.workerMonthly = newSite.siteTotal
+                    finalObject.sites.push(newSite);
+                    this.manageSites(siteId, site[0].site.name, workerId,workerName, newSite.siteTotal, newSite.days)
                 }
             })
             if(finalObject.sites.length > 0){
                 this.grouped.push(finalObject)    
             }
         });
+    }
+    manageSites(siteId, siteName, workerId, workerName, amount, days){
+        if(!this.sites[siteId]){
+            this.sites[siteId] = {name:siteName, monthlyTotal:0}
+        }
+        if(!this.sites[siteId]["workers"]){
+            this.sites[siteId]["workers"]=[]
+        }
+        this.sites[siteId].monthlyTotal += amount
+        this.sites[siteId]["workers"].push({id:workerId,name:workerName,"amount":amount,"days":days})
+
     }
     initDates() {
         this.format = DATE_FORMAT;

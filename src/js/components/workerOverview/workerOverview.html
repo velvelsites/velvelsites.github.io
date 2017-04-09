@@ -1,4 +1,4 @@
-<div class="col-xs-12">
+<div class="col-md-8 col-xs-12">
         <div class="card .date-card">
             <h4>תאריך</h4>
             <div class="col-md-4 col-xs-12">
@@ -10,10 +10,68 @@
                     </div>
           </div>
 </div>
-<div class="col-xs-12 col-md-6" ng-repeat="worker in $ctrl.grouped">
-  <div class="card">
-         <div class="table-responsive">
-            <h2 ng-bind="worker.workerName"></h2>
+<div class="col-md-8 col-xs-12 worker-monthly">
+    <h2>אתרים</h2>
+    <div class="card" ng-repeat="(site,siteObject) in $ctrl.sites">
+         <div    class="card-header row" 
+            ng-click="$ctrl.siteSection[site] = !$ctrl.siteSection[site]">
+        <span class="lead-button">
+            <i  class="glyphicon glyphicon glyphicon-plus"
+            ng-show="!$ctrl.siteSection[site]"></i>
+        <i  class="glyphicon glyphicon glyphicon-minus"
+            ng-show="$ctrl.siteSection[site]"></i>
+        </span>
+        <span class="title" ng-bind="siteObject.name"></span>
+        <span class="amount" ng-bind="' סך הכל: ' + siteObject.monthlyTotal"></span>
+        <span class="trail-button">
+            <i  class="glyphicon glyphicon glyphicon-envelope"
+            ng-show="currentSite.comments.length>0"></i>    
+        </span>
+        
+    </div>
+    <div class="card-content" ng-show="$ctrl.siteSection[site]">
+        <div class="table-responsive">
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr class="theader">
+                        <th>אתר</th>
+                        <th>ימים</th>
+                        <th>סך הכל</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="worker in siteObject.workers">
+                        <td ng-bind="worker.name"></td>
+                        <td ng-bind="worker.days"></td>
+                        <td ng-bind="worker.amount"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+<div class="col-md-8 col-xs-12 worker-monthly">
+<h2>פועלים</h2>
+  <div class="card" ng-repeat="worker in $ctrl.grouped">
+    <div    class="card-header row" 
+            ng-click="$ctrl.showSection[worker.workerId] = !$ctrl.showSection[worker.workerId]">
+        <span class="lead-button">
+            <i  class="glyphicon glyphicon glyphicon-plus"
+            ng-show="!$ctrl.showSection[worker.workerId]"></i>
+        <i  class="glyphicon glyphicon glyphicon-minus"
+            ng-show="$ctrl.showSection[worker.workerId]"></i>
+        </span>
+        <span class="title" ng-bind="worker.workerName"></span>
+        <span class="amount" ng-bind="' סך הכל: ' + worker.workerMonthly"></span>
+        <span class="trail-button">
+            <i  class="glyphicon glyphicon glyphicon-envelope"
+            ng-show="currentSite.comments.length>0"></i>    
+        </span>
+        
+    </div>
+    <div class="card-content" ng-show="$ctrl.showSection[worker.workerId]">
+        <div class="table-responsive">
             <table class="table table-hover table-striped">
                 <thead>
                     <tr class="theader">
@@ -32,10 +90,12 @@
                         <td ng-bind="currentDailyWorker.hours"></td>
                         <td ng-bind="currentDailyWorker.hourlyRate"></td>
                         <td ng-bind="currentDailyWorker.commute"></td>
-                        <td ng-bind="$ctrl.dailyWorkerTotal(currentDailyWorker.hourlyRate,currentDailyWorker.hours,currentDailyWorker.commute)"></td>
+                        <td ng-bind="currentDailyWorker.siteTotal"></td>
+
                     </tr>
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

@@ -10,6 +10,9 @@ class DailyResourceCtrl {
         this.resourceTypes = TypeService.resourceTypes;
         this.editDisabled = {};
         this.moment = moment;
+        this.hstep = 1;
+        this.mstep = 15;
+        this.max = new Date().setHours(22)
         this.SiteService.registerUserUpdateCallback(() => {
             this.initSites();
         });
@@ -31,6 +34,7 @@ class DailyResourceCtrl {
         this.initDates();
         this.initWorkers()
         this.initDailyWorkers()
+        this.initDAilyWorkerHours()
     }
     initResources() {
         this.resourceTypes = this.TypeService.types;
@@ -43,11 +47,41 @@ class DailyResourceCtrl {
     initDailyWorkers() {
         this.dailyWorkers = this.DailyWorkerService.dailyWorkers;
     }
+    startTimeChanged(){
+        if (this.workerStartTime >= this.workerEndTime){
+             this.workerEndTime = new Date(this.workerStartTime)
+             this.workerEndTime.setHours(this.workerStartTime.getHours()+1)
+        }
+        this.setDailyWorkerHours()
+    }
+    endTimeChanged(){
+        if (this.workerStartTime >= this.workerEndTime){
+             this.workerStartTime = new Date(this.workerEndTime)
+             this.workerStartTime.setHours(this.workerEndTime.getHours()-1)
+        }
+        this.setDailyWorkerHours()
+    }
+    initDAilyWorkerHours(){
+        let start = new Date()
+        let end = new Date()
+        this.workerStartTime = start;
+        end.setHours(end.getHours()+1)
+        this.workerEndTime = end;
+        this.setDailyWorkerHours()
+    }
+    setDailyWorkerHours(){
+        let start = this.moment(this.workerStartTime)
+        let end = this.moment(this.workerEndTime)
+        var ms = this.moment(end).diff(this.moment(start));
+        var d = this.moment.duration(ms).as('hours');
+        this.dailyWorker.hours = d
+    }
     initSites() {
         this.sites = this.SiteService.userSites;
         this.dailyResource.site = this.sites[0];
         this.getAllDailyResources();
     }
+
     getTypes() {
         this.TypeService.getTypes().then((response) => {
             this.resourceTypes = response.data;
@@ -90,6 +124,8 @@ class DailyResourceCtrl {
             this.addingWorker = true;
             let dailyResource = Object.assign({}, this.dailyResource);
             this.dailyWorker.date = this.formatDate(dailyResource.date);
+            this.dailyWorker.startTime = this.workerStartTime
+            this.dailyWorker.endTime = this.workerEndTime
             this.dailyWorker.user = {};
             this.dailyWorker.user._id = this.currentUser._id;
             this.dailyWorker.site = this.dailyResource.site;

@@ -70,7 +70,8 @@
                 <div ng-repeat="item in currentSite.resources" class="cell">
                     <div ng-bind="item.resourceType.name" class="header"></div>
                     <div class="body">
-                        <div class="button-holder">
+                        <div class="button-holder" ng-show="$ctrl.currentUser.role._id == '57d2805f13d468481b1fe130'
+                                || $ctrl.currentUser.role._id == '57d2837a13d468481b1fe133'">
                             <div ng-click="$ctrl.increaceDailyResource(item)">
                                 <i class="glyphicon glyphicon glyphicon-plus"></i>
                             </div>
@@ -79,7 +80,8 @@
                             </div>
                         </div>
                         <div><input type="text" ng-disabled="!$ctrl.editDisabled[item._id]" ng-model="item.amount"></div>
-                        <div class="button-holder" ng-show="!item.sum">
+                        <div class="button-holder"  ng-show="$ctrl.currentUser.role._id == '57d2805f13d468481b1fe130'
+                                || $ctrl.currentUser.role._id == '57d2837a13d468481b1fe133'">
                             <div ng-click="$ctrl.editField(item)" ng-class="{'inverse':$ctrl.editDisabled[item._id]}">
                                 <i class="glyphicon glyphicon glyphicon-edit"></i>
                             </div>
@@ -187,7 +189,9 @@
                 <thead>
                     <tr class="theader">
                         <th>שם</th>
+                        <th>התחלה</th>
                         <th>שעות</th>
+                        <th>סיום</th>
                         <th>שכר שעתי</th>
                         <th>נסיעות</th>
                         <th>לתשלום</th>
@@ -198,8 +202,14 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="currentDailyWorker in $ctrl.dailyWorkers">
-                        <td><input type="text" ng-disabled="!$ctrl.editDisabled[currentDailyWorker._id]" ng-model="currentDailyWorker.worker.name"></td>
-                        <td><input type="text" ng-disabled="!$ctrl.editDisabled[currentDailyWorker._id]" ng-model="currentDailyWorker.hours"></td>
+                        <td><input  type="text" ng-disabled="!$ctrl.editDisabled[currentDailyWorker._id]" 
+                                    ng-model="currentDailyWorker.worker.name"></td>
+                        <td><input  type="text" ng-disabled="true" 
+                                    ng-model="currentDailyWorker.startTime | date:'HH:mm'"></td>
+                        <td><input  type="text" ng-disabled="true" 
+                                    ng-model="currentDailyWorker.hours"></td>
+                        <td><input  type="text" ng-disabled="true" 
+                                    ng-model="currentDailyWorker.endTime | date:'HH:mm'"></td>
                         <td><input type="text" ng-disabled="!$ctrl.editDisabled[currentDailyWorker._id]" ng-model="currentDailyWorker.hourlyRate"></td>
                         <td><input  type="text" ng-disabled="!$ctrl.editDisabled[currentDailyWorker._id]"
                                     ng-model="currentDailyWorker.commute"></td>

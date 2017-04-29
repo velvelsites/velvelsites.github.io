@@ -52,6 +52,8 @@ class SiteCtrl {
 
     }
     deleteSite(siteId) {
+        alert('אין מחיקת אתרים כרגע')
+        return
         this.SiteService.deleteSite(siteId)
             .then((res) => {
                 this.getSites();

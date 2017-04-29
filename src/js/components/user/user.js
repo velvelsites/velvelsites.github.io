@@ -52,7 +52,6 @@ class UserCtrl {
     }
     getUsers() {
         this.UserService.getUsers().then((response) => {
-            console.log('User-component');
             this.users = response.data;
         }, (error) => {
             console.log('Error retriving Users');
@@ -79,7 +78,7 @@ class UserCtrl {
         this.RoleService.getRoles().then((response) => {
             console.log('User-component');
             this.roles = response.data;
-            if(this.roles[0]){
+            if(this.roles[0] && this.user){
                 this.user.role = this.roles[0];
             }
         }, (error) => {
@@ -94,6 +93,8 @@ class UserCtrl {
 
     }
     deleteUser(userId) {
+        alert('אין מחיקת משתמשים כרגע')
+        return
         this.UserService.deleteUser(userId)
             .then((res) => {
                 this.getUsers();

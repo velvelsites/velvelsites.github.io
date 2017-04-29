@@ -32,6 +32,8 @@ class WorkerCtrl {
 
     }
     deleteWorker(workerId) {
+        alert('אין מחיקת פועלים כרגע')
+        return
         this.WorkerService.deleteWorker(workerId)
             .then((res) => {
                 this.getWorkers();

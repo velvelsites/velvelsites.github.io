@@ -204,12 +204,10 @@
                     <tr ng-repeat="currentDailyWorker in $ctrl.dailyWorkers">
                         <td><input  type="text" ng-disabled="!$ctrl.editDisabled[currentDailyWorker._id]" 
                                     ng-model="currentDailyWorker.worker.name"></td>
-                        <td><input  type="text" ng-disabled="true" 
-                                    ng-model="currentDailyWorker.startTime | date:'HH:mm'"></td>
+                        <td ng-bind="currentDailyWorker.startTime | date:'HH:mm'"></td>
                         <td><input  type="text" ng-disabled="true" 
                                     ng-model="currentDailyWorker.hours"></td>
-                        <td><input  type="text" ng-disabled="true" 
-                                    ng-model="currentDailyWorker.endTime | date:'HH:mm'"></td>
+                        <td ng-bind="currentDailyWorker.endTime | date:'HH:mm'"></td>
                         <td><input type="text" ng-disabled="!$ctrl.editDisabled[currentDailyWorker._id]" ng-model="currentDailyWorker.hourlyRate"></td>
                         <td><input  type="text" ng-disabled="!$ctrl.editDisabled[currentDailyWorker._id]"
                                     ng-model="currentDailyWorker.commute"></td>

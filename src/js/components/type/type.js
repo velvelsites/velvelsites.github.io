@@ -65,6 +65,8 @@ class TypeCtrl {
             });
     }
     deleteType(typeId) {
+        alert('אין מחיקת משאבים כרגע')
+        return
         this.TypeService.deleteType(typeId)
             .then((res) => {
                 this.getTypes();

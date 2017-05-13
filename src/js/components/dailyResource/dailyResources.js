@@ -74,7 +74,7 @@ class DailyResourceCtrl {
         let end = this.moment(this.workerEndTime)
         var ms = this.moment(end).diff(this.moment(start));
         var d = this.moment.duration(ms).as('hours') %24;
-        this.dailyWorker.hours = parseFloat(d.toFixed(2))
+        this.dailyWorker.hours = parseFloat(d.toFixed(1))
     }
     initSites() {
         this.sites = this.SiteService.userSites;

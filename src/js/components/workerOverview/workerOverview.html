@@ -87,7 +87,7 @@
                     <tr ng-repeat="currentDailyWorker in worker.sites">
                         <td ng-bind="currentDailyWorker.name"></td>
                         <td ng-bind="currentDailyWorker.days"></td>
-                        <td ng-bind="currentDailyWorker.hours"></td>
+                        <td ng-bind="$ctrl.floatDown(currentDailyWorker.hours,1)"></td>
                         <td ng-bind="currentDailyWorker.hourlyRate"></td>
                         <td ng-bind="currentDailyWorker.commute"></td>
                         <td ng-bind="currentDailyWorker.siteTotal"></td>

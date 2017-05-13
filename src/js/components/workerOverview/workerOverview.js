@@ -108,6 +108,9 @@ class WorkerOverviewCtrl {
             }
         });
     }
+    floatDown(number, digits){
+        return parseFloat(number.toFixed(digits));
+    }
     manageSites(siteId, siteName, workerId, workerName, amount, days){
         if(!this.sites[siteId]){
             this.sites[siteId] = {name:siteName, monthlyTotal:0}

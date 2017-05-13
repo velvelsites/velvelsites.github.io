@@ -96,7 +96,7 @@ class WorkerOverviewCtrl {
                     }
                 })
                 if(newSite.days > 0){
-                    newSite.siteTotal = this.dailyWorkerTotal(newSite.hourlyRate,newSite.hours,newSite.commute)
+                    newSite.siteTotal = parseFloat(this.dailyWorkerTotal(newSite.hourlyRate,newSite.hours,newSite.commute).toFixed(0))
                     this.monthlyTotal += newSite.siteTotal;
                     finalObject.workerMonthly = newSite.siteTotal
                     finalObject.sites.push(newSite);

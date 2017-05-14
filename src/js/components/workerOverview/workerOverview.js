@@ -1,10 +1,13 @@
 import moment from 'moment-timezone';
 let DATE_FORMAT = 'yyyy-MM';
 
-@Inject('MainService', 'DailyWorkerService')
+@Inject('MainService', 'DailyWorkerService','SiteService')
 class WorkerOverviewCtrl {
     constructor() {
-        this.sites = {}
+        this.SiteService.registerUserUpdateCallback(() => {
+            this.initSites();
+        });
+        this.allSites = {}
         this.siteObject = {}
         this.sitesArray =[]
         this.showSection = {}
@@ -12,7 +15,8 @@ class WorkerOverviewCtrl {
         this.monthlyTotal = 0;
         this.initOverview()
         this.getMonthlyWorkers()
-        this.initDates();
+        this.initDates()
+        this.initSites()
     }
     initOverview(){
         if(this.DailyWorkerService.allDailyWorkers.length){
@@ -20,6 +24,23 @@ class WorkerOverviewCtrl {
         } else{
             this.getAllDailyWorkers();
         }
+    }
+    getSiteName(_id){
+        let site = _.find(this.allSites,{_id})
+        if(site){
+            return site.name;
+        }
+    }
+    getWorkerName(_id){
+        let worker = _.find(this.allDailyWorkers,(o)=>{
+            return o.worker._id == _id;
+        })
+        if(worker && worker.worker){
+            return worker.worker.name;   
+        }
+    }
+    initSites() {
+        this.allSites = this.SiteService.userSites;
     }
     getMonthlyWorkers(){
         let month = this.moment(this.date).month()
@@ -67,9 +88,20 @@ class WorkerOverviewCtrl {
     }
     groupWorkersByYearMonth(year, month){
         this.workers = _.groupBy(this.allDailyWorkers, 'worker._id');
+        
+        this.filteredDailyWorkers = _.filter(this.allDailyWorkers, (o)=>{
+            let siteDayYear = this.moment(o.date).year()
+            let siteDayMonth = this.moment(o.date).month()
+            return siteDayMonth == month && siteDayYear == year
+        })
+        this.workersSites = _.groupBy(this.filteredDailyWorkers, 'site._id');
+        this.groupedSites = {}
+        _.forEach(this.workersSites, (workerSite, key)=>{
+            this.groupedSites[key] = _.groupBy(workerSite, 'worker._id');
+        })
         this.grouped = [];
         this.sites = {};    
-        this.monthlyTotal = 0;
+        this.monthlyTotal = 0
         _.forEach(this.workers, (workerUnits, workerId)=>{
             let workerName = workerUnits[0].worker.name
             let finalObject = {

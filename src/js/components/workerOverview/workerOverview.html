@@ -53,7 +53,7 @@
 </div>
 <div class="col-md-8 col-xs-12 worker-monthly">
 <h2>פועלים</h2>
-  <div class="card" ng-repeat="worker in $ctrl.grouped">
+ <!--  <div class="card" ng-repeat="worker in $ctrl.grouped">
     <div    class="card-header row" 
             ng-click="$ctrl.showSection[worker.workerId] = !$ctrl.showSection[worker.workerId]">
         <span class="lead-button">
@@ -87,7 +87,7 @@
                     <tr ng-repeat="currentDailyWorker in worker.sites">
                         <td ng-bind="currentDailyWorker.name"></td>
                         <td ng-bind="currentDailyWorker.days"></td>
-                        <td ng-bind="$ctrl.floatDown(currentDailyWorker.hours,1)"></td>
+                        <td ng-bind="$ctrl.floatDowncurrentDailyWorker.hours)"></td>
                         <td ng-bind="currentDailyWorker.hourlyRate"></td>
                         <td ng-bind="currentDailyWorker.commute"></td>
                         <td ng-bind="currentDailyWorker.siteTotal"></td>
@@ -97,5 +97,90 @@
                 </table>
             </div>
         </div>
+    </div> -->
+
+
+
+
+
+
+    <div class="card" ng-repeat="(key, value) in $ctrl.groupedSites">
+    <div    class="card-header row" 
+            ng-click="$ctrl.showSection[key] = !$ctrl.showSection[key]">
+        <span class="lead-button">
+            <i  class="glyphicon glyphicon glyphicon-plus"
+            ng-show="!$ctrl.showSection[key]"></i>
+        <i  class="glyphicon glyphicon glyphicon-minus"
+            ng-show="$ctrl.showSection[key]"></i>
+        </span>
+        <span class="title" ng-bind="$ctrl.getSiteName(key)"></span>
+        <!-- <span class="amount" ng-bind="' סך הכל: ' + site.siteMonthly"></span> -->
+        <!-- <span class="trail-button">
+            <i  class="glyphicon glyphicon glyphicon-envelope"
+            ng-show="currentSite.comments.length>0"></i>    
+        </span> -->
+        
+    </div>
+    <div class="card-content" ng-repeat="(workerId,workerDays) in value" ng-show="$ctrl.showSection[key]">
+        <!-- <span ng-bind="$ctrl.getWorkerName(workerId)"></span> -->
+
+
+
+        <div    class="card-header row" 
+            ng-click="$ctrl.showSection[workerId] = !$ctrl.showSection[workerId]">
+        <span class="lead-button">
+            <i  class="glyphicon glyphicon glyphicon-plus"
+            ng-show="!$ctrl.showSection[workerId]"></i>
+        <i  class="glyphicon glyphicon glyphicon-minus"
+            ng-show="$ctrl.showSection[workerId]"></i>
+        </span>
+        <span class="title" ng-bind="$ctrl.getWorkerName(workerId)"></span>
+        <!-- <span class="amount" ng-bind="' סך הכל: ' + site.siteMonthly"></span> -->
+        <!-- <span class="trail-button">
+            <i  class="glyphicon glyphicon glyphicon-envelope"
+            ng-show="currentSite.comments.length>0"></i>    
+        </span> -->
+        
+    </div>
+
+
+        <div class="table-responsive" ng-show="$ctrl.showSection[workerId]" ng-init="items.total = 0">
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr class="theader">
+                        <th>תאריך</th>
+                        <th>התחלה</th>
+                        <th>סיום</th>
+                        <th>שעות</th>
+                        <th>שכר שעתי</th>
+                        <th>נסיעות</th>
+                        <th>לתשלום</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="currentDailySite in workerDays">
+                        <td ng-bind="currentDailySite.date | date:'dd/MM'"></td>
+                        <td ng-bind="currentDailySite.startTime | date:'HH:mm'"></td>
+                        <td ng-bind="currentDailySite.endTime | date:'HH:mm'"></td>
+                        <td ng-bind="$ctrl.floatDown(currentDailySite.hours,1)"></td>
+                        <td ng-bind="currentDailySite.hourlyRate"></td>
+                        <td ng-bind="currentDailySite.commute"></td>
+                        <td ng-init="items.total = items.total + $ctrl.floatDown(($ctrl.floatDown(currentDailySite.hours,1)*currentDailySite.hourlyRate) + currentDailySite.commute)"
+                            ng-bind="$ctrl.floatDown(($ctrl.floatDown(currentDailySite.hours,1)*currentDailySite.hourlyRate) + currentDailySite.commute)"></td>
+
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td ng-bind="items.total"></td>
+                    </tr>
+                    </tbody>
+                </table>
+        </div>
+    </div>
     </div>
 </div>

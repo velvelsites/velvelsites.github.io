@@ -11,11 +11,14 @@ class WorkerOverviewCtrl {
         this.siteObject = {}
         this.sitesArray =[]
         this.showSection = {}
+        this.monthDays = []
         this.moment = moment;
         this.monthlyTotal = 0;
         this.initOverview()
-        this.getMonthlyWorkers()
         this.initDates()
+        this.getDaysArrayByMonth()
+        this.getMonthlyWorkers()
+        
         this.initSites()
     }
     initOverview(){
@@ -95,7 +98,16 @@ class WorkerOverviewCtrl {
             return siteDayMonth == month && siteDayYear == year
         })
         this.workersSites = _.groupBy(this.filteredDailyWorkers, 'site._id');
+        this.monthlyWorkers = _.groupBy(this.filteredDailyWorkers, 'worker._id');
+        _.forEach(this.monthlyWorkers, (worker, key) =>{
+            this.monthlyWorkers[key] = _.groupBy(worker, 'date');
+            this.monthlyWorkers[key] = _.mapKeys(this.monthlyWorkers[key], o => {
+                return this.moment(o[0].date).date()
+            })
+        })
+
         this.groupedSites = {}
+
         _.forEach(this.workersSites, (workerSite, key)=>{
             this.groupedSites[key] = _.groupBy(workerSite, 'worker._id');
         })
@@ -153,6 +165,18 @@ class WorkerOverviewCtrl {
         this.sites[siteId].monthlyTotal += amount
         this.sites[siteId]["workers"].push({id:workerId,name:workerName,"amount":amount,"days":days})
 
+    }
+    getDaysArrayByMonth() {
+      let daysInMonth = moment().daysInMonth();
+      let arrDays = [];
+
+      while(daysInMonth) {
+        let current = moment().date(daysInMonth);
+        arrDays.push(current);
+        daysInMonth--;
+      }
+
+      this.monthDays = arrDays;
     }
     initDates() {
         this.format = DATE_FORMAT;

@@ -635,7 +635,22 @@ table{
         width:115px;
     }
 }
-
+.worker-table-line, .worker-table-header{
+    span{
+        display: inline-block;
+        min-width: 80px;
+        padding: 8px;
+        line-height: 1.42857;
+    }
+    border-top: 1px solid #ddd;
+}
+.worker-table-header{
+    background: #C7DAFA;
+    color: #ffffff;
+    padding:8px;
+}
+.worker-table-line{
+}
 
 
 

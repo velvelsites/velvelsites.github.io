@@ -90,8 +90,36 @@ class WorkerOverviewCtrl {
         });
     }
     groupWorkersByYearMonth(year, month){
+        var newMoment = this.moment
+        var selectedDate = this.date
         this.workers = _.groupBy(this.allDailyWorkers, 'worker._id');
-        
+        this.monthYearWorkers = _.filter(this.allDailyWorkers, function(o) { 
+            if(o){
+                return ((newMoment(o.date).month() == newMoment(selectedDate).month()) && (newMoment(o.date).year() == newMoment(selectedDate).year()));
+            }
+            return false
+        });
+        this.workerDataMap = {}
+        this.workerGrouped = _.groupBy(this.monthYearWorkers, 'worker._id');
+        this.workerMap = Object.keys(this.workerGrouped).map( workerId => {
+            var obj = {}
+            obj[workerId] = _.groupBy(_.sortBy(this.workerGrouped[workerId],'date'), 'site._id')
+            this.workerDataMap[workerId] = {
+                units:this.workerGrouped[workerId].length
+            }
+            this.workerDataMap[workerId]['units'] = this.workerGrouped[workerId].length
+            _.forEach(Object.keys(obj[workerId]), workeSiteKey => {
+                this.workerDataMap[workerId]['sites'] = !this.workerDataMap[workerId]['sites'] ? [] : this.workerDataMap[workerId]['sites']
+                this.workerDataMap[workerId]['sites'].push({
+                    name: obj[workerId][workeSiteKey][0].site.name,
+                    days:obj[workerId][workeSiteKey].length,
+                    percent: (( obj[workerId][workeSiteKey].length / this.workerGrouped[workerId].length ) *100).toFixed(0) + '%'
+                })
+            })
+            return obj
+        })
+
+        console.log(this.workerMap)
         this.filteredDailyWorkers = _.filter(this.allDailyWorkers, (o)=>{
             let siteDayYear = this.moment(o.date).year()
             let siteDayMonth = this.moment(o.date).month()

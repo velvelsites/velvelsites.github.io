@@ -638,7 +638,7 @@ table{
 .worker-table-line, .worker-table-header{
     span{
         display: inline-block;
-        min-width: 80px;
+        min-width: 115px;
         padding: 8px;
         line-height: 1.42857;
     }
@@ -647,7 +647,7 @@ table{
 .worker-table-header{
     background: #C7DAFA;
     color: #ffffff;
-    padding:8px;
+    // padding:8px;
 }
 .worker-table-line{
 }
@@ -721,6 +721,18 @@ table{
         .time-control{
             margin-top:0px;
         }
+    }
+}
+.worker-site-detail{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: stretch;
+    div{
+        min-width: 115px;
+        padding: 8px;
     }
 }
 

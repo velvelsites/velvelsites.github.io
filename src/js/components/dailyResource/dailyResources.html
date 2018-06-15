@@ -161,26 +161,46 @@
     <div class="card">
         <h2>הוספת פועל יומי</h2>
         <form class="form-inline2" name="dailyWorkerForm" ng-submit="$ctrl.addDailyWorker(dailyWorkerForm.$valid)" novalidate>
-            <label class="sr-only" for="name">Name:</label>
-            <select class="form-control" name="worker" id="worker" ng-model="$ctrl.dailyWorker.worker" ng-options="worker as worker.name for worker in $ctrl.workers"></select>
-            <div uib-timepicker ng-model="$ctrl.workerStartTime" 
-                                ng-change="$ctrl.startTimeChanged()" 
-                                hour-step="$ctrl.hstep" 
-                                minute-step="$ctrl.mstep"
-                                max="$ctrl.max"
-                                show-meridian="false"
-                                class="time-control"></div>
-            <input type="number" placeholder="שעות" disabled="true" min="1" value="1" class="form-control" name="hours" id="hours" ng-model="$ctrl.dailyWorker.hours" required />
-            <div uib-timepicker ng-model="$ctrl.workerEndTime" 
-                                ng-change="$ctrl.endTimeChanged()" 
-                                hour-step="$ctrl.hstep" 
-                                minute-step="$ctrl.mstep" 
-                                max="$ctrl.max"
-                                show-meridian="false"
-                                class="time-control"></div>
-            <input type="number" placeholder="שכר שעתי" class="form-control" name="hourlyRate" id="hourlyRate" ng-model="$ctrl.dailyWorker.worker.hourlyRate" required />
-            <input type="number" placeholder="נסיעות" class="form-control" name="commute" min="0" value="0" id="commute" ng-model="$ctrl.dailyWorker.commute" required />
-            <button type="submit" class="btn btn-primary" data-style="zoom-out" ladda="$ctrl.addingWorker">הוספת פועל יומי</button>
+            <div class="field-wrapper">
+                <label>פועל</label>
+                <label class="sr-only" for="name">Name:</label>
+                <select class="form-control" name="worker" id="worker" ng-model="$ctrl.dailyWorker.worker" ng-options="worker as worker.name for worker in $ctrl.workers"></select>
+            </div>
+            <div class="hour-wrapper">
+                <div class="field-wrapper time-picker-wrapper">
+                    <div uib-timepicker ng-model="$ctrl.workerStartTime" 
+                                        ng-change="$ctrl.startTimeChanged()" 
+                                        hour-step="$ctrl.hstep" 
+                                        minute-step="$ctrl.mstep"
+                                        max="$ctrl.max"
+                                        show-meridian="false"
+                                        class="time-control"></div>
+                </div>
+                <div class="field-wrapper time-picker-wrapper">
+                    <label>שעות</label>
+                    <input type="number" placeholder="שעות" disabled="true" min="1" value="1" class="form-control hour-input" name="hours" id="hours" ng-model="$ctrl.dailyWorker.hours" required />
+                </div>
+                <div class="field-wrapper time-picker-wrapper">
+                    <div uib-timepicker ng-model="$ctrl.workerEndTime" 
+                                        ng-change="$ctrl.endTimeChanged()" 
+                                        hour-step="$ctrl.hstep" 
+                                        minute-step="$ctrl.mstep" 
+                                        max="$ctrl.max"
+                                        show-meridian="false"
+                                        class="time-control"></div>
+                </div>
+            </div>
+            <div class="field-wrapper">
+                <label>שכר שעתי</label>
+                <input type="number" placeholder="שכר שעתי" class="form-control" name="hourlyRate" id="hourlyRate" ng-model="$ctrl.dailyWorker.worker.hourlyRate" required />
+            </div>
+            <div class="field-wrapper">
+                <label>נסיעות</label>
+                <input type="number" placeholder="נסיעות" class="form-control" name="commute" min="0" value="0" id="commute" ng-model="$ctrl.dailyWorker.commute" required />
+            </div>
+            <div class="field-wrapper">
+                <button type="submit" class="btn btn-primary add-worker" data-style="zoom-out" ladda="$ctrl.addingWorker">הוספת פועל יומי</button>
+            </div>
         </form>
     </div>
     <div class="card">

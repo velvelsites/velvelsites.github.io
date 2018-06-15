@@ -7,11 +7,12 @@ class DailyResourceCtrl {
         this.dailyResource = {};
         this.dailyResource.amount = 1;
         this.dailyWorker = {};
+        this.dailyWorker.commute = 0;
         this.resourceTypes = TypeService.resourceTypes;
         this.editDisabled = {};
         this.moment = moment;
         this.hstep = 1;
-        this.mstep = 15;
+        this.mstep = 30;
         this.max = new Date().setHours(22)
         this.SiteService.registerUserUpdateCallback(() => {
             this.initSites();
@@ -48,6 +49,9 @@ class DailyResourceCtrl {
         this.dailyWorkers = this.DailyWorkerService.dailyWorkers;
     }
     startTimeChanged(){
+        if (this.workerStartTime.getMinutes() != 30){
+            this.workerStartTime = this.moment(this.workerStartTime).startOf('hour'); 
+        }
         if (this.workerStartTime >= this.workerEndTime){
              this.workerEndTime = new Date(this.workerStartTime)
              this.workerEndTime.setHours(this.workerStartTime.getHours()+1)
@@ -64,9 +68,8 @@ class DailyResourceCtrl {
     initDAilyWorkerHours(){
         let start = new Date()
         let end = new Date()
-        this.workerStartTime = start;
-        end.setHours(end.getHours()+1)
-        this.workerEndTime = end;
+        this.workerStartTime = moment({hour: 7});
+        this.workerEndTime = moment({hour: 16});
         this.setDailyWorkerHours()
     }
     setDailyWorkerHours(){

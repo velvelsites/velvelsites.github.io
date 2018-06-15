@@ -629,7 +629,7 @@ table{
         width:105px;
     }
     .time-control{
-        border: 1px solid #ffffff;
+        // border: 1px solid #ffffff;
         padding: 5px;
         margin: 5px 0px;
         width:115px;
@@ -652,5 +652,75 @@ table{
 .worker-table-line{
 }
 
-
+.form-inline2 .hour-wrapper{
+        display: inline;
+}
+.form-inline2 .field-wrapper{
+    width:115px;
+    button{
+        margin-top:25px;
+    }
+    .time-control{
+        margin-top:30px;
+    }
+}
+@media (max-width: 768px){
+    button{
+        margin: 10px 0px;
+        width: 100%;
+    }
+    .form-inline2{
+        .form-control{
+            width: 100%;
+            border-radius: 5px;
+        }
+        label{
+            width:100px;
+        }
+        > div{
+            margin: 0px 0px 18px;
+            padding: 2px 4px;
+        }
+    }
+    .form-inline2 .field-wrapper{
+        width:100%;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: stretch;
+        align-content: stretch;
+    }
+    .add-worker{
+        margin: 10px 0px;
+        width: 100%;
+    }
+    .form-inline2 .time-picker-wrapper{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-items: center;
+        align-content: stretch;
+        width:100%;
+        label{
+            display:none;
+        }
+        .hour-input{
+            width:45px;
+        }
+    }
+    .form-inline2 .hour-wrapper{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-items: center;
+        align-content: stretch;
+        width:100%;
+        .time-control{
+            margin-top:0px;
+        }
+    }
+}
 

@@ -61,6 +61,9 @@ class WorkerOverviewCtrl {
     dailyWorkerTotal(hours, hourlyRate, commute){
         return (hours * hourlyRate) + commute;
     }
+    dailyWorkerTotalByCell(cell){
+        return (cell.hours * cell.hourlyRate) + cell.commute;
+    }
     groupWorkers(){
         this.workers = _.groupBy(this.allDailyWorkers, 'worker._id');
         this.grouped = [];
@@ -99,47 +102,30 @@ class WorkerOverviewCtrl {
             }
             return false
         });
-        this.workerDataMap = {}
-        this.workerDataMap2 = {}
+        this.workersSiteSummary = {}
+        this.siteMap = {}
         this.workerGrouped = _.groupBy(this.monthYearWorkers, 'worker._id');
         _.forEach(Object.keys(this.workerGrouped), workerKey=>{
-            if(!this.workerDataMap2[workerKey]){
-                this.workerDataMap2[workerKey] = {
+            if(!this.workersSiteSummary[workerKey]){
+                this.workersSiteSummary[workerKey] = {
                     sites:[],
                     total:0
                 }
             }
+            // 
             _.forEach(this.workerGrouped[workerKey], workerDaily=>{
-                this.workerDataMap2[workerKey].total += parseFloat(this.dailyWorkerTotal(workerDaily.hourlyRate,workerDaily.hours,workerDaily.commute).toFixed(0))
+                this.workersSiteSummary[workerKey].total += parseFloat(this.dailyWorkerTotal(workerDaily.hourlyRate,workerDaily.hours,workerDaily.commute).toFixed(0))
             })
             _.forEach(_.groupBy(this.workerGrouped[workerKey], 'site._id'), workerSiteDays=>{
-                this.workerDataMap2[workerKey].sites.push({
+                this.workersSiteSummary[workerKey].sites.push({
                     name: workerSiteDays[0].site.name,
                     days:workerSiteDays.length,
+                    total: _.sumBy(workerSiteDays, o=>{return parseFloat(this.dailyWorkerTotalByCell(o))}),
                     percent: (( workerSiteDays.length / this.workerGrouped[workerKey].length ) *100).toFixed(0) + '%'
                 })
             })
         })
-        this.workerMap = Object.keys(this.workerGrouped).map( workerId => {
-            var obj = {}
-            obj[workerId] = _.groupBy(_.sortBy(this.workerGrouped[workerId],'date'), 'site._id')
-            _.forEach(Object.keys(obj[workerId]), workeSiteKey => {
-                if(!this.workerDataMap[workerId]){
-                    this.workerDataMap[workerId]= {
-                        total:0,
-                        sites:[],
-                    }
-                }
-                this.workerDataMap[workerId].sites.push({
-                    name: obj[workerId][workeSiteKey][0].site.name,
-                    days:obj[workerId][workeSiteKey].length,
-                    percent: (( obj[workerId][workeSiteKey].length / this.workerGrouped[workerId].length ) *100).toFixed(0) + '%'
-                })
-            })
-            return obj
-        })
 
-        console.log(this.workerMap)
         this.filteredDailyWorkers = _.filter(this.allDailyWorkers, (o)=>{
             let siteDayYear = this.moment(o.date).year()
             let siteDayMonth = this.moment(o.date).month()
@@ -203,6 +189,14 @@ class WorkerOverviewCtrl {
     floatDown(number, digits){
         return parseFloat(number.toFixed(digits));
     }
+    printData(elementToGet){
+       var divToPrint=document.getElementById(elementToGet);
+       var newWin= window.open("");
+       newWin.document.write(
+        '<html lang="en"><head><style>'+cssTemplate+'</style></head><body>'+divToPrint.outerHTML)+'</body></html>';
+       newWin.print();
+       newWin.close();
+    }
     manageSites(siteId, siteName, workerId, workerName, amount, days){
         if(!this.sites[siteId]){
             this.sites[siteId] = {name:siteName, monthlyTotal:0}
@@ -255,6 +249,7 @@ class WorkerOverviewCtrl {
 
 
 }
+var cssTemplate = 'body{font-size:10px;direction:rtl;}#cell-large{width:100px;}.card{padding: 15px;border-radius: 4px;box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(63, 63, 68, 0.1);background-color: #FFFFFF;margin-bottom: 10px;margin-top: 1px;float: left;width: 100%;}.card .row {    margin: 0px;    padding: 10px;}.card .card-content {    padding: 10px;}.worker-table-header {    background: #C7DAFA;    color: #ffffff;}.worker-table-line span, .worker-table-header span {    display: inline-block;    width: 40px;    padding: 8px;    line-height: 1.42857;}.worker-table-line, .worker-table-header {    border-top: 1px solid #ddd;}.worker-site-detail {    display: flex;    flex-direction: row;    flex-wrap: nowrap;    justify-content: flex-start;    align-items: center;    align-content: stretch;}.worker-site-detail div {    width: 40px;    padding: 8px;}.worker-monthly{    padding: 10px;margin: 60px;}'
 angular.module('velvel-app').component('workerOverview', {
     template: require('./workerOverview.html'),
     bindings: {

@@ -10,10 +10,10 @@
         </div>
     </div>
 </div>
-<div class="col-md-8 col-xs-12 worker-monthly">
+<div class="col-md-8 col-xs-12 worker-monthly" id="worker-monthly">
     <h2>פועלים</h2>
 
-    <div class="card" ng-repeat="(key, dayObject) in $ctrl.workerGrouped">
+    <div class="card" ng-repeat="(key, dayObject) in $ctrl.workerGrouped" id="worker_{{key}}">
         <div    class="card-header row" 
                 ng-click="$ctrl.showSection[key] = !$ctrl.showSection[key]">
             <span class="lead-button">
@@ -27,7 +27,7 @@
         <div class="card-content" ng-show="$ctrl.showSection[key]">
             <div class="worker-table-header">
                 <span>תאריך</span>
-                <span>אתר</span>
+                <span id="cell-large">אתר</span>
                 <span>התחלה</span>
                 <span>סיום</span>
                 <span>שעות</span>
@@ -38,7 +38,7 @@
             <div ng-repeat="dailySite in dayObject" class="worker-table-line">
                 <!-- <div ng-repeat="day in dailySite" class="worker-table-line"> -->
                     <span ng-bind="dailySite.date | date:'dd/MM'"></span>
-                    <span ng-bind="dailySite.site.name"></span>
+                    <span id="cell-large" ng-bind="dailySite.site.name"></span>
                     <span ng-bind="dailySite.startTime | date:'HH:mm'"></span>
                     <span ng-bind="dailySite.endTime | date:'HH:mm'"></span>
                     <span ng-bind="$ctrl.floatDown(dailySite.hours,1)"></span>
@@ -49,16 +49,26 @@
                 <!-- </div> -->
             </div>
             <div class="worker-table-header">
-                <span>אתר</span>
+                <span id="cell-large">אתר</span>
                 <span>אחוז באתר</span>
                 <span>ימים</span>
+                <span>לתשלום</span>
             </div>
-            <div ng-bind="$ctrl.workerDataMap2[key].total"></div>
-            <div  class="worker-site-detail worker-table-line" ng-repeat="objectw in $ctrl.workerDataMap2[key].sites">
-                <div ng-bind="objectw.name"></div>
+            <div  class="worker-site-detail worker-table-line" ng-repeat="objectw in $ctrl.workersSiteSummary[key].sites">
+                <div id="cell-large" ng-bind="objectw.name"></div>
                 <div ng-bind="objectw.percent"></div>
                 <div ng-bind="objectw.days"></div>
+                <div ng-bind="objectw.total"></div>
             </div>
+            <div  class="worker-site-detail worker-table-line" >
+                <div id="cell-large">סך הכל:</div>
+                <div ></div>
+                <div ></div>
+                <div ng-bind="$ctrl.workersSiteSummary[key].total"></div>
+            </div>
+            <span class="print-button btn">
+                <i class="glyphicon glyphicon-print" ng-click="$ctrl.printData('worker_'+key)"></i>    
+            </span>
         </div> 
     </div>
 </div>

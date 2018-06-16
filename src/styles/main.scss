@@ -638,7 +638,7 @@ table{
 .worker-table-line, .worker-table-header{
     span{
         display: inline-block;
-        min-width: 115px;
+        min-width: 71px;
         padding: 8px;
         line-height: 1.42857;
     }
@@ -723,6 +723,9 @@ table{
         }
     }
 }
+#cell-large{
+    width:120px;
+}
 .worker-site-detail{
     display: flex;
     flex-direction: row;
@@ -731,8 +734,11 @@ table{
     align-items: center;
     align-content: stretch;
     div{
-        min-width: 115px;
+        min-width: 71px;
         padding: 8px;
     }
 }
-
+.print-button{
+    padding: 3px 13px;
+    margin: 16px 8px 5px 0px;
+}

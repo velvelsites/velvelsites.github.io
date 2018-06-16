@@ -44,7 +44,7 @@
                     <span ng-bind="$ctrl.floatDown(dailySite.hours,1)"></span>
                     <span ng-bind="dailySite.hourlyRate"></span>
                     <span ng-bind="dailySite.commute"></span>
-                    <span ng-init="items.total = items.total + $ctrl.floatDown(($ctrl.floatDown(dailySite.hours,1)*dailySite.hourlyRate) + dailySite.commute)"
+                    <span ng-init="total = total + $ctrl.floatDown(($ctrl.floatDown(dailySite.hours,1)*dailySite.hourlyRate) + dailySite.commute)"
                                     ng-bind="$ctrl.floatDown(($ctrl.floatDown(dailySite.hours,1)*dailySite.hourlyRate) + dailySite.commute)"></span>
                 <!-- </div> -->
             </div>
@@ -53,7 +53,8 @@
                 <span>אחוז באתר</span>
                 <span>ימים</span>
             </div>
-            <div  class="worker-site-detail worker-table-line" ng-repeat="objectw in $ctrl.workerDataMap[key].sites">
+            <div ng-bind="$ctrl.workerDataMap2[key].total"></div>
+            <div  class="worker-site-detail worker-table-line" ng-repeat="objectw in $ctrl.workerDataMap2[key].sites">
                 <div ng-bind="objectw.name"></div>
                 <div ng-bind="objectw.percent"></div>
                 <div ng-bind="objectw.days"></div>

@@ -100,17 +100,37 @@ class WorkerOverviewCtrl {
             return false
         });
         this.workerDataMap = {}
+        this.workerDataMap2 = {}
         this.workerGrouped = _.groupBy(this.monthYearWorkers, 'worker._id');
+        _.forEach(Object.keys(this.workerGrouped), workerKey=>{
+            if(!this.workerDataMap2[workerKey]){
+                this.workerDataMap2[workerKey] = {
+                    sites:[],
+                    total:0
+                }
+            }
+            _.forEach(this.workerGrouped[workerKey], workerDaily=>{
+                this.workerDataMap2[workerKey].total += parseFloat(this.dailyWorkerTotal(workerDaily.hourlyRate,workerDaily.hours,workerDaily.commute).toFixed(0))
+            })
+            _.forEach(_.groupBy(this.workerGrouped[workerKey], 'site._id'), workerSiteDays=>{
+                this.workerDataMap2[workerKey].sites.push({
+                    name: workerSiteDays[0].site.name,
+                    days:workerSiteDays.length,
+                    percent: (( workerSiteDays.length / this.workerGrouped[workerKey].length ) *100).toFixed(0) + '%'
+                })
+            })
+        })
         this.workerMap = Object.keys(this.workerGrouped).map( workerId => {
             var obj = {}
             obj[workerId] = _.groupBy(_.sortBy(this.workerGrouped[workerId],'date'), 'site._id')
-            this.workerDataMap[workerId] = {
-                units:this.workerGrouped[workerId].length
-            }
-            this.workerDataMap[workerId]['units'] = this.workerGrouped[workerId].length
             _.forEach(Object.keys(obj[workerId]), workeSiteKey => {
-                this.workerDataMap[workerId]['sites'] = !this.workerDataMap[workerId]['sites'] ? [] : this.workerDataMap[workerId]['sites']
-                this.workerDataMap[workerId]['sites'].push({
+                if(!this.workerDataMap[workerId]){
+                    this.workerDataMap[workerId]= {
+                        total:0,
+                        sites:[],
+                    }
+                }
+                this.workerDataMap[workerId].sites.push({
                     name: obj[workerId][workeSiteKey][0].site.name,
                     days:obj[workerId][workeSiteKey].length,
                     percent: (( obj[workerId][workeSiteKey].length / this.workerGrouped[workerId].length ) *100).toFixed(0) + '%'

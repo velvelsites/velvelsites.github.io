@@ -28,42 +28,46 @@
             <div class="worker-table-header">
                 <span>תאריך</span>
                 <span id="cell-large">אתר</span>
-                <span>התחלה</span>
-                <span>סיום</span>
+                <span class="hidden-xs">התחלה</span>
+                <span class="hidden-xs">סיום</span>
                 <span>שעות</span>
-                <span>שכר שעתי</span>
-                <span>נסיעות</span>
+                <span class="hidden-xs">שכר שעתי</span>
+                <span class="hidden-xs">נסיעות</span>
                 <span>לתשלום</span>
             </div>
             <div ng-repeat="dailySite in dayObject" class="worker-table-line">
-                <!-- <div ng-repeat="day in dailySite" class="worker-table-line"> -->
                     <span ng-bind="dailySite.date | date:'dd/MM'"></span>
                     <span id="cell-large" ng-bind="dailySite.site.name"></span>
-                    <span ng-bind="dailySite.startTime | date:'HH:mm'"></span>
-                    <span ng-bind="dailySite.endTime | date:'HH:mm'"></span>
+                    <span class="hidden-xs" ng-bind="dailySite.startTime | date:'HH:mm'"></span>
+                    <span class="hidden-xs" ng-bind="dailySite.endTime | date:'HH:mm'"></span>
                     <span ng-bind="$ctrl.floatDown(dailySite.hours,1)"></span>
-                    <span ng-bind="dailySite.hourlyRate"></span>
-                    <span ng-bind="dailySite.commute"></span>
+                    <span class="hidden-xs" ng-bind="dailySite.hourlyRate"></span>
+                    <span class="hidden-xs" ng-bind="dailySite.commute"></span>
                     <span ng-init="total = total + $ctrl.floatDown(($ctrl.floatDown(dailySite.hours,1)*dailySite.hourlyRate) + dailySite.commute)"
                                     ng-bind="$ctrl.floatDown(($ctrl.floatDown(dailySite.hours,1)*dailySite.hourlyRate) + dailySite.commute)"></span>
-                <!-- </div> -->
             </div>
-            <div class="worker-table-header">
+            <div class="worker-table-header top-gap">
                 <span id="cell-large">אתר</span>
                 <span>אחוז באתר</span>
                 <span>ימים</span>
-                <span>לתשלום</span>
+                <span>שעות</span>
+                <span></span>
+                <span>תשלום לפני מע"מ</span>
             </div>
             <div  class="worker-site-detail worker-table-line" ng-repeat="objectw in $ctrl.workersSiteSummary[key].sites">
                 <div id="cell-large" ng-bind="objectw.name"></div>
                 <div ng-bind="objectw.percent"></div>
                 <div ng-bind="objectw.days"></div>
+                <div></div>
+                <div></div>
                 <div ng-bind="objectw.total"></div>
             </div>
             <div  class="worker-site-detail worker-table-line" >
                 <div id="cell-large">סך הכל:</div>
-                <div ></div>
-                <div ></div>
+                <div></div>
+                <div ng-bind="$ctrl.workersSiteSummary[key].totalDays"></div>
+                <div ng-bind="$ctrl.workersSiteSummary[key].totalHours"></div>
+                <div ng-bind="$ctrl.workersSiteSummary[key].totalCommute"></div>
                 <div ng-bind="$ctrl.workersSiteSummary[key].total"></div>
             </div>
             <span class="print-button btn">

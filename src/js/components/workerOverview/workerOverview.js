@@ -109,12 +109,19 @@ class WorkerOverviewCtrl {
             if(!this.workersSiteSummary[workerKey]){
                 this.workersSiteSummary[workerKey] = {
                     sites:[],
-                    total:0
+                    total:0,
+                    totalDays:0,
+                    totalHours:0,
+                    totalCommute:0
+
                 }
             }
             // 
             _.forEach(this.workerGrouped[workerKey], workerDaily=>{
                 this.workersSiteSummary[workerKey].total += parseFloat(this.dailyWorkerTotal(workerDaily.hourlyRate,workerDaily.hours,workerDaily.commute).toFixed(0))
+                this.workersSiteSummary[workerKey].totalHours += workerDaily.hours
+                this.workersSiteSummary[workerKey].totalDays += 1
+                this.workersSiteSummary[workerKey].totalCommute += workerDaily.commute
             })
             _.forEach(_.groupBy(this.workerGrouped[workerKey], 'site._id'), workerSiteDays=>{
                 this.workersSiteSummary[workerKey].sites.push({

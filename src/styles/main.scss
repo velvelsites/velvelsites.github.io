@@ -136,7 +136,9 @@ select{
     -webkit-box-shadow: none;
     box-shadow: none;
 }
-
+.top-gap{
+    margin-top:20px;
+}
 
 
 .horizontal-table, .worker-monthly{
@@ -638,7 +640,7 @@ table{
 .worker-table-line, .worker-table-header{
     span{
         display: inline-block;
-        min-width: 71px;
+        width: 80px;
         padding: 8px;
         line-height: 1.42857;
     }
@@ -665,6 +667,18 @@ table{
     }
 }
 @media (max-width: 768px){
+    .worker-table-line, .worker-table-header{
+        span{
+            width: 60px;
+            padding: 4px;
+        }
+    }
+    .worker-site-detail{
+        div{
+            width: 60px;
+            padding: 4px;
+        }
+    }
     button{
         margin: 10px 0px;
         width: 100%;
@@ -734,11 +748,12 @@ table{
     align-items: center;
     align-content: stretch;
     div{
-        min-width: 71px;
+        width: 80px;
         padding: 8px;
     }
 }
 .print-button{
+    color: #ffffff;
     padding: 3px 13px;
     margin: 16px 8px 5px 0px;
 }

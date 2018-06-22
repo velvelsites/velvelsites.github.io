@@ -2,6 +2,7 @@ $bold-font: 600;
 $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 @import '~bootstrap-sass/assets/stylesheets/_bootstrap.scss';
 @import "../js/components/loader/loader";
+@import "../styles/animations";
 // $fa-font-path: '~font-awesome/fonts/';
 // @import '~font-awesome/scss/font-awesome.scss';
 
@@ -391,7 +392,19 @@ thead{
         }
     }
 }
+#sidebar-wrapper span:hover, .card .card-header:hover{
+  cursor:pointer;
+  background: #8B9BD6;
+  color: #ffffff;
+}
 
+#sidebar-wrapper span:hover{
+  cursor:pointer;
+  background: #ffffff;
+  color: #8B9BD6;
+  transition: all 0.7s ease;
+  // transition: color 0.2s ease;
+}
 
 .pull-left{
     float:left;
@@ -584,7 +597,10 @@ table{
 
 }
 .btn-info.active{
-    color:#8B9BD6;
+    background:#8B9BD6;
+    .text-info{
+        color:#ffffff;
+    }
 }
 
 @media (max-width:  488px) {

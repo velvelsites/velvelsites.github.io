@@ -1,0 +1,179 @@
+
+.expanded {
+	opacity:1;
+}
+.collapsed {
+	opacity:0;
+}
+.default {
+	overflow:hidden;
+  transition: height 400ms ease-out, opacity 400ms ease-out;
+}
+
+@keyframes slideInFromTop {
+  0% {
+    transform: translateY(-10%);
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes slideInFromBottom {
+  0% {
+    transform: translateY(5%);
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes slideInFromRightTop {
+  0% {
+    transform: translate(5%,-8%);
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+    transform: translateY(0);
+  }
+}
+@keyframes slideInFromMiddle {
+  0% {
+    transform: translateY(-5%);
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.slide-from-top{
+	animation: 0.7s 0s 1 slideInFromTop;
+}
+.slide-from-bottom{
+  animation: 0.5s ease-out 0s 1 slideInFromBottom;
+}
+.slide-from-right-top{
+  animation: 0.2s ease-out 0s 1 slideInFromRightTop;
+}
+
+.slide-from-middle{
+  animation: 0.5s ease-out 0s 1 slideInFromMiddle;
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-10%);
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes slideInFromLeftHard {
+  0% {
+    transform: translateX(-20%);
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.slide-from-left{
+	animation: 0.5s ease-out 0s 1 slideInFromLeft;
+}
+
+.slide-from-left-hard{
+  animation: 0.5s ease-out 0s 1 slideInFromLeftHard;
+}
+
+
+
+
+
+
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(10%);
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes slideInFromRightHard {
+  0% {
+    transform: translateX(20%);
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.slide-from-right{
+  animation: 0.5s ease-out 0s 1 slideInFromRight;
+}
+
+.slide-from-right-hard{
+  animation: 0.5s ease-out 0s 1 slideInFromRightHard;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation-name: fadeIn;
+  animation-duration: 500ms;
+  animation-iteration-count: 1;
+}
+
+.shine:after {
+  content: "";
+  position: absolute;
+  top: -110%;
+  left: -210%;
+  width: 200%;
+  height: 200%;
+  opacity: 0;
+  transform: rotate(30deg);
+  
+  background: rgba(255, 255, 255, 0.13);
+  background: linear-gradient(
+    to right, 
+    rgba(255, 255, 255, 0.13) 0%,
+    rgba(255, 255, 255, 0.13) 77%,
+    rgba(255, 255, 255, 0.5) 92%,
+    rgba(255, 255, 255, 0.0) 100%
+  );
+}
+
+/* Hover state - trigger effect */
+
+.shine:hover:after {
+  opacity: 1;
+  top: -30%;
+  left: -30%;
+  transition-property: left, top, opacity;
+  transition-duration: 1.4s, 1.4s, 0.3s;
+  transition-timing-function: ease;
+}
+
+/* Active state */
+
+.shine:active:after {
+  opacity: 0;
+}

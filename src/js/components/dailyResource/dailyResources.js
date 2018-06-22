@@ -38,7 +38,7 @@ class DailyResourceCtrl {
         this.initDAilyWorkerHours()
     }
     initCommutOptions(){
-        this.commutes = [{_id:70, name:70},{_id:120, name:120}]
+        this.commutes = [{_id:40, name:40},{_id:70, name:70},{_id:140, name:140}]
         this.dailyWorker.commute = this.commutes[0]
     }
     initResources() {

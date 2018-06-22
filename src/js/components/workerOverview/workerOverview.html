@@ -41,34 +41,34 @@
                     <span class="hidden-xs" ng-bind="dailySite.startTime | date:'HH:mm'"></span>
                     <span class="hidden-xs" ng-bind="dailySite.endTime | date:'HH:mm'"></span>
                     <span ng-bind="$ctrl.floatDown(dailySite.hours,1)"></span>
-                    <span class="hidden-xs" ng-bind="dailySite.hourlyRate"></span>
-                    <span class="hidden-xs" ng-bind="dailySite.commute"></span>
+                    <span class="hidden-xs" ng-bind="$ctrl.formatShekels(dailySite.hourlyRate)"></span>
+                    <span class="hidden-xs" ng-bind="$ctrl.formatShekels(dailySite.commute)"></span>
                     <span ng-init="total = total + $ctrl.floatDown(($ctrl.floatDown(dailySite.hours,1)*dailySite.hourlyRate) + dailySite.commute)"
-                                    ng-bind="$ctrl.floatDown(($ctrl.floatDown(dailySite.hours,1)*dailySite.hourlyRate) + dailySite.commute)"></span>
+                                    ng-bind="$ctrl.formatShekels($ctrl.floatDown(($ctrl.floatDown(dailySite.hours,1)*dailySite.hourlyRate) + dailySite.commute))"></span>
             </div>
             <div class="worker-table-header top-gap">
                 <span id="cell-large">אתר</span>
                 <span>אחוז באתר</span>
                 <span>ימים</span>
                 <span>שעות</span>
+                <span>נסיעות</span>
+                <span id="cell-large">תשלום לפני מע"מ</span>
+            </div>
+            <div  class="worker-table-line" ng-repeat="objectw in $ctrl.workersSiteSummary[key].sites">
+                <span id="cell-large" ng-bind="objectw.name"></span>
+                <span ng-bind="objectw.percent"></span>
+                <span ng-bind="objectw.days"></span>
+                <span ng-bind="objectw.hours"></span>
+                <span ng-bind="$ctrl.formatShekels(objectw.commute)"></span>
+                <span id="cell-large" ng-bind="$ctrl.formatShekels(objectw.total)"></span>
+            </div>
+            <div  class="worker-table-line" >
+                <span id="cell-large">סך הכל:</span>
                 <span></span>
-                <span>תשלום לפני מע"מ</span>
-            </div>
-            <div  class="worker-site-detail worker-table-line" ng-repeat="objectw in $ctrl.workersSiteSummary[key].sites">
-                <div id="cell-large" ng-bind="objectw.name"></div>
-                <div ng-bind="objectw.percent"></div>
-                <div ng-bind="objectw.days"></div>
-                <div></div>
-                <div></div>
-                <div ng-bind="objectw.total"></div>
-            </div>
-            <div  class="worker-site-detail worker-table-line" >
-                <div id="cell-large">סך הכל:</div>
-                <div></div>
-                <div ng-bind="$ctrl.workersSiteSummary[key].totalDays"></div>
-                <div ng-bind="$ctrl.workersSiteSummary[key].totalHours"></div>
-                <div ng-bind="$ctrl.workersSiteSummary[key].totalCommute"></div>
-                <div ng-bind="$ctrl.workersSiteSummary[key].total"></div>
+                <span ng-bind="$ctrl.workersSiteSummary[key].totalDays"></span>
+                <span ng-bind="$ctrl.workersSiteSummary[key].totalHours"></span>
+                <span ng-bind="$ctrl.formatShekels($ctrl.workersSiteSummary[key].totalCommute)"></span>
+                <span id="cell-large" ng-bind="$ctrl.formatShekels($ctrl.workersSiteSummary[key].total)"></span>
             </div>
             <span class="print-button btn">
                 <i class="glyphicon glyphicon-print" ng-click="$ctrl.printData('worker_'+key)"></i>    
@@ -88,7 +88,7 @@
                         ng-show="$ctrl.siteSection[site]"></i>
                 </span>
                 <span class="title" ng-bind="siteObject.name"></span>
-                <span class="amount" ng-bind="' סך הכל: ' + siteObject.monthlyTotal"></span>
+                <span class="amount" ng-bind="' סך הכל: ' + $ctrl.formatShekels(siteObject.monthlyTotal)"></span>
                 <span class="trail-button">
                     <i  class="glyphicon glyphicon glyphicon-envelope"
                     ng-show="currentSite.comments.length>0"></i>    
@@ -108,7 +108,7 @@
                         <tr ng-repeat="worker in siteObject.workers">
                             <td ng-bind="worker.name"></td>
                             <td ng-bind="worker.days"></td>
-                            <td ng-bind="worker.amount"></td>
+                            <td ng-bind="$ctrl.formatShekels(worker.amount)"></td>
                         </tr>
                     </tbody>
                 </table>

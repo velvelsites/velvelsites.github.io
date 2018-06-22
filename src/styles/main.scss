@@ -382,7 +382,7 @@ thead{
     }
         .amount{
             float:right;
-            width:85px;
+            width:150px;
             text-align: right;
         }
         .trail-button{
@@ -673,12 +673,6 @@ table{
             padding: 4px;
         }
     }
-    .worker-site-detail{
-        div{
-            width: 60px;
-            padding: 4px;
-        }
-    }
     button{
         margin: 10px 0px;
         width: 100%;
@@ -739,18 +733,6 @@ table{
 }
 #cell-large{
     width:120px;
-}
-.worker-site-detail{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    align-items: center;
-    align-content: stretch;
-    div{
-        width: 80px;
-        padding: 8px;
-    }
 }
 .print-button{
     color: #ffffff;

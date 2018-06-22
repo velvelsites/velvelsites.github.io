@@ -7,7 +7,7 @@ class DailyResourceCtrl {
         this.dailyResource = {};
         this.dailyResource.amount = 1;
         this.dailyWorker = {};
-        this.dailyWorker.commute = 0;
+        this.initCommutOptions();
         this.resourceTypes = TypeService.resourceTypes;
         this.editDisabled = {};
         this.moment = moment;
@@ -36,6 +36,10 @@ class DailyResourceCtrl {
         this.initWorkers()
         this.initDailyWorkers()
         this.initDAilyWorkerHours()
+    }
+    initCommutOptions(){
+        this.commutes = [{_id:70, name:70},{_id:120, name:120}]
+        this.dailyWorker.commute = this.commutes[0]
     }
     initResources() {
         this.resourceTypes = this.TypeService.types;

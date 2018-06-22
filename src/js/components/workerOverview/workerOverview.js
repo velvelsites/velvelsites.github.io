@@ -1,4 +1,5 @@
 import moment from 'moment-timezone';
+import {GetNISFormat} from '../../utils/utils';
 let DATE_FORMAT = 'yyyy-MM';
 
 @Inject('MainService', 'DailyWorkerService','SiteService')
@@ -45,6 +46,10 @@ class WorkerOverviewCtrl {
     initSites() {
         this.allSites = this.SiteService.userSites;
     }
+    formatShekels(amount) {
+        return GetNISFormat(amount)
+    }
+
     getMonthlyWorkers(){
         let month = this.moment(this.date).month()
         let year = this.moment(this.date).year()
@@ -127,6 +132,8 @@ class WorkerOverviewCtrl {
                 this.workersSiteSummary[workerKey].sites.push({
                     name: workerSiteDays[0].site.name,
                     days:workerSiteDays.length,
+                    hours: _.sumBy(workerSiteDays, o=> o.hours),
+                    commute: _.sumBy(workerSiteDays, o=> o.commute),
                     total: _.sumBy(workerSiteDays, o=>{return parseFloat(this.dailyWorkerTotalByCell(o))}),
                     percent: (( workerSiteDays.length / this.workerGrouped[workerKey].length ) *100).toFixed(0) + '%'
                 })

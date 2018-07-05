@@ -197,7 +197,7 @@
             <div class="field-wrapper">
                 <label>נסיעות</label>
                 <select class="form-control" name="commute" id="commute" ng-model="$ctrl.dailyWorker.commute"
-                    ng-options="commute as commute.name for commute in $ctrl.commutes"></select>
+                    ng-options="commute for commute in $ctrl.commutes"></select>
                 <!-- <input type="number" placeholder="נסיעות" class="form-control" name="commute" min="0" value="0" id="commute" ng-model="$ctrl.dailyWorker.commute" required /> -->
             </div>
             <div class="field-wrapper">

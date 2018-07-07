@@ -33,7 +33,7 @@
                 <span>שעות</span>
                 <span class="hidden-xs">שכר שעתי</span>
                 <span class="hidden-xs">נסיעות</span>
-                <span>לתשלום</span>
+                <!-- <span>לתשלום</span> -->
             </div>
             <div ng-repeat="dailySite in dayObject" class="worker-table-line">
                     <span ng-bind="dailySite.date | date:'dd/MM'"></span>
@@ -43,35 +43,41 @@
                     <span ng-bind="$ctrl.floatDown(dailySite.hours,1)"></span>
                     <span class="hidden-xs" ng-bind="$ctrl.formatShekels(dailySite.hourlyRate)"></span>
                     <span class="hidden-xs" ng-bind="$ctrl.formatShekels(dailySite.commute)"></span>
-                    <span ng-init="total = total + $ctrl.floatDown(($ctrl.floatDown(dailySite.hours,1)*dailySite.hourlyRate) + dailySite.commute)"
-                                    ng-bind="$ctrl.formatShekels($ctrl.floatDown(($ctrl.floatDown(dailySite.hours,1)*dailySite.hourlyRate) + dailySite.commute))"></span>
+                    <!-- <span ng-init="total = total + $ctrl.floatDown(($ctrl.floatDown(dailySite.hours,1)*dailySite.hourlyRate) + dailySite.commute)"
+                                    ng-bind="$ctrl.formatShekels($ctrl.floatDown(($ctrl.floatDown(dailySite.hours,1)*dailySite.hourlyRate) + dailySite.commute))"></span> -->
+            </div>
+            <div class="worker-table-header top-gap">
+                <span id="cell-large">אתר</span>
+                <span>ימים</span>
+                <span>שעות</span>
+                <span id="cell-large">סה"כ לפי שעות</span>
+                <span>נסיעות</span>
+            </div>
+            <div  class="worker-table-line" >
+                <span id="cell-large">סך הכל:</span>
+                <span ng-bind="$ctrl.workersSiteSummary[key].totalDays"></span>
+                <span ng-bind="$ctrl.workersSiteSummary[key].totalHours"></span>
+                <span id="cell-large" ng-bind="$ctrl.formatShekels($ctrl.workersSiteSummary[key].totalNoCommute)"></span>
+                <span ng-bind="$ctrl.formatShekels($ctrl.workersSiteSummary[key].totalCommute)"></span>
             </div>
             <div class="worker-table-header top-gap">
                 <span id="cell-large">אתר</span>
                 <span>אחוז באתר</span>
-                <span>ימים</span>
-                <span>שעות</span>
-                <span>נסיעות</span>
-                <span id="cell-large">סה"כ לפי שעות</span>
-                <span id="cell-large">סה"כ כולל נסיעות</span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
             <div  class="worker-table-line" ng-repeat="objectw in $ctrl.workersSiteSummary[key].sites">
                 <span id="cell-large" ng-bind="objectw.name"></span>
                 <span ng-bind="objectw.percent"></span>
-                <span ng-bind="objectw.days"></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <!-- <span ng-bind="objectw.days"></span>
                 <span ng-bind="objectw.hours"></span>
                 <span ng-bind="$ctrl.formatShekels(objectw.commute)"></span>
-                <span id="cell-large" ng-bind="$ctrl.formatShekels(objectw.totalNoCommute)"></span>
-                <span id="cell-large" ng-bind="$ctrl.formatShekels(objectw.total)"></span>
-            </div>
-            <div  class="worker-table-line" >
-                <span id="cell-large">סך הכל:</span>
-                <span></span>
-                <span ng-bind="$ctrl.workersSiteSummary[key].totalDays"></span>
-                <span ng-bind="$ctrl.workersSiteSummary[key].totalHours"></span>
-                <span ng-bind="$ctrl.formatShekels($ctrl.workersSiteSummary[key].totalCommute)"></span>
-                <span id="cell-large" ng-bind="$ctrl.formatShekels($ctrl.workersSiteSummary[key].totalNoCommute)"></span>
-                <span id="cell-large" ng-bind="$ctrl.formatShekels($ctrl.workersSiteSummary[key].total)"></span>
+                <span id="cell-large" ng-bind="$ctrl.formatShekels(objectw.totalNoCommute)"></span> -->
             </div>
             <span class="print-button btn">
                 <i class="glyphicon glyphicon-print" ng-click="$ctrl.printData('worker_'+key)"></i>    

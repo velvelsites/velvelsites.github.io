@@ -63,16 +63,11 @@ class WorkerOverviewCtrl {
             console.log('Error retriving worker overview');
         });
     }
-    dailyWorkerTotal(hours, hourlyRate, commute){
-        commute = !commute ? 0 : commute
-        return (hours * hourlyRate) + commute;
-    }
-
-    dailyWorkerTotalByCell(cell){
-        return (cell.hours * cell.hourlyRate) + cell.commute;
+    dailyWorkerTotal(hours, hourlyRate){
+        return parseFloat(hours * hourlyRate);
     }
     dailyWorkerNoCommuteTotalByCell(cell){
-        return (cell.hours * cell.hourlyRate);
+        return this.dailyWorkerTotal(cell.hours * cell.hourlyRate);
     }
     groupWorkers(){
         this.workers = _.groupBy(this.allDailyWorkers, 'worker._id');
@@ -119,7 +114,6 @@ class WorkerOverviewCtrl {
             if(!this.workersSiteSummary[workerKey]){
                 this.workersSiteSummary[workerKey] = {
                     sites:[],
-                    total:0,
                     totalNoCommute:0,
                     totalDays:0,
                     totalHours:0,
@@ -129,9 +123,8 @@ class WorkerOverviewCtrl {
             }
             // 
             _.forEach(this.workerGrouped[workerKey], workerDaily=>{
-                this.workersSiteSummary[workerKey].totalNoCommute += parseFloat(this.dailyWorkerTotal(workerDaily.hourlyRate,workerDaily.hours))
-                this.workersSiteSummary[workerKey].total += parseFloat(this.dailyWorkerTotal(workerDaily.hourlyRate,workerDaily.hours,workerDaily.commute))
-                this.workersSiteSummary[workerKey].totalHours += workerDaily.hours
+                this.workersSiteSummary[workerKey].totalNoCommute += this.dailyWorkerTotal(workerDaily.hourlyRate,workerDaily.hours)
+                this.workersSiteSummary[workerKey].totalHours += workerDaily.hours - 0.5
                 this.workersSiteSummary[workerKey].totalDays += 1
                 this.workersSiteSummary[workerKey].totalCommute += workerDaily.commute
             })
@@ -141,8 +134,7 @@ class WorkerOverviewCtrl {
                     days:workerSiteDays.length,
                     hours: _.sumBy(workerSiteDays, o=> o.hours),
                     commute: _.sumBy(workerSiteDays, o=> o.commute),
-                    totalNoCommute: _.sumBy(workerSiteDays, o=>{return parseFloat(this.dailyWorkerNoCommuteTotalByCell(o))}),
-                    total: _.sumBy(workerSiteDays, o=>{return parseFloat(this.dailyWorkerTotalByCell(o))}),
+                    totalNoCommute: _.sumBy(workerSiteDays, o=>{return (this.dailyWorkerNoCommuteTotalByCell(o))}),
                     percent: (( workerSiteDays.length / this.workerGrouped[workerKey].length ) *100).toFixed(0) + '%'
                 })
             })
@@ -209,6 +201,7 @@ class WorkerOverviewCtrl {
         });
     }
     floatDown(number, digits){
+        number = number - 0.5
         return parseFloat(number.toFixed(digits));
     }
     printData(elementToGet){

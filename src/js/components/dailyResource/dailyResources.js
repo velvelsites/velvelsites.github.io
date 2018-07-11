@@ -128,6 +128,16 @@ class DailyResourceCtrl {
         }
     }
     addDailyWorker(isValid) {
+        
+        let doesExist = ((_.filter(this.dailyWorkers, o =>
+            o.worker._id == this.dailyWorker.worker._id && 
+            (moment(o.date).isSame(moment(this.dailyResource.date), "day"))
+        )).length > 0)
+        if (doesExist){
+            alert('פועל קיים בתאריך')
+            return
+        }
+
         if (isValid) {
             this.addingWorker = true;
             let dailyResource = Object.assign({}, this.dailyResource);
@@ -139,7 +149,7 @@ class DailyResourceCtrl {
             this.dailyWorker.site = this.dailyResource.site;
             this.dailyWorker.hourlyRate = this.dailyWorker.worker.hourlyRate
             this.DailyWorkerService.addDailyWorker(this.dailyWorker).then((response) => {
-                // this.getTypes();
+                this.getDailyWorkers();
             }).finally(()=>{
                 this.addingWorker = false;
             });

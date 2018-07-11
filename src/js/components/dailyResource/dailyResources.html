@@ -226,10 +226,36 @@
                     <tr ng-repeat="currentDailyWorker in $ctrl.dailyWorkers">
                         <td><input  type="text" ng-disabled="!$ctrl.editDisabled[currentDailyWorker._id]" 
                                     ng-model="currentDailyWorker.worker.name"></td>
-                        <td ng-bind="currentDailyWorker.startTime | date:'HH:mm'"></td>
+                        <td ng-show="!$ctrl.editDisabled[currentDailyWorker._id]" ng-bind="currentDailyWorker.startTime | date:'HH:mm'"></td>
+                        <td ng-show="$ctrl.editDisabled[currentDailyWorker._id]">
+                            <div class="field-wrapper time-picker-wrapper">
+                                <div uib-timepicker ng-model="currentDailyWorker.startTime" 
+                                                    ng-disabled="!$ctrl.editDisabled[currentDailyWorker._id]"
+                                                    ng-change="$ctrl.endTimeChanged()" 
+                                                    hour-step="$ctrl.hstep" 
+                                                    minute-step="$ctrl.mstep" 
+                                                    max="$ctrl.max"
+                                                    show-meridian="false"
+                                                    class="time-control">
+                                </div>
+                            </div>
+                        </td>
                         <td><input  type="text" ng-disabled="true" 
                                     ng-model="currentDailyWorker.hours"></td>
-                        <td ng-bind="currentDailyWorker.endTime | date:'HH:mm'"></td>
+                        <td ng-show="!$ctrl.editDisabled[currentDailyWorker._id]" ng-bind="currentDailyWorker.endTime | date:'HH:mm'"></td>
+                        <td ng-show="$ctrl.editDisabled[currentDailyWorker._id]">
+                            <div class="field-wrapper time-picker-wrapper">
+                                <div uib-timepicker ng-model="currentDailyWorker.endTime" 
+                                                    ng-change="$ctrl.endTimeChanged()" 
+                                                    hour-step="$ctrl.hstep" 
+                                                    minute-step="$ctrl.mstep" 
+                                                    max="$ctrl.max"
+                                                    show-meridian="false"
+                                                    ng-disabled="!$ctrl.editDisabled[currentDailyWorker._id]"
+                                                    class="time-control">
+                                </div>
+                            </div>
+                        </td>
                         <td><input type="text" ng-disabled="!$ctrl.editDisabled[currentDailyWorker._id]" ng-model="currentDailyWorker.hourlyRate"></td>
                         <td><input  type="text" ng-disabled="!$ctrl.editDisabled[currentDailyWorker._id]"
                                     ng-model="currentDailyWorker.commute"></td>

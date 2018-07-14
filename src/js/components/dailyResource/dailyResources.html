@@ -169,7 +169,7 @@
             <div class="hour-wrapper">
                 <div class="field-wrapper time-picker-wrapper">
                     <div uib-timepicker ng-model="$ctrl.workerStartTime" 
-                                        ng-change="$ctrl.startTimeChanged()" 
+                                        ng-change="$ctrl.startTimeChanged($ctrl.workerStartTime, $ctrl.workerEndTime, $ctrl.dailyWorker)" 
                                         hour-step="$ctrl.hstep" 
                                         minute-step="$ctrl.mstep"
                                         max="$ctrl.max"
@@ -182,7 +182,7 @@
                 </div>
                 <div class="field-wrapper time-picker-wrapper">
                     <div uib-timepicker ng-model="$ctrl.workerEndTime" 
-                                        ng-change="$ctrl.endTimeChanged()" 
+                                        ng-change="$ctrl.endTimeChanged($ctrl.workerStartTime, $ctrl.workerEndTime, $ctrl.dailyWorker)" 
                                         hour-step="$ctrl.hstep" 
                                         minute-step="$ctrl.mstep" 
                                         max="$ctrl.max"
@@ -231,7 +231,7 @@
                             <div class="field-wrapper time-picker-wrapper">
                                 <div uib-timepicker ng-model="currentDailyWorker.startTime" 
                                                     ng-disabled="!$ctrl.editDisabled[currentDailyWorker._id]"
-                                                    ng-change="$ctrl.endTimeChanged()" 
+                                                    ng-change="$ctrl.endTimeChanged(currentDailyWorker.startTime,currentDailyWorker.endTime,currentDailyWorker)" 
                                                     hour-step="$ctrl.hstep" 
                                                     minute-step="$ctrl.mstep" 
                                                     max="$ctrl.max"
@@ -246,7 +246,7 @@
                         <td ng-show="$ctrl.editDisabled[currentDailyWorker._id]">
                             <div class="field-wrapper time-picker-wrapper">
                                 <div uib-timepicker ng-model="currentDailyWorker.endTime" 
-                                                    ng-change="$ctrl.endTimeChanged()" 
+                                                    ng-change="$ctrl.endTimeChanged(currentDailyWorker.startTime,currentDailyWorker.endTime,currentDailyWorker)" 
                                                     hour-step="$ctrl.hstep" 
                                                     minute-step="$ctrl.mstep" 
                                                     max="$ctrl.max"

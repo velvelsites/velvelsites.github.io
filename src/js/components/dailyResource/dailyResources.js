@@ -63,26 +63,27 @@ class DailyResourceCtrl {
         }
         this.setDailyWorkerHours()
     }
-    endTimeChanged(){
-        if (this.workerStartTime >= this.workerEndTime){
-             this.workerStartTime = new Date(this.workerEndTime)
-             this.workerStartTime.setHours(this.workerEndTime.getHours()-1)
+    endTimeChanged(startTime, endTime, hours){
+        if (startTime >= endTime){
+             startTime = new Date(endTime)
+             startTime.setHours(endTime.getHours()-1)
         }
-        this.setDailyWorkerHours()
+        this.setDailyWorkerHours(startTime, endTime, hours)
     }
     initDAilyWorkerHours(){
         let start = new Date()
         let end = new Date()
         this.workerStartTime = moment({hour: 7});
         this.workerEndTime = moment({hour: 16});
-        this.setDailyWorkerHours()
+        this.dailyWorker.hours = 0
+        this.setDailyWorkerHours(this.workerStartTime, this.workerEndTime, this.dailyWorker)
     }
-    setDailyWorkerHours(){
-        let start = this.moment(this.workerStartTime)
-        let end = this.moment(this.workerEndTime)
+    setDailyWorkerHours(startTime, endTime, hourObject){
+        let start = this.moment(startTime)
+        let end = this.moment(endTime)
         var ms = this.moment(end).diff(this.moment(start));
         var d = this.moment.duration(ms).as('hours') %24;
-        this.dailyWorker.hours = parseFloat(d.toFixed(1))
+        hourObject.hours = parseFloat(d.toFixed(1))
     }
     initSites() {
         this.sites = this.SiteService.userSites;

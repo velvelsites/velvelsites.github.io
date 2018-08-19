@@ -67,7 +67,7 @@ class WorkerOverviewCtrl {
         return parseFloat(hours * hourlyRate);
     }
     dailyWorkerNoCommuteTotalByCell(cell){
-        return this.dailyWorkerTotal(cell.hours * cell.hourlyRate);
+        return this.dailyWorkerTotal(cell.hours, cell.hourlyRate);
     }
     groupWorkers(){
         this.workers = _.groupBy(this.allDailyWorkers, 'worker._id');
@@ -123,8 +123,8 @@ class WorkerOverviewCtrl {
             }
             // 
             _.forEach(this.workerGrouped[workerKey], workerDaily=>{
-                this.workersSiteSummary[workerKey].totalNoCommute += this.dailyWorkerTotal(workerDaily.hourlyRate,workerDaily.hours)
                 this.workersSiteSummary[workerKey].totalHours += workerDaily.hours - 0.5
+                this.workersSiteSummary[workerKey].totalNoCommute += this.dailyWorkerTotal(workerDaily.hourlyRate, workerDaily.hours - 0.5)
                 this.workersSiteSummary[workerKey].totalDays += 1
                 this.workersSiteSummary[workerKey].totalCommute += workerDaily.commute
             })
